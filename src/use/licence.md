@@ -17,7 +17,7 @@ open.
 
 ## The free tier
 
-Without a licence the panel runs on the free tier: **25 users and 1 node**.
+Without a licence the panel runs on the free tier: **50 users and 2 nodes**.
 A banner at the top of every page says so, with a link to the **License**
 page.
 
@@ -98,7 +98,7 @@ Past a cap, nothing is deleted:
   again.
 
 The same happens when a licence expires: the panel falls back to the free
-tier's 25 users and 1 node, and marks the rest. There is no grace period after
+tier's 50 users and 2 nodes, and marks the rest. There is no grace period after
 the date. The panel warns before it:
 
 - a banner on every page from seven days before the expiry;

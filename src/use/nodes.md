@@ -237,7 +237,7 @@ no relay or no origin is deleted with it.
 
 ## Nodes beyond the licence
 
-The free tier serves one node. A node beyond what your licence allows is
+The free tier serves two nodes. A node beyond what your licence allows is
 marked **Outside licence**: it is listed and can be deleted, but it serves
 nothing and cannot be changed. See [[use/licence]].
 
