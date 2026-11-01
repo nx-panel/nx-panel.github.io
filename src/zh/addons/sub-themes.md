@@ -39,7 +39,7 @@ sub-themes/
 | --- | --- |
 | `starter/` | 最小的完整页面，带注释，供复制使用：状态、用量、到期时间、二维码、应用按钮、每个配置、配置文件、通知以及实时刷新。一个 HTML 文件和一个样式表。 |
 | `builtin/violet/`、`builtin/amber/` | 面板自己的两个页面。更大，适合借鉴：标签页、用量环、流量历史图表。 |
-| `check/` | `go run ./check` 按面板的方式解析每个主题。 |
+| `check/` | `go run ./check` 按仓库的规则检查每个主题，并按面板的方式解析它。 |
 
 1. 把 `starter/` 复制到一个以你的主题命名的目录。
 2. 把它放到面板上（见下文），打开某个用户的页面。
@@ -249,7 +249,18 @@ sub-themes/
 
 ## 分享你的主题 {#share-your-theme}
 
-向 [`nx-panel/sub-themes`](https://github.com/nx-panel/sub-themes) 发送拉取请求，把你的主题作为一个新的顶层目录，并附上一个带截图的简短 `README.md`。仓库的 README 列出了其中的主题必须满足的要求。那里的每个主题都采用 MIT 许可，因此运营者可以为自己的服务修改它们。
+合并进 [`nx-panel/sub-themes`](https://github.com/nx-panel/sub-themes) 的主题会出现在每个面板的主题库中（[[use/subscriptions#theme-catalogue]]），运营者一键即可安装。要提交主题，请发起一个拉取请求，把主题作为一个新的顶层目录，其中包含：
+
+| 文件 | |
+| --- | --- |
+| `index.html` | 页面本身。 |
+| `theme.json` | 名称（与目录相同）、`version`、`en`、`fa`、`ru`、`zh` 四种语言的标题和描述、作为 `author` 的你及你的 GitHub 账号，以及 `panelMin`，即主题能运行的最旧面板版本。 |
+| `README.md` | 它的外观。 |
+| `preview.png` | 手机宽度的截图，最大 300 KB。主题库会显示它。 |
+
+`go run ./check` 会检查它能检查的内容：文件（最多 2 MB，只能是页面、样式、脚本、图片和字体文件，不能有链接或隐藏文件）、不从其他主机加载任何内容、没有脚本把文本当作代码执行，以及页面能够解析。审核会阅读每一个脚本，因此读取 `/info` 以外内容的脚本会被询问。主题的每次修改都要提高它的 `version`，面板正是由此得知有更新。详情见 [`CONTRIBUTING.md`](https://github.com/nx-panel/sub-themes/blob/main/CONTRIBUTING.md)。
+
+那里的每个主题都采用 MIT 许可，因此运营者可以为自己的服务修改它们。
 
 ## 相关页面 {#related}
 

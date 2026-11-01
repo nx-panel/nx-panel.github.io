@@ -57,7 +57,7 @@ licensed MIT, holds:
 | --- | --- |
 | `starter/` | The smallest complete page, commented to be copied: status, usage, expiry, the QR code, app buttons, each configuration, config files, notices and live refresh. One HTML file and one stylesheet. |
 | `builtin/violet/`, `builtin/amber/` | The panel's own two pages. Larger, and good to borrow from: tabs, a usage ring, the traffic history chart. |
-| `check/` | `go run ./check` parses every theme the way the panel does. |
+| `check/` | `go run ./check` holds every theme to the repository's rules and parses it the way the panel does. |
 
 1. Copy `starter/` to a directory with your theme's name.
 2. Put it on a panel (below) and open a user's page.
@@ -316,11 +316,30 @@ browser, otherwise English.
 
 ## Share your theme
 
-Send a pull request to
-[`nx-panel/sub-themes`](https://github.com/nx-panel/sub-themes) with your
-theme as a new top-level directory and a short `README.md` with a
-screenshot. The repository's README lists what a theme there must do. Every
-theme there is MIT licensed, so operators can change it for their service.
+A theme merged into
+[`nx-panel/sub-themes`](https://github.com/nx-panel/sub-themes) appears in
+every panel's theme catalogue ([[use/subscriptions#theme-catalogue]]), where
+operators install it with one click. To send one, open a pull request with
+your theme as a new top-level directory holding:
+
+| File | |
+| --- | --- |
+| `index.html` | The page. |
+| `theme.json` | Its name (the directory's), `version`, a title and a description in `en`, `fa`, `ru` and `zh`, you as `author` with your GitHub account, and `panelMin`, the oldest panel release it runs on. |
+| `README.md` | What it looks like. |
+| `preview.png` | A screenshot at phone width, at most 300 KB. The catalogue shows it. |
+
+`go run ./check` tests what it can: the files (at most 2 MB, only page,
+style, script, image and font files, no links or hidden files), that nothing
+is loaded from another host, that no script runs text as code, and that the
+page parses. The review reads every script, so a script that reads anything
+but `/info` will be asked about. Every change to a theme raises its
+`version`; that is how a panel learns there is an update.
+[`CONTRIBUTING.md`](https://github.com/nx-panel/sub-themes/blob/main/CONTRIBUTING.md)
+has the details.
+
+Every theme there is MIT licensed, so operators can change it for their
+service.
 
 ## Related
 
