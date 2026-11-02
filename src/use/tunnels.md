@@ -22,10 +22,11 @@ what happens inside one.
 1. Both the relay and the origins are added and connected on [[use/nodes]].
 2. The relay serves users: it has a template with inbounds, and your users are
    on that template. A tunnel changes only where the relay's traffic leaves.
-3. The node that listens has an address the other side can reach: its
-   **Link addresses**, or its **Address** when it has none. The dialing side
-   tries every link address at once, so a second address is a ready
-   fallback.
+3. The node that listens has an address the other side can reach. By default
+   the dialing side uses all of its **Link addresses**, or its **Address** when
+   it has none, and tries them all at once, so a second address is a ready
+   fallback. You can choose others: see
+   [[use/tunnels#which-addresses-are-dialed|which addresses are dialed]].
 4. The tunnel's port is open in the listening server's firewall. The panel
    does not open it for you.
 
@@ -64,6 +65,35 @@ Choose **Reverse** unless the relay cannot accept connections from the
 origins.
 
 <NxTunnel scene="modes" />
+
+### Which addresses are dialed {#which-addresses-are-dialed}
+
+The form's first tab, **Nodes and addresses**, has a section for every origin
+under **Addresses dialed**. In **Reverse** it says which of the relay's
+addresses that origin dials; in **Direct**, which of that origin's own
+addresses the relay dials.
+
+- **All addresses**, the default, dials the node's
+  **Node addresses for tunnels** when it has them, otherwise its link
+  addresses. The node's **Address** is left out while it has link addresses.
+- Turn **All addresses** off to choose. The list starts with what was being
+  dialed: remove an address with its ×, add one of the node's addresses or
+  type another, and drag to set the order. The first is the primary and the
+  others take over when it fails. An address the node does not list is dialed
+  too.
+
+Changing **Mode**, or the relay in **Reverse**, resets the sections, because
+they would then name another node's addresses. The form says so.
+
+#### Node addresses for tunnels {#node-addresses-for-tunnels}
+
+**Node addresses for tunnels**, beside the health refresh on the tunnels page,
+sets once for every tunnel which addresses a node is dialed at. Turn
+**Link addresses** off for a node and list its addresses for tunnels: they
+replace its link addresses for every origin whose section is
+**All addresses**. Use it to leave out an address some far side cannot reach,
+or to add one only tunnels use, such as a private network between two data
+centres. Only nodes that are an end of a tunnel are listed.
 
 ### Profiles: the port, security and transport
 
@@ -147,11 +177,22 @@ The **Health** column asks both sides of every tunnel when the page opens:
 
 The summary strip counts the same states. **Refresh health** asks again.
 
-**Live status** on a row's menu asks every node of the tunnel and refreshes
-every few seconds while it is open. For each origin it shows the links,
-streams and uptime. On the dialing side it shows the **Backoff** before the
-next try and the **Last error**: read that first when a tunnel does not
-connect.
+**Live status** on a row's menu draws the tunnel: users, the relay with the
+addresses it is dialed at, every origin, and one line for each origin and
+address. A line's colour says whether all of its links are up, some, or none
+(retrying), or that the node that dials it did not answer. The `>>` mark in the
+middle points away from the side that dials, moving dots are open streams, and
+the count beside the origin has one dot per profile. On a phone the same
+appears as a column of cards with a row per address. It refreshes every few
+seconds while it is open.
+
+Choose a line to see each profile's links, the **Backoff** before the next try
+and the **Last error**: read that first when a tunnel does not connect. When an
+address has failed on every profile for a while, a note says what the reports
+show. Either another origin reaches it, so the path from this origin is at
+fault, or no origin reaches it while the relay's other addresses work. The
+note offers the fix: the origin's section, or **Node addresses for tunnels**.
+**Every detail as a table** shows everything both sides report.
 
 ### Reset
 
@@ -184,11 +225,15 @@ Each tunnel is checked as if you had edited it alone. One the panel refuses is
 reported, and the others still change.
 
 **Usage graph** on a row's menu shows the traffic that went through the
-tunnel.
+tunnel. Its node list holds only the tunnel's relay and origins:
+**The whole tunnel** is what the relay carried, and an origin shows its own
+share.
 
 ## When it does not connect
 
 - Read **Last error** in **Live status**.
+- If one address fails while the others work, leave it out: in the origin's
+  section, or for every tunnel in **Node addresses for tunnels**.
 - Check the listen port is open on the listening node: the relay in
   **Reverse**, every origin in **Direct**. From the other node:
   `nc -vz <address> <port>`.

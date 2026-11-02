@@ -101,11 +101,13 @@ origin is lost, only the users who were on it move to another.
 
 ## Several addresses: warm failover
 
-The dialing side dials **every** link address of the listening node at once,
-under one identity. All of them stay connected, so there is no standby to
-wake up: if one address is blocked, the links it carried drop and the others
-already carry the traffic. An address that cannot connect, such as a CDN
-address the tunnel cannot pass, stays in backoff while the others work.
+The dialing side dials **every** address chosen for the link at once, under
+one identity: the origin's own section of the tunnel, otherwise the listening
+node's addresses for tunnels, otherwise its link addresses. All of them stay
+connected, so there is no standby to wake up: if one address is blocked, the
+links it carried drop and the others already carry the traffic. An address
+that cannot connect, such as a CDN address the tunnel cannot pass, stays in
+backoff while the others work, and the live status says which one it is.
 
 ## Changes reach the nodes live
 
