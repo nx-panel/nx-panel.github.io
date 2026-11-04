@@ -306,7 +306,7 @@ over its volume, and says how many; renew those first.
 
 ## Users beyond the licence
 
-The free tier serves 25 users. Accounts beyond what the licence allows are
+The free tier serves 50 users. Accounts beyond what the licence allows are
 marked **Outside licence**: they are listed and can be deleted, but are served
 on no node and cannot be changed. A notice above the list counts them. See
 [[use/licence]].

@@ -148,7 +148,7 @@ runs on its own.
 ## Licence {#licence}
 
 What sets how many users and nodes a panel serves. Without one, the panel runs
-free with up to 25 users and 1 node.
+free with up to 50 users and 2 nodes.
 
 ## Setup wizard {#setup-wizard}
 

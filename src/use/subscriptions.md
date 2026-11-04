@@ -172,9 +172,50 @@ there. The page follows the user's browser language.
 | Setting | |
 | --- | --- |
 | **Theme** | **Built-in page · Violet** (the default), **Built-in page · Amber**, or one of your own themes |
+| **Catalogue** | Opens the theme catalogue: themes made by others, installed with one click |
 | **Themes directory** | Where your own themes are read from. Main admin only |
+| **Theme catalogue address** | Where the catalogue is downloaded from; empty is GitHub. Main admin only |
 | **Profile title**, **Support link**, **Announcement** | Shown on the page, and also sent to apps as headers |
 | **Serve raw configuration to browsers** | Turns the page off: a browser gets the same answer an app does |
+
+### Themes from the catalogue {#theme-catalogue}
+
+**Catalogue** next to **Theme** lists the themes accepted into the public
+[`nx-panel/sub-themes`](https://github.com/nx-panel/sub-themes) repository,
+each with a screenshot, its author and its version.
+
+1. Click **Refresh**. The panel downloads the latest list and screenshots
+   to its own server. Until you refresh again, opening the catalogue shows
+   that copy and reaches nothing on the internet.
+2. Click **Install** on a theme. Its files are copied into the themes
+   directory; nothing else changes.
+3. Pick it under **Theme** and save.
+
+A new version of an installed theme shows only after a refresh: the theme
+gets **New version** and an **Update** button. Nothing updates by itself. If
+you changed one of its files on the server, the update names the files and
+asks before replacing them.
+
+- **Remove** deletes a theme the catalogue installed. It is refused while
+  **Theme** or a branding uses it.
+- A folder of your own with the same name is never touched: the catalogue
+  shows **Name taken** and offers no install.
+- A theme that needs a newer panel says which, and cannot be installed until
+  you update.
+- Only the main admin can refresh, install and remove. Other admins see the
+  list.
+- What a theme does once installed is yours to judge, as for one you copy in
+  by hand. Themes are reviewed before they are accepted, and the files are
+  on your server to read.
+
+**Docker:** the compose files used to mount `./sub-themes` read-only, and an
+install there is refused with a message saying so. Change the line to
+`- ./sub-themes:/app/sub-themes` (no `:ro`) and run `docker compose up -d`.
+
+The catalogue comes from GitHub's release downloads. Where GitHub is slow or
+blocked, set **Theme catalogue address** to a mirror that serves the same
+two paths: `latest/download/catalog.tar.gz` and
+`download/<build>/<theme>-<version>.tar.gz`.
 
 ### Your own theme
 
