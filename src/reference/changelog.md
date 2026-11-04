@@ -14,7 +14,7 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
-### v0.1.1 — 4 November 2026 {#panel-v0-1-1}
+### v0.1.1 — 5 November 2026 {#panel-v0-1-1}
 
 Installs from the update button ([[use/panel-update]]). Take a backup first,
 and update the panel before the nodes: this panel works with nodes on v0.1.0,
@@ -31,6 +31,11 @@ and node v0.1.1 is needed only for the new certificate features on a node.
 - **Tunnel status** is drawn as a diagram of the relay, the origins and the
   addresses between them, coloured by what each side reports, and a tunnel's
   usage graph shows only its own ends ([[use/tunnels]]).
+- **Verify peer cert by name** in a certificate's or an inbound's client
+  settings: names Xray apps check the server's certificate against instead of
+  the SNI, so a link can send another SNI and still verify an ACME certificate
+  without a pin. Links carry it as `vcn`; sing-box and Clash apps have no such
+  option ([[use/inbounds#client-settings]]).
 - **Certificates:** dns-01 gains ArvanCloud, Selectel, Tencent Cloud (DNSPod)
   and Huawei Cloud. Names are checked before the authority is asked, and a
   wildcard over http-01 or tls-alpn-01 is refused at once. A node's ingress
@@ -202,10 +207,13 @@ its **Update** page ([[use/panel-update]]).
 
 ## Node
 
-### v0.1.1 — 4 November 2026 {#node-v0-1-1}
+### v0.1.1 — 5 November 2026 {#node-v0-1-1}
 
 **Update the panel to v0.1.1 first.** A node on v0.1.0 keeps working with it.
 
+- **OpenConnect clients stay connected.** Each packet now goes out in one TLS
+  record; before, every client built on libopenconnect dropped the session
+  right after connecting. DTLS does not connect yet, so traffic runs over TLS.
 - The ingress inbound answers the tls-alpn-01 challenge on the port it holds,
   so the node issues and renews a certificate while the inbound keeps serving.
 - dns-01 gains ArvanCloud, Selectel, Tencent Cloud (DNSPod) and Huawei Cloud.

@@ -11,13 +11,14 @@ tags: [reference]
 
 ## 面板 {#panel}
 
-### v0.1.1 — 2026 年 11 月 4 日 {#panel-v0-1-1}
+### v0.1.1 — 2026 年 11 月 5 日 {#panel-v0-1-1}
 
 可以用更新按钮安装（[[use/panel-update]]）。请先做备份，并先更新面板再更新节点：这个面板可以与 v0.1.0 的节点一起工作，只有节点上的新证书功能需要节点 v0.1.1。
 
 - **OpenVPN：** `.ovpn` 文件现在能在 OpenVPN Connect 中通过验证，无论是 Let's Encrypt 证书还是面板的自签名证书。**用户需要重新下载文件**（[[protocols/openvpn]]）。
 - **隧道地址：** 隧道的每个源端都可以自己选择要连接的地址，按故障转移顺序排列，也可以包括节点的管理地址；隧道页面上的 **节点的隧道地址** 按节点设置它们。修改节点地址会立即同步它的隧道（[[use/tunnels#which-addresses-are-dialed]]）。
 - **隧道状态** 以图示显示中继、各源端以及它们之间的地址，按每一端的报告着色；隧道的流量图只显示它自己的两端（[[use/tunnels]]）。
+- 证书或入站客户端设置中的 **Verify peer cert by name**：Xray 应用用这些名称而不是 SNI 来验证服务器证书，因此链接可以发送其他 SNI，同时仍无需指纹即可验证 ACME 证书。它在链接中以 `vcn` 传递；sing-box 和 Clash 应用没有这个选项（[[use/inbounds#client-settings]]）。
 - **证书：** dns-01 新增 ArvanCloud、Selectel、腾讯云（DNSPod）和华为云。向证书机构申请前会先检查域名，通过 http-01 或 tls-alpn-01 申请通配符会被立即拒绝。节点的 ingress 入站会在自己的端口上响应 tls-alpn-01，因此签发证书时入站照常服务（[[use/certificates#checked-before-the-authority-is-asked]]）。
 - **Hysteria2 gecko 混淆：** **Obfs type** 在 *salamander* 之外提供 *gecko*，它还会把开头的握手拆成大小随机、带填充的分片。只有较新的应用支持它，因此请在 salamander 入站旁边添加一个 gecko 入站。Xray 订阅现在包含带混淆的 Hysteria2 条目（[[protocols/hysteria2#obfuscation]]）。
 - **主题库：** **设置 → 订阅 → 主题库** 可以从公共主题库安装、更新和删除订阅页主题。在 Docker 中，`./sub-themes` 必须以可写方式挂载（[[use/subscriptions#theme-catalogue]]）。
@@ -93,10 +94,11 @@ tags: [reference]
 
 ## 节点 {#node}
 
-### v0.1.1 — 2026 年 11 月 4 日 {#node-v0-1-1}
+### v0.1.1 — 2026 年 11 月 5 日 {#node-v0-1-1}
 
 **请先把面板更新到 v0.1.1。** v0.1.0 的节点仍可与它一起工作。
 
+- **OpenConnect 客户端保持连接。** 每个数据包现在作为一条 TLS 记录发出；此前所有基于 libopenconnect 的客户端在连接后会立即断开会话。DTLS 暂时仍无法连接，因此流量走 TLS。
 - ingress 入站会在它占用的端口上响应 tls-alpn-01 验证，因此节点签发和续期证书时入站照常服务。
 - dns-01 新增 ArvanCloud、Selectel、腾讯云（DNSPod）和华为云。
 - 修复了 tls-alpn-01 路径中的一个崩溃。
