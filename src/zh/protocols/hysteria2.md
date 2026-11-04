@@ -42,6 +42,26 @@ Hysteria2 运行在 QUIC 之上，使用 UDP。在 TCP 协议会卡住的丢包�
 
 sing-box 应用读取这两个字段。Clash 应用读取间隔；在 mihomo 1.19.24 及以上版本中也读取端口范围。分享链接里没有放这两项的位置，所以通过导入链接添加的应用会使用自己的默认值。面板会拒绝没有间隔的上限、小于间隔的上限，以及低于五秒的任何值，这些也正是客户端在用户设备上会拒绝的值。
 
+## 混淆 {#obfuscation}
+
+在填写 **Obfs password**（高级）之前，混淆是关闭的。密码会打乱每个数据包，使检查流量的网络不再把连接识别为 Hysteria2。随后由 **Obfs type** 选择方式：
+
+- **salamander**（默认）用密码打乱每个数据包。所有支持 Hysteria2 混淆的应用都能识别它。
+- **gecko** 做同样的事，此外还把每个连接开头的握手拆成二到八个大小随机、带随机填充的分片，更难通过数据包大小识别。只有较新的应用支持它（见下表）。
+
+**Gecko min packet size** 和 **Gecko max packet size**（高级，仅 gecko）设置分片填充到的大小范围，单位为字节。留空即 512 和 1200。面板最多接受 1452：更大的分片无法到达 sing-box 应用，而 1452 也是 IPv6 路径能承载的大小。这个范围只决定每一端发送的内容，因此应用不必使用相同的范围；不过 sing-box、Clash 和 Xray 应用仍会收到它。
+
+每个链接都携带密码和类型，因此修改其中任何一个都会让所有用户断开，直到他们刷新订阅；不支持 gecko 的应用则完全无法连接。要提供 gecko，请在 salamander 入站旁边再添加一个使用 gecko 的 Hysteria2 入站，而不是切换正在使用的那个。
+
+| 应用 | salamander | gecko |
+| --- | --- | --- |
+| Hysteria（官方） | 是 | 2.9.2 或更高 |
+| sing-box 应用 | 是 | sing-box 1.14 或更高；更旧的版本会丢弃该条目或拒绝整个订阅 |
+| Clash 应用 | 是 | mihomo 1.19.26 或更高 |
+| Xray 应用、Xray 订阅 | 是 | Xray 26.9.30 或更高 |
+| v2rayN（分享链接） | 是 | 是 |
+| v2rayNG（分享链接） | 是 | 否：它把 gecko 链接导入为 salamander，无法连接 |
+
 ## 速度与按用户限制 {#speed-and-per-user-limits}
 
 节点始终以 BBR 拥塞控制运行 Hysteria2，并忽略应用声明的带宽。正因如此，用户的 **速度限制** 在 Hysteria2 上和在其他地方一样有效，这也是该入站没有带宽字段的原因。用户在应用里设置的带宽不会提高其速度。
@@ -52,7 +72,7 @@ sing-box 应用读取这两个字段。Clash 应用读取间隔；在 mihomo 1.1
 
 | 字段（高级） | |
 | --- | --- |
-| **Obfs password** | 用双方共享的密码打乱每个数据包，使检查流量的网络不再把连接识别为 Hysteria2。每个链接都携带它；修改后每个用户都需要刷新订阅 |
+| **Obfs password**、**Obfs type** | 见 [[protocols/hysteria2#obfuscation]] |
 | **Masquerade URL** | 当有人在没有有效密码的情况下连接（例如浏览器）时，节点向其展示的网站 |
 | **Idle timeout**、**Keep-alive period**、各接收窗口、**Max concurrent streams** | QUIC 调优；除非你经过测量有明确理由，否则留空 |
 

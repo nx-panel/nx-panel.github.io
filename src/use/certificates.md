@@ -48,22 +48,59 @@ of three ways under **ACME challenge**:
 
 | Challenge | Needs |
 | --- | --- |
-| **DNS-01** | The API token of your DNS provider. Works for any domain, including wildcards, from anywhere. |
-| **HTTP-01** | The domain pointing at whoever answers, with port 80 free there. |
-| **TLS-ALPN-01** | The domain pointing at whoever answers, with port 443 free there. |
+| **DNS-01** | The API credentials of your DNS provider. Works for any domain, from anywhere and behind a CDN, and is the only way to get a wildcard (`*.example.com`). |
+| **HTTP-01** | The domain pointing at whoever answers, with port 80 free there or held by one of the panel's own listeners. |
+| **TLS-ALPN-01** | The domain pointing at whoever answers, with port 443 free there, held by one of the panel's own listeners, or, on a node, held by an ingress inbound. |
 
-For DNS-01, pick the **DNS provider** (Cloudflare, Alibaba Cloud DNS or
-acme-dns) and paste its **DNS API token**. The token is kept for renewals and
-never shown again; leave the box empty when editing to keep it.
+For DNS-01, pick the **DNS provider** and paste its **DNS API token**. The form
+shows, under the box, the shape the token takes; its fields are joined with
+`:`.
+
+| Provider | Token |
+| --- | --- |
+| Cloudflare | `apiToken` |
+| ArvanCloud | `apiKey`, with or without the leading `Apikey` |
+| Selectel | `user:password:accountId:projectName` |
+| Alibaba Cloud DNS | `accessKeyId:accessKeySecret` |
+| DNSPod (Tencent Cloud) | `secretId:secretKey` |
+| Huawei Cloud DNS | `accessKeyId:secretAccessKey`, or `accessKeyId:secretAccessKey:region` |
+| acme-dns | `username:password:subdomain:serverURL`, for a zone at any other DNS host through a CNAME |
+
+The token is kept for renewals and never shown again; leave the box empty when
+editing to keep it. A node obtains a certificate with ArvanCloud, Selectel,
+DNSPod or Huawei Cloud only once it runs the release that added them; an older
+node answers `unsupported dns provider`.
 
 Who answers depends on the type:
 
 - **Obtained by the panel**: the panel's server answers. HTTP-01 and
   TLS-ALPN-01 work only for a domain pointing at the panel, and the panel
   cannot answer them for an IP address. When the panel itself listens on port
-  80 or 443 ([[use/ingress]]), it answers there.
+  80 or 443 ([[use/ingress]]), it answers there, without stopping.
 - **Obtained by a node**: pick the node under **Obtained by**. DNS-01 works
   from any node; HTTP-01 and TLS-ALPN-01 need the domain pointing at that node.
+  When an ingress inbound holds port 443 on the node, it answers TLS-ALPN-01
+  itself, and the inbounds behind it keep serving while the certificate is
+  issued or renewed.
+
+### Checked before the authority is asked
+
+The panel looks at the names before it asks the authority, so a request that
+cannot work fails in a second instead of after minutes:
+
+- **A wildcard over HTTP-01 or TLS-ALPN-01 is refused.** An authority issues a
+  wildcard only through DNS-01. A `*` anywhere but the whole first label is
+  refused too.
+- **For HTTP-01 and TLS-ALPN-01, every name is looked up.** A name with no
+  address, one pointing at a CDN such as Cloudflare or ArvanCloud, and one
+  pointing at a server other than the one answering are listed, and the panel
+  asks whether to issue anyway. A failed attempt counts toward the
+  authority's limit on failures (at Let's Encrypt, five an hour for one name),
+  so fix the name first, or switch to DNS-01. The check only warns: DNS may
+  still be changing, and behind NAT the panel cannot always see its own public
+  address.
+
+The same check runs when you press **Renew**.
 
 The issued certificate is stored in the panel only. Nodes receive it inside
 their configuration.
@@ -133,6 +170,14 @@ certificate. Edit a certificate to see its pins.
 - **Self-signed**: always pinned.
 - **Custom**: pinned when its client settings allow an untrusted certificate.
 - **ACME**: never pinned. Apps check it against the public authorities.
+  To send a different SNI and still have Xray apps verify it, set
+  **Verify peer cert by name** in the client settings (see
+  [[inbounds#client-settings]]).
+
+A Hysteria2 or Hysteria link to a self-signed certificate carries both the pin
+and `insecure=1`: the official Hysteria app checks the certificate's chain even
+when it has a pin, and refuses a self-signed one without `insecure=1`. The pin
+is still checked, so a different certificate is refused.
 
 When a self-signed certificate is reissued, its pin changes. Users pick up the
 new pin on their next subscription refresh.

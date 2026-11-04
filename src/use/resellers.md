@@ -67,6 +67,13 @@ A reseller's traffic is the sum of its customers' traffic since the start of
 the current cycle, counted the way the customers are charged: each node's
 traffic multiplier applies. When the cycle resets, the count starts again.
 
+Traffic is charged to whoever owned the customer when it was used, and it stays
+charged. Deleting a customer does not give its traffic back to the reseller,
+and handing a customer to another owner leaves its past traffic with the
+reseller that sold it; only what the customer uses from then on counts for the
+new owner. A node's multiplier is the one in force when the traffic was used,
+so changing it later does not rewrite a reseller's past.
+
 ### Limits on a role
 
 A role based on the reseller tier can carry three caps that apply to every

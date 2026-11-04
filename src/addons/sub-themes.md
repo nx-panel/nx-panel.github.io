@@ -309,6 +309,10 @@ browser, otherwise English.
   is connected, often on a network that blocks font and script CDNs. A theme
   that waits for one shows a blank page. Ship fonts and images in the theme's
   directory, or use system fonts.
+- **Never touch the panel's API.** The page is served from the panel's own
+  address, so a request to the panel carries the sign-in of whoever is
+  logged in to it in that browser. Read `/info` and nothing else: `check`
+  refuses any mention of the `/api` path, however it is written.
 - Test `qr` before you print it.
 - Check `.Expire.Pending` before you print a date.
 - Show `.Address`, never `.Server` and `.Port` joined by hand.
@@ -331,7 +335,8 @@ your theme as a new top-level directory holding:
 
 `go run ./check` tests what it can: the files (at most 2 MB, only page,
 style, script, image and font files, no links or hidden files), that nothing
-is loaded from another host, that no script runs text as code, and that the
+is loaded from another host, that nothing mentions the panel's `/api` path,
+that no script runs text as code, and that the
 page parses. The review reads every script, so a script that reads anything
 but `/info` will be asked about. Every change to a theme raises its
 `version`; that is how a panel learns there is an update.

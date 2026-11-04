@@ -32,7 +32,7 @@ a client address pool and the node's certificate.
 | **Listen port** | the port users connect to |
 | **Mode** | `tls` (the default) is the one for customers: the server proves itself with a certificate and each user signs in with their name and password. `static_key` is one point-to-point tunnel for a single client, see below |
 | **Network** | `udp` (the default) or `tcp`. One endpoint listens on one of them; for both, add a second endpoint |
-| **Address (CIDR list)** | the pool users' tunnel addresses come from, for example `10.9.0.1/24` |
+| **Address (CIDR list)** | the pool users' tunnel addresses come from, for example `10.9.0.1/16`. Each connected device holds one address while it is connected: a `/24` serves 253 at once, the `/16` the form starts with 65533 |
 | TLS certificate | the node's certificate by default, or one from [[use/certificates]]. The certificate fields show only while it is set to the endpoint's own certificate |
 | **Verify client certificate** (advanced) | off by default. Requiring client certificates drops the endpoint from users' subscriptions, because the panel does not issue them |
 
@@ -107,7 +107,12 @@ dialog under **Client apps** (**Save file**) and on their
 [[~subscription-page|subscription page]]. The file is complete:
 
 - the server's certificate is inside it, so a self-signed node certificate
-  works without any setup on the device;
+  works without any setup on the device. An ACME (Let's Encrypt) certificate
+  works too: the file carries the root it chains to and names the
+  certificate's domain, so the app accepts this server's certificate and no
+  other one from the same authority. Files saved from 0.1.0 with either kind
+  fail in OpenVPN Connect with "Peer certificate verification failure"; the
+  user downloads the file again;
 - the user's name and password are inside it too, so OpenVPN Connect 3 and
   OpenVPN 2.6 or later connect without asking.
 
