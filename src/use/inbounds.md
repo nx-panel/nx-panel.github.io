@@ -111,6 +111,14 @@ On the **TLS** tab, **Client settings (links & subscriptions)**:
   for the app's side of the TLS connection.
 - **Public key SHA-256 pin**: computed from a self-signed certificate and put
   into subscriptions automatically, so apps trust exactly that certificate.
+- **Verify peer cert by name**: one or more names, comma-separated, that Xray
+  apps check the server's certificate against instead of the SNI. With it, a
+  link can send a different SNI and still verify a certificate from a public
+  authority, such as an ACME one, with no pin to change at each renewal. It
+  goes into links as `vcn` and into Xray subscriptions as
+  `verifyPeerCertByName`; sing-box and Clash have no such option. The panel
+  does not check the names: if they are not on the certificate, Xray apps
+  refuse the connection.
 - Handshake fragmentation options, which only the apps that understand them
   receive.
 - With REALITY, the **uTLS fingerprint** and an optional public key override.

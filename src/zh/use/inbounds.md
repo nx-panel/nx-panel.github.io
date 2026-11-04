@@ -80,6 +80,7 @@ tags: [protocols, tls]
 
 - **Server name (SNI)**、**ALPN**、**uTLS fingerprint** 和 **Allow insecure**：用于应用一侧的 TLS 连接。
 - **Public key SHA-256 pin**：根据自签名证书计算，并自动写入订阅，让应用只信任这一张证书。
+- **Verify peer cert by name**：一个或多个名称（用逗号分隔），Xray 应用用它们代替 SNI 来验证服务器证书。有了它，链接可以发送不同的 SNI，仍能验证公共证书机构签发的证书（例如 ACME 证书），且没有每次续期都会改变的指纹。它在链接中写作 `vcn`，在 Xray 订阅中写作 `verifyPeerCertByName`；sing-box 和 Clash 没有这个选项。面板不检查这些名称：如果证书上没有它们，Xray 应用会拒绝连接。
 - 握手分片选项，只有支持这些选项的应用才会收到。
 - 使用 REALITY 时：**uTLS fingerprint** 和可选的公钥覆盖。
 

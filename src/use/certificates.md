@@ -170,6 +170,9 @@ certificate. Edit a certificate to see its pins.
 - **Self-signed**: always pinned.
 - **Custom**: pinned when its client settings allow an untrusted certificate.
 - **ACME**: never pinned. Apps check it against the public authorities.
+  To send a different SNI and still have Xray apps verify it, set
+  **Verify peer cert by name** in the client settings (see
+  [[inbounds#client-settings]]).
 
 A Hysteria2 or Hysteria link to a self-signed certificate carries both the pin
 and `insecure=1`: the official Hysteria app checks the certificate's chain even
