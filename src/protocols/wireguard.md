@@ -42,10 +42,12 @@ Each user's address is worked out from their account number inside the range,
 counted up from the server's own address. It is not a free-list: the range has
 to reach your **highest** account number, not just your number of users.
 
-The form starts with a `/24`, which runs out after about 250 accounts have
-ever been created on the panel. A user past the end of the range gets a
-`.conf` that says so instead of a working one. Widen the range to a `/16`
-before you go live, and it covers tens of thousands.
+The form starts with a `/16`, which covers account numbers up to 65533. An
+endpoint created before 0.1.1 started with a `/24`, which stops at 253. A user
+past the end of the range gets a `.conf` that says so instead of a working one,
+and the node's warnings on [[use/nodes]] say how many accounts were left out.
+Widen the range in place, keeping the server's own address, and every user
+keeps the address they have.
 
 ## What each user gets
 
