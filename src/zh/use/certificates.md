@@ -41,16 +41,37 @@ ACME 证书机构在签发前会确认你控制该域名。在 **ACME 验证方�
 
 | 验证方式 | 需要 |
 | --- | --- |
-| **DNS-01** | 你的 DNS 服务商的 API 令牌。适用于任何域名（包括通配符域名），在任何位置都能完成。 |
-| **HTTP-01** | 域名指向负责验证的一方，且那里的 80 端口空闲。 |
-| **TLS-ALPN-01** | 域名指向负责验证的一方，且那里的 443 端口空闲。 |
+| **DNS-01** | 你的 DNS 服务商的 API 凭据。适用于任何域名，在任何位置、在 CDN 后面都能完成，也是获取通配符证书（`*.example.com`）的唯一方式。 |
+| **HTTP-01** | 域名指向负责验证的一方，且那里的 80 端口空闲，或由面板自己的某个监听器占用。 |
+| **TLS-ALPN-01** | 域名指向负责验证的一方，且那里的 443 端口空闲、由面板自己的某个监听器占用，或在节点上由 ingress 类型的入站占用。 |
 
-使用 DNS-01 时，选择 **DNS 服务商**（Cloudflare、Alibaba Cloud DNS 或 acme-dns），并粘贴它的 **DNS API 令牌**。令牌会保存下来用于续期，之后不再显示；编辑时留空即可保留原令牌。
+使用 DNS-01 时，选择 **DNS 服务商**，并粘贴它的 **DNS API 令牌**。表单会在输入框下方显示令牌的格式；各部分用 `:` 连接。
+
+| 服务商 | 令牌 |
+| --- | --- |
+| Cloudflare | `apiToken` |
+| ArvanCloud | `apiKey`，开头带不带 `Apikey` 均可 |
+| Selectel | `user:password:accountId:projectName` |
+| Alibaba Cloud DNS | `accessKeyId:accessKeySecret` |
+| DNSPod (Tencent Cloud) | `secretId:secretKey` |
+| Huawei Cloud DNS | `accessKeyId:secretAccessKey` 或 `accessKeyId:secretAccessKey:region` |
+| acme-dns | `username:password:subdomain:serverURL`，通过 CNAME 用于托管在其他任何 DNS 服务商的区域 |
+
+令牌会保存下来用于续期，之后不再显示；编辑时留空即可保留原令牌。节点只有在运行加入这些服务商的版本后，才能通过 ArvanCloud、Selectel、DNSPod 或 Huawei Cloud 获取证书；旧版本节点会回答 `unsupported dns provider`。
 
 由谁完成验证取决于类型：
 
-- **由面板获取**：由面板所在的服务器完成验证。HTTP-01 和 TLS-ALPN-01 只适用于指向面板的域名，面板无法为 IP 地址完成这两种验证。当面板自己监听 80 或 443 端口时（[[use/ingress]]），它就在那里完成验证。
-- **由节点获取**：在 **由谁获取** 中选择节点。DNS-01 可以由任何节点完成；HTTP-01 和 TLS-ALPN-01 要求域名指向该节点。
+- **由面板获取**：由面板所在的服务器完成验证。HTTP-01 和 TLS-ALPN-01 只适用于指向面板的域名，面板无法为 IP 地址完成这两种验证。当面板自己监听 80 或 443 端口时（[[use/ingress]]），它就在那里完成验证，无需停止。
+- **由节点获取**：在 **由谁获取** 中选择节点。DNS-01 可以由任何节点完成；HTTP-01 和 TLS-ALPN-01 要求域名指向该节点。当节点的 443 端口由 ingress 类型的入站占用时，由它直接应答 TLS-ALPN-01，其后的入站在签发或续期证书期间照常服务。
+
+### 向证书机构申请前的检查 {#checked-before-the-authority-is-asked}
+
+面板在向证书机构申请之前先检查这些名称，让注定失败的申请在一秒内失败，而不是几分钟之后：
+
+- **通过 HTTP-01 或 TLS-ALPN-01 申请通配符会被拒绝。** 证书机构只通过 DNS-01 签发通配符证书。`*` 出现在第一个完整标签以外的任何位置也会被拒绝。
+- **对 HTTP-01 和 TLS-ALPN-01，每个名称都会被解析。** 没有地址的名称、指向 Cloudflare 或 ArvanCloud 等 CDN 的名称，以及指向应答方以外服务器的名称都会被列出，面板会询问是否仍要签发。失败的尝试会计入证书机构的失败次数限制（Let's Encrypt 为每个名称每小时五次），所以请先修正名称，或改用 DNS-01。此检查只发出警告：DNS 可能仍在变化，而在 NAT 后面面板未必能看到自己的公网地址。
+
+点击 **续期** 时也会进行同样的检查。
 
 签发的证书只保存在面板中。节点通过自己的配置收到证书。
 
