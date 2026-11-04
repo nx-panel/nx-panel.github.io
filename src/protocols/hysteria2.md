@@ -63,6 +63,40 @@ app that imported a link keeps its own default. The panel refuses a maximum
 without an interval, a maximum below the interval, and anything under five
 seconds, the same values a client would refuse on the user's device.
 
+## Obfuscation {#obfuscation}
+
+Obfuscation is off until you fill **Obfs password** (advanced). The password
+scrambles every packet, so to a network that inspects traffic the connection no
+longer looks like Hysteria2. **Obfs type** then picks how:
+
+- **salamander**, the default, scrambles every packet with the password. Every
+  app with Hysteria2 obfuscation speaks it.
+- **gecko** does the same and also splits each connection's opening handshake
+  into two to eight pieces of random size with random padding, which is harder
+  to recognise by packet size. Only newer apps speak it (table below).
+
+**Gecko min packet size** and **Gecko max packet size** (advanced, gecko only)
+set the size range the pieces are padded to, in bytes. Empty is 512 and 1200.
+The panel accepts at most 1452: a larger piece does not get through to
+sing-box apps, and 1452 is what an IPv6 path carries. The range shapes only
+what each side sends, so an app does not need the same one; sing-box, Clash
+and Xray apps are told it anyway.
+
+Every link carries the password and the type, so changing either cuts off
+every user until they refresh their subscription, and an app that does not
+speak gecko cannot connect at all. To offer gecko, add a second Hysteria2
+inbound with gecko beside the salamander one, rather than switching the one
+in use.
+
+| App | salamander | gecko |
+| --- | --- | --- |
+| Hysteria (official) | yes | 2.9.2 or later |
+| sing-box apps | yes | sing-box 1.14 or later; an older one drops the entry or fails the whole subscription |
+| Clash apps | yes | mihomo 1.19.26 or later |
+| Xray apps, Xray subscription | yes | Xray 26.9.30 or later |
+| v2rayN (share link) | yes | yes |
+| v2rayNG (share link) | yes | no: it imports a gecko link as salamander, which does not connect |
+
 ## Speed and per-user limits
 
 The node always runs Hysteria2 with BBR congestion control and ignores the
@@ -77,7 +111,7 @@ is: empty or `standard`, `conservative`, or `aggressive`.
 
 | Field (advanced) | |
 | --- | --- |
-| **Obfs password** | scrambles every packet with a password both ends share, so to a network that inspects traffic the connection no longer looks like Hysteria2. Every link carries it; changing it means every user has to refresh |
+| **Obfs password**, **Obfs type** | see [[protocols/hysteria2#obfuscation]] |
 | **Masquerade URL** | a site the node shows to anyone who connects without a valid password, a browser for example |
 | **Idle timeout**, **Keep-alive period**, the receive windows, **Max concurrent streams** | QUIC tuning; leave empty unless you have measured a reason |
 

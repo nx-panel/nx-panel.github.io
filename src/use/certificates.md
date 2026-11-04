@@ -171,6 +171,11 @@ certificate. Edit a certificate to see its pins.
 - **Custom**: pinned when its client settings allow an untrusted certificate.
 - **ACME**: never pinned. Apps check it against the public authorities.
 
+A Hysteria2 or Hysteria link to a self-signed certificate carries both the pin
+and `insecure=1`: the official Hysteria app checks the certificate's chain even
+when it has a pin, and refuses a self-signed one without `insecure=1`. The pin
+is still checked, so a different certificate is refused.
+
 When a self-signed certificate is reissued, its pin changes. Users pick up the
 new pin on their next subscription refresh.
 

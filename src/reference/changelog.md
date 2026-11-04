@@ -14,6 +14,51 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
+### v0.1.1 — 4 November 2026 {#panel-v0-1-1}
+
+Installs from the update button ([[use/panel-update]]). Take a backup first,
+and update the panel before the nodes: this panel works with nodes on v0.1.0,
+and node v0.1.1 is needed only for the new certificate features on a node.
+
+- **OpenVPN:** `.ovpn` files now verify in OpenVPN Connect, with a Let's Encrypt
+  certificate and with the panel's self-signed one. **Users download their file
+  again** ([[protocols/openvpn]]).
+- **Tunnel addresses:** each origin of a tunnel can choose the addresses it
+  dials, in failover order, including the node's management address, and
+  **Node addresses for tunnels** on the Tunnels page sets them per node. Editing
+  a node's addresses resyncs its tunnels at once
+  ([[use/tunnels#which-addresses-are-dialed]]).
+- **Tunnel status** is drawn as a diagram of the relay, the origins and the
+  addresses between them, coloured by what each side reports, and a tunnel's
+  usage graph shows only its own ends ([[use/tunnels]]).
+- **Certificates:** dns-01 gains ArvanCloud, Selectel, Tencent Cloud (DNSPod)
+  and Huawei Cloud. Names are checked before the authority is asked, and a
+  wildcard over http-01 or tls-alpn-01 is refused at once. A node's ingress
+  inbound answers tls-alpn-01 on its own port, so the inbound keeps serving
+  while a certificate is issued
+  ([[use/certificates#checked-before-the-authority-is-asked]]).
+- **Hysteria2 gecko obfuscation:** **Obfs type** offers *gecko* beside
+  *salamander*; it also splits the opening handshake into randomly sized,
+  padded pieces. Only newer apps speak it, so add a gecko inbound beside the
+  salamander one. Xray subscriptions now carry obfuscated Hysteria2 entries
+  ([[protocols/hysteria2#obfuscation]]).
+- **Theme catalogue:** **Settings → Subscriptions → Catalogue** installs,
+  updates and removes subscription page themes from the public catalogue. In
+  Docker, `./sub-themes` must be mounted writable
+  ([[use/subscriptions#theme-catalogue]]).
+- **Resellers:** spent traffic stays spent. Deleting an account or handing it to
+  another owner no longer gives a reseller its traffic back; the upgrade keeps
+  every reseller's current figure ([[use/resellers#traffic-allowance]]).
+- **WireGuard:** the node's warnings say when an endpoint's range has no room
+  for an account, and new WireGuard, OpenVPN and OpenConnect endpoints start at
+  a /16 ([[protocols/wireguard]]).
+- **The free tier** serves 50 users and 2 nodes ([[use/licence#the-free-tier]]).
+- A Hysteria2 or Hysteria link to a self-signed certificate carries
+  `insecure=1` beside the pin, so the official Hysteria app connects; the pin
+  is still checked ([[use/certificates#pins-in-links]]).
+- An error the panel did not explain now says whether no answer came or the
+  answer was not the panel's own.
+
 ### v0.1.0 — 30 October 2026 {#panel-v0-1-0}
 
 The move to the NX name. **The update button cannot install this release**: it
@@ -156,6 +201,15 @@ The first stable release. From this release on, the panel updates itself from
 its **Update** page ([[use/panel-update]]).
 
 ## Node
+
+### v0.1.1 — 4 November 2026 {#node-v0-1-1}
+
+**Update the panel to v0.1.1 first.** A node on v0.1.0 keeps working with it.
+
+- The ingress inbound answers the tls-alpn-01 challenge on the port it holds,
+  so the node issues and renews a certificate while the inbound keeps serving.
+- dns-01 gains ArvanCloud, Selectel, Tencent Cloud (DNSPod) and Huawei Cloud.
+- Fixes a crash in the tls-alpn-01 path.
 
 ### v0.1.0 — 30 October 2026 {#node-v0-1-0}
 
