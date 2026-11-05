@@ -23,7 +23,7 @@ panel, and writes into your NX panel through its API.
 | **3x-ui** | its database file, or the running panel | users, inbounds, WireGuard as endpoints, outbounds, routing, DNS, admins |
 | **x-ui** (the original and its forks) | its database file, or the running panel | the same as 3x-ui |
 | **Marzban** | the running panel | users, admins, inbounds, outbounds, routing, DNS |
-| **PasarGuard** | the running panel | the same as Marzban; each core configuration becomes its own template |
+| **PasarGuard** | the running panel | the same as Marzban, plus WireGuard as endpoints; each core configuration becomes its own template |
 | **Hiddify** | the running panel | users and admins |
 | **Marzneshin** | the running panel | users and admins |
 | **Remnawave** | the running panel | users |
@@ -95,14 +95,18 @@ link.
   across. An inbound whose transport NX does not have, such as XDRIVE or
   MASQUE, is listed red: its clients could not reach it. Check each inbound
   before you put it on a node.
-- **Each user keeps its inbounds.** Where the old panel (s-ui, 3x-ui, x-ui) put a
-  user on only some of its inbounds, the NX user is limited to those with
-  [[users#limiting-configs|Limit configs]], by their tags. A user that was on all
-  of them is not limited.
+- **Each user keeps its inbounds.** Where the old panel (s-ui, 3x-ui, x-ui,
+  Marzban, PasarGuard) put a user on only some of its inbounds, the NX user is
+  limited to those with [[users#limiting-configs|Limit configs]], by their tags.
+  A user that was on all of them is not limited. In PasarGuard this follows the
+  user's enabled groups.
 - **The `direct` outbound.** NX gives every node a `direct` outbound itself,
   so the old one is not created again and rules that named it use NX's.
 - **WireGuard peers** come across on their endpoint as written. They do not
-  become NX users.
+  become NX users. PasarGuard's WireGuard, where the panel gave every user a
+  peer, becomes an NX WireGuard endpoint that does the same: each user keeps
+  its key, but NX gives it a new tunnel address, so users need their new
+  WireGuard config.
 - **Switching the nodes off during the transfer** avoids thousands of updates:
   they are synced once at the end and switched back on even if the transfer
   fails. A node switched off in NX serves nobody, so the box is ticked by

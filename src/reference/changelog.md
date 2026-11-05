@@ -316,6 +316,7 @@ updated from the panel ([[start/add-node]]).
 | Notifier v0.3.0 | 9 October 2026 | |
 | Notifier v0.2.0 | 4 October 2026 | |
 | Notifier v0.1.0 | 4 October 2026 | First release |
+| nx-migrate v0.1.1 | 5 November 2026 | Works with panel 0.1.1. Users keep the inbounds they had (all panels except Hiddify, Marzneshin and Remnawave); PasarGuard's WireGuard comes across; Hysteria2 obfuscation, 3x-ui weekly renewals and Hiddify's reset cycle are carried; nodes are switched off during a transfer by default only on a panel with no users ([[start/migrate]]) |
 | nx-migrate v0.1.0 | 30 October 2026 | The move to the NX name; package and security updates ([[start/migrate]]) |
 | nx-migrate v0.0.2 | 9 October 2026 | Windows, Linux and macOS builds |
 | nx-migrate v0.0.1 | 23 September 2026 | First release |

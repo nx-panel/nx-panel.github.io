@@ -171,6 +171,7 @@ tags: [reference]
 | Notifier v0.3.0 | 2026 年 10 月 9 日 | |
 | Notifier v0.2.0 | 2026 年 10 月 4 日 | |
 | Notifier v0.1.0 | 2026 年 10 月 4 日 | 首个版本 |
+| nx-migrate v0.1.1 | 2026 年 11 月 5 日 | 适配面板 0.1.1。用户保留原有的入站（Hiddify、Marzneshin 和 Remnawave 以外的所有面板）；迁移 PasarGuard 的 WireGuard；迁移 Hysteria2 混淆、3x-ui 的每周续期和 Hiddify 的重置周期；只有在面板还没有用户时，迁移期间才默认关闭节点（[[start/migrate]]） |
 | nx-migrate v0.1.0 | 2026 年 10 月 30 日 | 改用 NX 名称；软件包更新和安全修复（[[start/migrate]]） |
 | nx-migrate v0.0.2 | 2026 年 10 月 9 日 | Windows、Linux 和 macOS 版本 |
 | nx-migrate v0.0.1 | 2026 年 9 月 23 日 | 首个版本 |
