@@ -91,13 +91,24 @@ link.
 - **Inbounds are converted into NX's format.** Settings with no equivalent
   in NX, such as fallbacks, mux and TCP header obfuscation, are dropped with
   a note on the row. A REALITY inbound without a private key gets a new key, so
-  its users need new links. Check each inbound before you put it on a node.
+  its users need new links. Hysteria2 obfuscation (salamander and gecko) comes
+  across. An inbound whose transport NX does not have, such as XDRIVE or
+  MASQUE, is listed red: its clients could not reach it. Check each inbound
+  before you put it on a node.
+- **Each user keeps its inbounds.** Where the old panel (s-ui, 3x-ui, x-ui) put a
+  user on only some of its inbounds, the NX user is limited to those with
+  [[users#limiting-configs|Limit configs]], by their tags. A user that was on all
+  of them is not limited.
 - **The `direct` outbound.** NX gives every node a `direct` outbound itself,
   so the old one is not created again and rules that named it use NX's.
 - **WireGuard peers** come across on their endpoint as written. They do not
   become NX users.
-- **Nodes are paused during the transfer** and synced once at the end, to avoid
-  thousands of updates. They are switched back on even if the transfer fails.
+- **Switching the nodes off during the transfer** avoids thousands of updates:
+  they are synced once at the end and switched back on even if the transfer
+  fails. A node switched off in NX serves nobody, so the box is ticked by
+  default only when your NX panel has no users yet. On a panel that already
+  has users it is unticked, and ticking it shows how many would be
+  disconnected until the transfer ends.
 - **Admin passwords cannot be moved.** Imported admins get a generated password,
   shown once on the last page and saved nowhere. Write it down.
 
