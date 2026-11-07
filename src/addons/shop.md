@@ -63,6 +63,8 @@ lives in `/opt/nx-addons/shop`: the answers in `.env`, the data in
 | `base_path` | drawn at random | The path Shop's admin and API are under. Customers' pages (`/app/`, `/pay/`) stay at the root and never show it. Empty puts the admin at the root. |
 | `public_url` | | Where customers reach Shop, `https://<host>:<port>`. With HTTPS on it names Shop's port (443 when it names none). |
 | `https` | `panel` in the panel's form, `off` by hand | How Shop serves HTTPS: `panel`, `acme`, `acme-http`, `self-signed` or `off`. See [[shop-portal#https]]. |
+| `trusted_proxies` | | Only behind a reverse proxy — the panel's ingress, nginx, a CDN: its addresses or ranges, such as `127.0.0.1`. Shop then reads the visitor from their `X-Forwarded-For` and HTTPS from their `X-Forwarded-Proto`, so limits count each visitor apart. Empty trusts no header. |
+| `listen` | | Empty: every interface. `127.0.0.1` only when a reverse proxy on the same server stands in front, so nothing reaches Shop around it; the panel, customers and gateways then reach it through that proxy. In Docker the port is published on this address. |
 
 Give Shop an address of its own, never one beside the panel's. Telegram opens
 the mini-app only over HTTPS.
