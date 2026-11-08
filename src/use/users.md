@@ -277,7 +277,9 @@ reconnects on its next packet unless the account is disabled.
 
 The row's menu also has **Usage graph** (traffic over time), **Usage by node**
 (which nodes the traffic went through) and **Route test** (which routing rule
-a connection would match; see [[use/routing]]).
+a connection would match; see [[use/routing]]). **Usage by node** takes the
+same windows as a node's per-user usage, a whole **Month** among them, and
+its **CSV** button downloads the split as a spreadsheet.
 
 ## Renewing an account
 

@@ -183,6 +183,11 @@ Each row has three buttons, **Sync**, **Usage graph** and **Edit**, and a
 - **Per-user usage on this node** lists who used how much traffic on it in
   the window.
 
+The window is one of the presets or a whole **Month**, in the Persian
+calendar when the panel is in Persian. **CSV** downloads every row of the
+window as a spreadsheet. Traffic older than 30 days is kept per day rather
+than per hour, so a window that far back counts whole days.
+
 A node too old to report host figures shows no history. That is not an
 outage, and the bar does not paint it red.
 
