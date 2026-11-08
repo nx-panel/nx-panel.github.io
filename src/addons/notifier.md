@@ -42,6 +42,8 @@ gives you a command to run. Every way to install is in [[directory]].
 | Admin path | Everything the notifier serves is under it. Drawn at random; empty puts it at the root. |
 | Public address | Where you open the notifier: scheme, host and port. |
 | HTTPS | `panel` (the default in the panel's form), `acme`, `acme-http`, `self-signed` or `off`, as for every addon ([[directory#https-for-the-addon]]). |
+| Trusted reverse proxies | Only behind a reverse proxy — the panel's ingress, nginx, a CDN: its addresses or ranges, such as `127.0.0.1`. The notifier then reads the visitor from their `X-Forwarded-For`, so a stranger's wrong passwords do not lock you out. Empty trusts no header. |
+| Listen address | Empty: every interface. `127.0.0.1` only when a reverse proxy on the same server stands in front, so nothing reaches the notifier around it; the panel must then reach it through that proxy. In Docker the port is published on this address. |
 
 By hand, on a Linux server as root:
 

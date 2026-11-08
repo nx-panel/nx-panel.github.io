@@ -46,6 +46,8 @@ sh install.sh --method script --opt port=8095 \
 | `base_path` | 随机生成 | Shop 管理后台和 API 所在的路径。客户页面（`/app/`、`/pay/`）保留在根路径，永远不会显示它。留空则把管理后台放在根路径。 |
 | `public_url` | | 客户访问 Shop 的地址，`https://<host>:<port>`。开启 HTTPS 时必须写明 Shop 的端口（未写明时为 443）。 |
 | `https` | 面板表单中为 `panel`，手动安装为 `off` | Shop 如何提供 HTTPS：`panel`、`acme`、`acme-http`、`self-signed` 或 `off`。见 [[shop-portal#https]]。 |
+| `trusted_proxies` | | 仅在反向代理（面板 ingress、nginx、CDN）之后填写：其地址或网段，例如 `127.0.0.1`。Shop 随后从它们的 `X-Forwarded-For` 读取访客、从 `X-Forwarded-Proto` 读取 HTTPS，限制按访客分别计数。留空则不信任任何头。 |
+| `listen` | | 留空：所有网卡。仅当本机有反向代理在前时填写 `127.0.0.1`，这样无人能绕过它访问 Shop；面板、客户和支付网关也须经该代理访问。Docker 中端口发布在此地址上。 |
 
 给 Shop 一个它自己的地址，不要与面板共用地址。Telegram 只通过 HTTPS 打开小程序。
 

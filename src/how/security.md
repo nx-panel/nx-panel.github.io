@@ -39,6 +39,13 @@ See [[how/node-lifecycle]].
 - A sign-in creates a random session token, delivered as a cookie the page's
   scripts cannot read. The panel stores only a hash of it, so the sessions
   table is no way in.
+- The cookie goes only to the panel's own address and path, never to another
+  subdomain or to a site beside the panel on the same host. Over HTTPS it is
+  sent over HTTPS only, and another site's links and forms never carry it.
+  Changing the panel's base path, or its first update over HTTPS to this
+  release, asks everyone to sign in again.
+- A change sent from a page on another address — even a subdomain of the
+  panel's own domain — is refused, whatever cookie the browser holds.
 - A session ends after 24 hours without use, or 30 days with
   **Keep me signed in for 30 days**. Sessions survive a panel restart.
 - Every admin can list their own sessions, with address, app and last
