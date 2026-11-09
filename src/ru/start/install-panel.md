@@ -22,13 +22,13 @@ tags: [install, panel]
 Запускайте от root. С SQLite, которой не нужна никакая другая служба:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 В конце установщик печатает ссылку для настройки:
 
 ```terminal title="root@server: ~"
-$ bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+$ bash <(curl -fsSL https://nx-panel.org/install.sh)
 ==> installing NX Panel (linux-amd64)
 ==> downloading the panel
 ==> downloading node binaries
@@ -54,6 +54,22 @@ no admin seeded; the panel will open its setup wizard on first start
 создаёт главного администратора, поэтому никому её не показывайте. После
 завершения настройки она перестаёт работать.
 
+### Напрямую с GitHub {#straight-from-github}
+
+Если nx-panel.org недоступен с сервера или вы не хотите идти через него,
+запустите тот же установщик прямо из публичного репозитория панели. С `--github`
+он и саму панель скачивает с GitHub:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
+```
+
+Без этого параметра установщик сначала пробует nx-panel.org, а при неудаче сам
+переходит на GitHub. Остальные параметры работают с ним так же. Ежедневная
+проверка новой версии в панели по-прежнему сначала спрашивает nx-panel.org, а
+затем GitHub; чтобы отключить её, выключите **Ежедневно проверять выпуски** в
+**Настройки → Обновление панели**.
+
 ### Параметры {#options}
 
 | Параметр | Действие |
@@ -62,6 +78,7 @@ no admin seeded; the panel will open its setup wizard on first start
 | `--version v1.2.3` | установить конкретный выпуск панели вместо самого нового |
 | `--node-version v1.2.3` | подготовить для установщиков узлов конкретный выпуск узла вместо самого нового |
 | `--uninstall` | удалить панель; см. [[uninstall]] |
+| `--github` | скачать панель напрямую с GitHub, а не через nx-panel.org; см. [Напрямую с GitHub](#straight-from-github) |
 
 ### SQLite или PostgreSQL {#sqlite-or-postgresql}
 
@@ -132,6 +149,16 @@ docker compose logs panel | grep setup
 настройка не завершена, панель отвечает только на ссылку для настройки. Если
 позже снова выполнить ту же команду, панель обновится на месте; см.
 [[start/update]].
+
+### Что записывает nx-panel.org {#what-nx-panel-org-records}
+
+Установка, обновление и проверка новой версии идут через nx-panel.org.
+Каждый запрос записывает версию и платформу панели, контрольную сумму её
+исполняемого файла, есть ли у неё лицензия, а также адрес, с которого он
+пришёл, вместе со страной. Эти данные используются для статистики лицензий и
+выпусков. Адреса удаляются через 12 месяцев; счётчики сохраняются. Выключение
+проверки обновлений (**Ежедневно проверять выпуски** в
+**Настройки → Обновление панели**) останавливает ежедневный запрос панели.
 
 ### Потеряли ссылку? {#lost-the-link}
 

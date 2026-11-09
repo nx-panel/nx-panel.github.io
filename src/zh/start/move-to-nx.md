@@ -12,7 +12,7 @@ tags: [install, panel, node]
 **旧面板的更新按钮无法安装它。** 它会故意失败并显示发布说明，说明会指向本页。请以 root 身份在面板服务器上运行一次新的安装脚本：
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 ## 脚本做了什么

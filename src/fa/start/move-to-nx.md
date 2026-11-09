@@ -17,7 +17,7 @@ tags: [install, panel, node]
 بار، با کاربر root، روی سرور پنل اجرا کنید:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 ## اسکریپت چه می‌کند

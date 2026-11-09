@@ -17,7 +17,7 @@ tags: [install, panel, node]
 Один раз запустите новый скрипт установки от root на сервере панели:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 ## Что делает скрипт

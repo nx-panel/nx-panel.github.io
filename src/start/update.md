@@ -57,16 +57,32 @@ domain or path.
   `nx-panel restore FILE -keep-web-settings=false` and restart the panel.
 :::
 
-**Check for releases daily** turns the daily check off. It is one request a day
-to the public panel repository, which tells it your server's address. The button
-still works with the check off.
+**Check for releases daily** turns the daily check off. The button still
+works with the check off.
+
+### What nx-panel.org records
+
+Install, update and the new-version check go through nx-panel.org. Each
+request records the panel's version and platform, a checksum of its binary,
+whether it holds a licence, and the address it came from with its country.
+They are used for licence and release statistics. Addresses are deleted after
+12 months; the counts are kept. Switching off the update check
+(**Check for releases daily** on **Settings → Panel update**) stops the
+panel's daily request.
 
 ## The panel, from the command line
 
 Run the installer again. It finds the existing install and updates it in place:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
+```
+
+To update straight from GitHub instead, without nx-panel.org (see
+[[install-panel#straight-from-github]]):
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
 ```
 
 It stops the service, copies a SQLite database to `nx.db.bak`, keeps the

@@ -22,13 +22,13 @@ tags: [install, panel]
 آن را با کاربر root اجرا کنید. با SQLite، که به هیچ سرویس دیگری نیاز ندارد:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 نصب‌کننده در پایان لینک راه‌اندازی را چاپ می‌کند:
 
 ```terminal title="root@server: ~"
-$ bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+$ bash <(curl -fsSL https://nx-panel.org/install.sh)
 ==> installing NX Panel (linux-amd64)
 ==> downloading the panel
 ==> downloading node binaries
@@ -53,6 +53,21 @@ no admin seeded; the panel will open its setup wizard on first start
 لینک را باز کنید و با [[setup-wizard]] ادامه دهید. توکن داخل لینک مدیر اصلی را
 می‌سازد، پس آن را خصوصی نگه دارید. وقتی راه‌اندازی تمام شود، دیگر کار نمی‌کند.
 
+### مستقیم از GitHub {#straight-from-github}
+
+اگر nx-panel.org از روی سرور در دسترس نیست، یا ترجیح می‌دهید از آن عبور نکنید،
+همین نصب‌کننده را مستقیم از مخزن عمومی پنل اجرا کنید. `--github` باعث می‌شود
+خود پنل هم از GitHub دانلود شود:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
+```
+
+بدون این گزینه، نصب‌کننده اول nx-panel.org را امتحان می‌کند و اگر نشد خودش به
+GitHub می‌رود. بقیهٔ گزینه‌ها با آن همان‌طور کار می‌کنند. بررسی روزانهٔ نسخهٔ
+جدید در پنل همچنان اول از nx-panel.org و بعد از GitHub می‌پرسد؛ برای قطع آن،
+**بررسی روزانهٔ انتشار نسخهٔ جدید** را در **تنظیمات ← به‌روزرسانی پنل** خاموش کنید.
+
 ### گزینه‌ها {#options}
 
 | گزینه | اثر |
@@ -61,6 +76,7 @@ no admin seeded; the panel will open its setup wizard on first start
 | `--version v1.2.3` | به جای جدیدترین نسخه، نسخهٔ مشخصی از پنل را نصب می‌کند |
 | `--node-version v1.2.3` | به جای جدیدترین نسخه، نسخهٔ مشخصی از نود را برای نصب‌کننده‌های نود آماده می‌کند |
 | `--uninstall` | پنل را حذف می‌کند؛ [[uninstall]] را ببینید |
+| `--github` | پنل را به جای nx-panel.org مستقیم از GitHub دانلود می‌کند؛ [مستقیم از GitHub](#straight-from-github) را ببینید |
 
 ### SQLite یا PostgreSQL {#sqlite-or-postgresql}
 
@@ -131,6 +147,16 @@ IPv6 دارد، IPv6 را در سرویس Docker فعال کنید (`"ipv6": tru
 همهٔ مسیرهایی که استفاده می‌کند در [[files-and-ports]] آمده است. تا وقتی
 راه‌اندازی تمام نشده، پنل فقط به لینک راه‌اندازی جواب می‌دهد. اجرای دوبارهٔ همین
 دستور در آینده پنل را درجا به‌روز می‌کند؛ [[start/update]] را ببینید.
+
+### nx-panel.org چه چیزی را ثبت می‌کند {#what-nx-panel-org-records}
+
+نصب، به‌روزرسانی و بررسی نسخهٔ جدید از طریق nx-panel.org انجام می‌شوند. هر
+درخواست نسخه و پلتفرم پنل، چک‌سام فایل اجرایی آن، اینکه لایسنس دارد یا نه، و
+آدرسی که از آن آمده را همراه با کشورش ثبت می‌کند. این اطلاعات برای آمار
+لایسنس و انتشار نسخه‌ها به کار می‌روند. آدرس‌ها پس از ۱۲ ماه حذف می‌شوند؛
+شمارش‌ها نگه داشته می‌شوند. خاموش کردن بررسی به‌روزرسانی
+(**بررسی روزانهٔ انتشار نسخهٔ جدید** در **تنظیمات ← به‌روزرسانی پنل**)
+درخواست روزانهٔ پنل را متوقف می‌کند.
 
 ### لینک را گم کرده‌اید؟ {#lost-the-link}
 

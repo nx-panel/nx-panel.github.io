@@ -64,7 +64,7 @@ const WORDS = {
 } as const
 const w = computed(() => WORDS[lang.value.slice(0, 2) as keyof typeof WORDS] ?? WORDS.en)
 
-const INSTALL = 'bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)'
+const INSTALL = 'bash <(curl -fsSL https://nx-panel.org/install.sh)'
 const NODE = 'curl -fsSL https://PANEL/install-node.sh | bash -s -- --panel PANEL --token TOKEN'
 const pin = computed(() => {
   const v = version.value.trim()

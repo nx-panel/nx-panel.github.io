@@ -17,7 +17,7 @@ and shows the release notes, which point here. Run the new install script once,
 as root, on the panel's server:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 ## What the script does

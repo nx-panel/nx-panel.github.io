@@ -37,14 +37,24 @@ tags: [install, panel, node]
 - 如果从此页面更新失败、旧版本被自动换回，也会发生同样的情况。请再次运行更新（必要时在服务器上运行），或用 `nx-panel restore FILE -keep-web-settings=false` 还原更新前的备份，然后重启面板。
 :::
 
-**每天检查新版本** 可以关闭每日检查。它每天向公开的面板仓库发一次请求，这会让对方知道你服务器的地址。关闭检查后按钮仍然可用。
+**每天检查新版本** 可以关闭每日检查。关闭检查后按钮仍然可用。
+
+### nx-panel.org 记录什么 {#what-nx-panel-org-records}
+
+安装、更新和新版本检查都通过 nx-panel.org 进行。每个请求都会记录面板的版本和平台、其程序文件的校验和、是否持有许可证，以及请求来源的地址及其所在国家。这些信息用于许可证和版本发布统计。地址在 12 个月后删除；计数会保留。关闭更新检查（**设置 → 面板更新** 中的 **每天检查新版本**）会停止面板每天的请求。
 
 ## 面板：从命令行更新 {#the-panel-from-the-command-line}
 
 再次运行安装程序。它会找到现有安装并就地更新：
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
+```
+
+如需直接从 GitHub 更新、不经过 nx-panel.org（见 [[install-panel#straight-from-github]]）：
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
 ```
 
 它会停止服务，把 SQLite 数据库复制为 `nx.db.bak`，保留旧程序，更新数据库，然后重新启动。你的设置和管理员账户不受影响。使用 PostgreSQL 时，请先自行导出数据库。

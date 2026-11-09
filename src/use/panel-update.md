@@ -26,8 +26,8 @@ The page shows:
 - **Last checked**, and **Check now** to look again.
 
 The panel checks once a day and shows a banner when a release is out. The daily
-check is one request to the public panel repository on GitHub, which tells it
-your server's address. Switch it off with **Check for releases daily**, or from
+check is one request to nx-panel.org; what it records is in
+[[start/install-panel#what-nx-panel-org-records]]. Switch it off with **Check for releases daily**, or from
 the command line (see [[reference/cli]]). **Check now** and the update button
 still work with it off.
 

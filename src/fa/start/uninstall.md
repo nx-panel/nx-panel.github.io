@@ -14,7 +14,7 @@ tags: [install]
 ## پنل {#the-panel}
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --uninstall
+bash <(curl -fsSL https://nx-panel.org/install.sh) --uninstall
 ```
 
 | حذف می‌شود | می‌ماند |
