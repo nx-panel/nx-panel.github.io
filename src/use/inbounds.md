@@ -57,7 +57,7 @@ apply to the chosen type are hidden.
 
 | Tab | What you set |
 | --- | --- |
-| **Basic** | **Tag**, **Type**, **Remark**, **Listen** address and **Port**, and the link address override |
+| **Basic** | **Tag**, **Type**, **Remark**, **Order in subscriptions**, **Listen** address and **Port**, and the link address override |
 | **Protocol** | The protocol's own options |
 | **Transport** | For VLESS, VMess and Trojan: plain TCP, WebSocket, gRPC, HTTP, HTTPUpgrade, QUIC, XHTTP or mKCP, with its path and options |
 | **TLS** | None, TLS or REALITY, the certificate, and the client settings |
@@ -104,6 +104,13 @@ On the **Basic** tab:
   of the node's own address and the inbound's port. Use them behind a port
   forward. For a node with several public addresses, use the node's link
   addresses instead (see [[nodes]]).
+
+- **Order in subscriptions**: where this inbound's entries appear in every
+  user's subscription. Lower numbers come first, and negative numbers are
+  allowed. Inbounds with the same number keep the usual order: node by node,
+  then the domain fronts. It applies to every node and front that carries the
+  inbound, and takes effect on the next subscription update. Once any inbound
+  has a number, the list shows an **Order in subscriptions** column.
 
 On the **TLS** tab, **Client settings (links & subscriptions)**:
 
