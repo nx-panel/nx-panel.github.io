@@ -67,7 +67,9 @@ WireGuard、OpenVPN 和 OpenConnect 是[[~endpoint|端点]]，在 [[use/endpoint
 | SSH | 否 | 是 | 是 | 否 |
 | Mieru | 否 | 是 | 否 | 否 |
 | Snell | 否 | 否 | 是 | 否 |
-| ShadowTLS、MTProxy、TrustTunnel、Sudoku | 否 | 否 | 否 | 否 |
+| ShadowTLS（后接 Shadowsocks） | 否 | 是 | 是 | 否 |
+| MTProxy | 订阅页面上的 `tg://proxy` 链接，供 Telegram 使用 | 否 | 否 | 否 |
+| TrustTunnel、Sudoku | 否 | 否 | 否 | 否 |
 | WireGuard | `.conf` 文件 | 是 | 是 | 是 |
 | OpenVPN | `.ovpn` 文件 | 否 | 是 | 否 |
 | OpenConnect | 服务器和登录信息 | 否 | 是 | 否 |

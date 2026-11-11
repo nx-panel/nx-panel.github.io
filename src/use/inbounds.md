@@ -69,6 +69,20 @@ The **Tag** names the inbound everywhere: routing rules, ingress routes and
 traffic history all refer to it. It is fixed after creation. Use **Remark**
 for the display name.
 
+## Listen options {#listen-options}
+
+Under the protocol's own fields on the **Basic** tab, **Listen options** holds
+the settings of the listening socket: TCP fast open, multipath TCP, UDP
+fragmentation and session timeout, TCP keep-alive, the bind interface and the
+routing mark. All of them are optional.
+
+**Detour (inbound)** hands every connection the inbound accepts to another
+inbound on the same node. A [[protocols/more#shadowtls|ShadowTLS]] inbound
+needs it, and there it is required. The target must be an inbound that can
+take a handed-over connection (not, for example, Hysteria2, TUIC, Mieru or an ingress),
+may not have a detour of its own, and must be selected in every template that
+selects the inbound pointing at it.
+
 ## TLS {#tls}
 
 The **TLS** tab is a three-way choice: **None**, **TLS** or **REALITY**. Some
@@ -149,8 +163,11 @@ The **Listen** column says how users reach each inbound:
 | Shown | Meaning |
 | --- | --- |
 | An address and port | The inbound has its own port and is reached on it. |
-| **via** *tag* | The inbound has no port of its own; an [[protocols/ingress\|ingress]] routes to it. |
-| **Unreachable** | No port and no ingress route. The node binds it to loopback, and it is left out of subscriptions until you give it a port or add it to an ingress. |
+| **via** *tag* | The inbound has no port of its own; an [[protocols/ingress\|ingress]] routes to it, or another inbound detours to it. |
+| **Unreachable** | No port, no ingress route and no inbound detouring to it. The node binds it to loopback, and it is left out of subscriptions until you give it a port or add it to an ingress. |
+
+A port bound to a loopback address such as `127.0.0.1` counts as no port:
+no user can reach it.
 
 The link address, when one is set, shows under the listen address.
 
@@ -168,7 +185,7 @@ to every ticked row.
 
 Deleting removes the inbound from every template and node that served it. The
 panel refuses the delete while something else in a template that selects it
-still names the inbound by tag, such as an ingress route or a routing rule,
+still names the inbound by tag, such as an ingress route, another inbound's detour or a routing rule,
 and lists those references.
 Remove or repoint them first, then delete.
 

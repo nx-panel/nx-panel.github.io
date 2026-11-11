@@ -141,6 +141,7 @@ something like "30 days, from your first connection", as the starter does.
 | `.Address` | Server and port, ready to show: `203.0.113.10:443`, `[2001:db8::1]:443` |
 | `.Server`, `.Port` | The same, apart |
 | `.Link` | The share link |
+| `.Open` | A link an app opens when tapped, set only where that beats copying: an MTProxy entry's `tg://proxy` link, which Telegram adds as a proxy. Empty otherwise. Use it as an `href` as it is; it is already marked safe for one |
 
 Show `.Address`. Writing `{{ .Server }}:{{ .Port }}` yourself turns an IPv6
 server into `2001:db8::1:443`, which reads as neither.
