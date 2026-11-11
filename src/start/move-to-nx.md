@@ -59,6 +59,30 @@ which one to use.
 The script renames only a database it set up on this server. Any other keeps its
 name, and the panel goes on using the DSN in `/opt/nx-panel/config.json`.
 
+## Prometheus and Grafana {#prometheus-and-grafana}
+
+The metrics are renamed too: every series now starts with `nx_`, and the series
+recorded before the move keep their old prefix. A dashboard from before the
+move shows nothing from that day on. Replace the `monitoring/` directory with
+the one from the [panel's repository](https://github.com/nx-panel/panel) to get
+the **NX fleet** dashboard.
+
+Its datasource has a new uid, `nx-prometheus`. Grafana cannot change the uid of
+a datasource it already provisioned, so on the old Grafana data it refuses to
+start and logs `Datasource provisioning error: data source not found`. Add this
+block above `datasources:` in
+`monitoring/grafana/provisioning/datasources/prometheus.yml`, then start the
+overlay again:
+
+```yaml
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+```
+
+Grafana removes the old datasource and creates the new one. The block can stay:
+on later starts it re-creates the same datasource.
+
 ## The old addresses
 
 The old website, documentation and GitHub organisation redirect to the new

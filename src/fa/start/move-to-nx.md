@@ -61,6 +61,30 @@ bash <(curl -fsSL https://nx-panel.org/install.sh)
 باشد. بقیه نامشان را نگه می‌دارند و پنل همچنان از DSN داخل
 `/opt/nx-panel/config.json` استفاده می‌کند.
 
+## Prometheus و Grafana {#prometheus-and-grafana}
+
+نام معیارها هم عوض شده است: همهٔ سری‌ها حالا با `nx_` شروع می‌شوند و سری‌هایی که
+پیش از انتقال ثبت شده‌اند پیشوند قدیمی‌شان را نگه می‌دارند. داشبوردی که از پیش
+از انتقال مانده، از آن روز به بعد چیزی نشان نمی‌دهد. پوشهٔ `monitoring/` را با
+نسخهٔ [مخزن پنل](https://github.com/nx-panel/panel) جایگزین کنید تا داشبورد
+**NX fleet** را داشته باشید.
+
+datasource آن uid تازه‌ای دارد: `nx-prometheus`. Grafana نمی‌تواند uid
+datasourceی را که قبلاً provision کرده عوض کند، پس روی دادهٔ قدیمی Grafana بالا
+نمی‌آید و در لاگ می‌نویسد `Datasource provisioning error: data source not found`.
+این بلوک را بالای `datasources:` در
+`monitoring/grafana/provisioning/datasources/prometheus.yml` بگذارید و overlay را
+دوباره اجرا کنید:
+
+```yaml
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+```
+
+Grafana datasource قدیمی را حذف می‌کند و جدید را می‌سازد. بلوک می‌تواند بماند:
+در اجراهای بعدی همان datasource را دوباره می‌سازد.
+
 ## نشانی‌های قدیمی
 
 وب‌سایت، مستندات و سازمان گیت‌هاب قدیمی به نشانی‌های جدید هدایت می‌شوند. سرویس
