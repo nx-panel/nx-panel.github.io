@@ -68,6 +68,8 @@ tags: [protocols]
 
 `openconnect` 端点可以用**一次性密码**（TOTP 或 RSA SecurID）回应第二因素认证，用**登录表单答案**回应额外的登录字段，因为节点上没有人可以输入它们。证书以文本粘贴；表单不引用节点上的任何文件。
 
+节点也不会为端点运行任何程序。在 JSON 中指定 Cisco Secure Desktop、GlobalProtect HIP 或 Pulse TNCC 包装程序（带 `wrapper_path` 的 `csd`、`hip` 或 `tncc`）的端点在保存时会被拒绝；此前已保存的端点在发往节点时会去掉该路径。坚持要求此类检查的服务器无法从节点连接。
+
 ## Tailscale {#tailscale}
 
 `tailscale` 端点使用 **Auth key** 把节点加入 Tailscale 网络；使用 Headscale 服务器时，还需填写 **Control server URL (Headscale)**。它可以 **Advertise routes (CIDR list)**、**Advertise tags** 或 **Advertise as exit node**，也可以把另一台设备用作 **Exit node**。它不为面板用户提供服务；用它从节点访问私有网络，或经由私有网络把流量发送出去。

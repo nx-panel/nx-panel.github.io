@@ -53,10 +53,18 @@ tags: [routing]
 WARP 出站让流量经 Cloudflare 的网络出去，目标看到的是 Cloudflare 的地址而不是节点的地址。适用于拒绝你服务器地址的网站。
 
 1. 打开**核心配置 → 出站**，点击**从预设添加**。
-2. 选择 **Cloudflare WARP**。普通表单会打开，类型 `masque`、标签 `warp` 已填好。配置文件字段留空。
+2. 选择 **Cloudflare WARP**。普通表单会打开，类型 `masque`、标签 `warp` 已填好。配置文件字段留空；唯一的例外是 WARP+ 密钥（[WARP+](#warp-plus)）。
 3. 点击**保存**，在某个模板的**出站**中选中它，并自己编写把流量发往 `warp` 的路由规则。预设不会添加任何规则。
 
 无需创建账号。每个节点首次启动时会自行向 Cloudflare 注册自己的 WARP 设备并保存下来，所以任何两个节点都不会共用一个账号。首次注册时节点需要能访问 Cloudflare 的 API；如果不能，把 **Profile detour** 设为一个能访问它的出站。
+
+### WARP+ {#warp-plus}
+
+WARP+ 密钥让节点改用 Cloudflare 的付费 WARP。把它粘贴到出站表单的 **WARP+ licence key** 中并保存。每个节点会把密钥绑定到它已有的 WARP 设备上，不会注册新设备。
+
+- 每个节点都是一台独立的设备，而一个密钥只覆盖少数几台设备（撰写本文时为五台）。超出后 Cloudflare 会拒绝该密钥，节点继续使用免费 WARP，原因写在节点日志中。
+- 清空该字段不会让节点回到免费 WARP；**Recreate profile** 才会，并在每个节点上注册一台新设备。
+- 早于此字段的节点会拒绝带有它的出站。设置密钥之前请先更新节点（[[start/update]]）。
 
 ## 路由如何引用出站 {#how-routing-names-an-outbound}
 

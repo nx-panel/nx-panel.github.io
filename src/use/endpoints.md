@@ -111,6 +111,12 @@ password** (TOTP or RSA SecurID), and extra login fields with **Login form
 answers**, since nobody is at the node to type them. Certificates are pasted as
 text; the form names no file on the node.
 
+Nor does a node run a program for an endpoint. One that names a Cisco Secure
+Desktop, GlobalProtect HIP or Pulse TNCC wrapper in its JSON (`csd`, `hip` or
+`tncc` with a `wrapper_path`) is refused when it is saved, and an endpoint
+stored with one before has the path left out on its way to the node. A server
+that insists on such a check cannot be reached from a node.
+
 ## Tailscale
 
 A `tailscale` endpoint joins the node to a Tailscale network with an

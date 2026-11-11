@@ -68,7 +68,8 @@ sites that refuse your server's address.
 
 1. Open **Core configs → Outbounds** and click **From a preset**.
 2. Pick **Cloudflare WARP**. The ordinary form opens with the type `masque`
-   and the tag `warp` filled in. Leave the profile fields empty.
+   and the tag `warp` filled in. Leave the profile fields empty; a WARP+ key
+   is the one exception ([WARP+](#warp-plus)).
 3. Click **Save**, select it in a template's **Outbounds**, and write the
    routing rules that send traffic to `warp` yourself. The preset adds no
    rules.
@@ -77,6 +78,20 @@ There is no account to create. On its first start each node registers its own
 WARP device with Cloudflare and keeps it, so no two nodes share one. That first
 registration needs the node to reach Cloudflare's API. Where it cannot, set
 **Profile detour** to an outbound that can reach it.
+
+### WARP+ {#warp-plus}
+
+A WARP+ key moves the nodes onto Cloudflare's paid WARP. Paste it in **WARP+
+licence key** in the outbound's form and save. Each node puts the key on the
+WARP device it already has; no new device is registered.
+
+- Every node is a device of its own, and a key covers only a few devices
+  (five at the time of writing). Past that, Cloudflare refuses the key and the
+  node stays on free WARP; the node's log says why.
+- Clearing the field does not take the nodes back to free WARP. **Recreate
+  profile** does, with a new device on each node.
+- A node from before this field refuses an outbound carrying it. Update the
+  nodes before you set a key ([[start/update]]).
 
 ## How routing names an outbound
 
