@@ -146,6 +146,11 @@ OpenConnect clients take a server address and a sign-in rather than a file.
 The user's **Client apps** tab and subscription page show both. Sing-box apps
 also get the endpoint in their subscription.
 
+AnyConnect clients carry their traffic over DTLS when UDP gets through, and
+over TLS when it does not; DTLS needs node v0.1.2 or later. A client that
+leaves without saying so is noticed after 30 seconds, an idle one is dropped
+after 70, and a failed DTLS handshake is logged as a warning naming the user.
+
 ## Users
 
 - **One device at a time per user on OpenVPN.** A second device that signs

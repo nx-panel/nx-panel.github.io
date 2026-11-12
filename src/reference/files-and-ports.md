@@ -62,7 +62,7 @@ Each panel stack keeps what must outlive the container next to its compose file:
 | `/var/opt/nx-node/certs/ssl_cert.pem` | the node's own certificate |
 | `/var/opt/nx-node/certs/ssl_key.pem` | its private key |
 | `/var/opt/nx-node/certs/panel_ca.pem` | the panel's certificate, the only one the node accepts |
-| `/var/opt/nx-node/cache/` | rule sets and other files the panel pushed, which it sends again if they are deleted, and a Tailscale endpoint's login, which is lost if they are |
+| `/var/opt/nx-node/cache/` | rule sets and other files the panel pushed, which it sends again if they are deleted, and a Tailscale endpoint's login, which is lost if they are; also a Tor outbound's data directory and a log file named in the core settings |
 | `/etc/systemd/system/nx-node.service` | the service |
 
 Everything a node serves is sent by the panel and held in memory. A restarted

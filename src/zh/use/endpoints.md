@@ -70,9 +70,19 @@ tags: [protocols]
 
 节点也不会为端点运行任何程序。在 JSON 中指定 Cisco Secure Desktop、GlobalProtect HIP 或 Pulse TNCC 包装程序（带 `wrapper_path` 的 `csd`、`hip` 或 `tncc`）的端点在保存时会被拒绝；此前已保存的端点在发往节点时会去掉该路径。坚持要求此类检查的服务器无法从节点连接。
 
+## 导入端点 {#import}
+
+**添加** 旁边的 **⋯** 按钮（**操作**）会打开导入菜单：
+
+- **从配置文件导入**：WireGuard 的 `.conf` 或 OpenVPN 的 `.ovpn` 会变成一个向外连接的端点。密钥和证书必须写在文件内。需要登录的配置文件，在同一个对话框中填写用户名和密码。
+- **从 NordVPN 导入**：Nord Account 中的访问令牌（NordVPN，然后 Manual setup），或 NordLynx 私钥本身。选择 **国家**，再从 NordVPN 的实时列表中选择服务器，列表显示城市和负载；一次转换最多 200 台。
+- **从 PIA 导入**：PIA 用户名和密码，再从 PIA 的实时地区列表中选择服务器。每转换一台服务器，都会在 PIA 注册一个新密钥。
+
+NordVPN 和 PIA 的服务器会变成 WireGuard 端点。点击 **转换** 后，在保存任何内容之前会先显示每个端点及其可修改的标签；然后 **添加 n 个** 通过普通的保存流程逐个创建，因此保存时的所有检查照样适用。未能转换的内容列在 **未转换** 下。文件、令牌和密码只用于这一次请求，不会保存；每个端点自带自己的密钥。新建的端点还不在任何模板中：请将它们加入模板，并编写使用它们的路由规则。
+
 ## Tailscale {#tailscale}
 
-`tailscale` 端点使用 **Auth key** 把节点加入 Tailscale 网络；使用 Headscale 服务器时，还需填写 **Control server URL (Headscale)**。它可以 **Advertise routes (CIDR list)**、**Advertise tags** 或 **Advertise as exit node**，也可以把另一台设备用作 **Exit node**。它不为面板用户提供服务；用它从节点访问私有网络，或经由私有网络把流量发送出去。
+`tailscale` 端点使用 **Auth key** 把节点加入 Tailscale 网络；使用 Headscale 服务器时，还需填写 **Control server URL (Headscale)**。它可以 **Advertise routes (CIDR list)**、**Advertise tags** 或 **Advertise as exit node**，也可以把另一台设备用作 **Exit node**。它不为面板用户提供服务；用它从节点访问私有网络，或经由私有网络把流量发送出去。保存端点时，Tailscale 的 SSH 服务器会被拒绝：配置中的任何内容都不会在节点上启动程序。
 
 节点把该端点的登录状态保存在自己的缓存目录中。重新安装节点会保留缓存。如果缓存被清除，端点会用它的 auth key 作为新设备重新登录，所以请使用可重复使用的密钥（无论是否 ephemeral）；已经用过的一次性密钥需要换成新的。更换标签、auth key 或控制服务器同样会作为新设备重新登录。
 

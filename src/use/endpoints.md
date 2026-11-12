@@ -117,6 +117,30 @@ Desktop, GlobalProtect HIP or Pulse TNCC wrapper in its JSON (`csd`, `hip` or
 stored with one before has the path left out on its way to the node. A server
 that insists on such a check cannot be reached from a node.
 
+## Importing endpoints {#import}
+
+The **⋯** button (**Operations**) beside **Add** opens the import menu:
+
+- **From a configuration file**: a WireGuard `.conf` or an OpenVPN `.ovpn`
+  becomes an endpoint that connects out. Keys and certificates must be inside
+  the file. A profile that asks for a sign-in takes its username and password
+  in the dialog.
+- **From NordVPN**: an access token from your Nord Account (NordVPN, then
+  Manual setup), or the NordLynx private key itself. Pick a **Country**, then
+  servers from NordVPN's live list, with their city and load; one conversion
+  takes up to 200.
+- **From PIA**: your PIA username and password, then servers from PIA's live
+  list of regions. PIA registers a new key for each server you convert.
+
+NordVPN and PIA servers become WireGuard endpoints. Click **Convert**, and
+every endpoint is shown before anything is saved, with a tag you can change;
+**Add** *n* then creates each one through the ordinary save, so every check a
+save applies still applies. What did not convert is listed under
+**Not converted**. The file, the token and the password are used for that one
+request and are not stored; each endpoint carries its own key. The new
+endpoints are on no template yet: add them to a template and write the routing
+rules that use them.
+
 ## Tailscale
 
 A `tailscale` endpoint joins the node to a Tailscale network with an
@@ -124,7 +148,9 @@ A `tailscale` endpoint joins the node to a Tailscale network with an
 (Headscale)**. It can **Advertise routes (CIDR list)**, **Advertise tags** or
 **Advertise as exit node**, and can use another device as its
 **Exit node**. It does not serve panel users; use it to reach a private
-network from the node, or to send traffic out through one.
+network from the node, or to send traffic out through one. Tailscale's SSH
+server is refused when the endpoint is saved: nothing in a config starts a
+program on a node.
 
 The node keeps the endpoint's login in its cache directory, which a reinstall
 keeps. If the cache is cleared, the endpoint logs in again with its auth key

@@ -55,7 +55,7 @@ tags: [reference, install]
 | `/var/opt/nx-node/certs/ssl_cert.pem` | 节点自己的证书 |
 | `/var/opt/nx-node/certs/ssl_key.pem` | 它的私钥 |
 | `/var/opt/nx-node/certs/panel_ca.pem` | 面板的证书，节点只接受这一张 |
-| `/var/opt/nx-node/cache/` | 面板推送的规则集和其他文件（删除后面板会重新发送），以及 Tailscale 端点的登录状态（删除后即丢失） |
+| `/var/opt/nx-node/cache/` | 面板推送的规则集和其他文件（删除后面板会重新发送），以及 Tailscale 端点的登录状态（删除后即丢失）；还有 Tor 出站的数据目录和在核心设置中指定的日志文件 |
 | `/etc/systemd/system/nx-node.service` | 服务 |
 
 节点提供的一切都由面板发送并保存在内存中。重启后的节点在面板重新发送配置之前不提供任何服务，这只需几秒钟。证书是节点上值得备份的文件；有 Tailscale 端点的节点还应备份 `cache/tailscale`。
