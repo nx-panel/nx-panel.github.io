@@ -120,10 +120,12 @@ sub-themes/
 {{ range .Apps }}
   {{ $code := qr .Content }}
   {{ if $code }}{{ $code }}{{ else }}<p>{{ index $.T "qrTooBig" }}</p>{{ end }}
-  <a download="{{ .FileName }}" href="{{ dataURI "text/plain" .Content }}">{{ index $.T "download" }}</a>
+  <a download="{{ .FileName }}" href="{{ dataURI "application/octet-stream" .Content }}">{{ index $.T "download" }}</a>
   <button data-copy="{{ .Content }}">{{ index $.T "copy" }}</button>
 {{ end }}
 ```
+
+下载请使用 `application/octet-stream`，而不是 `text/plain`：Safari 和 Android 上的 Chrome 会给扩展名不认识的文本文件加上 `.txt`，而 `.conf.txt` 或 `.ovpn.txt` 没有应用能打开。
 
 ### 订阅：`.Sub` {#the-subscription-sub}
 
@@ -176,7 +178,7 @@ sub-themes/
 | `when` | `{{ when .User.OnlineAt .T }}` → `Today 09:30` |
 | `num` | `{{ num .Expire.Days }}` → `40` |
 | `qr` | `{{ qr .Sub.URL }}` → 内联 SVG 形式的二维码；文本太长无法编码时不输出任何内容 |
-| `dataURI` | `href="{{ dataURI "text/plain" .Content }}"`，用于下载 |
+| `dataURI` | `href="{{ dataURI "application/octet-stream" .Content }}"`，用于下载 |
 | `b64` | `{{ b64 .Sub.URL }}` → base64 |
 | `default` | `{{ default "Subscription" .Panel.Title }}` |
 | `hasPrefix` | `{{ if hasPrefix "vless" .Protocol }}…{{ end }}` |

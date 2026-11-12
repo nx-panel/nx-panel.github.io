@@ -156,10 +156,12 @@ a download and a copy button:
 {{ range .Apps }}
   {{ $code := qr .Content }}
   {{ if $code }}{{ $code }}{{ else }}<p>{{ index $.T "qrTooBig" }}</p>{{ end }}
-  <a download="{{ .FileName }}" href="{{ dataURI "text/plain" .Content }}">{{ index $.T "download" }}</a>
+  <a download="{{ .FileName }}" href="{{ dataURI "application/octet-stream" .Content }}">{{ index $.T "download" }}</a>
   <button data-copy="{{ .Content }}">{{ index $.T "copy" }}</button>
 {{ end }}
 ```
+
+Give the download `application/octet-stream`, not `text/plain`: Safari and Chrome on Android add `.txt` to a text file whose extension they do not know, and no app opens a `.conf.txt` or an `.ovpn.txt`.
 
 ### The subscription: `.Sub`
 
@@ -221,7 +223,7 @@ ranges with radio buttons and no script.
 | `when` | `{{ when .User.OnlineAt .T }}` → `Today 09:30` |
 | `num` | `{{ num .Expire.Days }}` → `40` |
 | `qr` | `{{ qr .Sub.URL }}` → a QR code as inline SVG, or nothing for text too long for one |
-| `dataURI` | `href="{{ dataURI "text/plain" .Content }}"` for a download |
+| `dataURI` | `href="{{ dataURI "application/octet-stream" .Content }}"` for a download |
 | `b64` | `{{ b64 .Sub.URL }}` → base64 |
 | `default` | `{{ default "Subscription" .Panel.Title }}` |
 | `hasPrefix` | `{{ if hasPrefix "vless" .Protocol }}…{{ end }}` |
