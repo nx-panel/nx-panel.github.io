@@ -13,7 +13,7 @@ tags: [reference]
 
 ### v0.1.2 — DATE {#panel-v0-1-2}
 
-可以用更新按钮安装（[[use/panel-update]]）。请先做备份，并先更新面板再更新节点：这个面板可以与 v0.1.1 的节点一起工作，节点 v0.1.2 恢复了 OpenConnect 的 DTLS，并带来 WARP+ 许可证密钥。更早的节点会拒绝带有密钥的 WARP 出站，因此请在设置密钥之前先更新节点。**更新后所有人都需要再登录一次**，因为登录 cookie 变了（[[how/security#sessions]]）。
+可以用更新按钮安装（[[use/panel-update]]）。请先做备份，并先更新面板再更新节点：这个面板可以与 v0.1.1 的节点一起工作，节点 v0.1.2 恢复了 OpenConnect 的 DTLS，并带来 WARP+ 许可证密钥。更早的节点会拒绝带有密钥的 WARP 出站，因此请在设置密钥之前先更新节点。**通过 HTTPS 访问时，更新后所有人都需要再登录一次**，因为登录 cookie 变了（[[how/security#sessions]]）。
 
 - **已签名的版本：** 从这个版本起，更新按钮只安装经 NX 签名的版本，并在备份之前检查签名。已发布但尚未签名的版本会显示为可用，但会被拒绝（*not signed yet*），面板保持原样（[[use/panel-update#only-signed-releases]]）。
 - **每日版本检查会先询问 nx-panel.org**，发送面板的版本、架构、其程序文件的校验和以及是否持有许可证；地址在 12 个月后删除。没有响应时改为询问 GitHub，且不发送这些信息（[[start/update#what-nx-panel-org-records]]）。

@@ -47,7 +47,8 @@ whole upgrade:
 5. **Restarting** on the new version.
 
 You stay signed in, unless the release notes say otherwise: after the update
-to v0.1.2 everyone signs in once more, because the login cookie changed. The
+to v0.1.2 a panel reached over HTTPS asks everyone to sign in once more,
+because its login cookie changed. The
 panel is unreachable for a few seconds and the page says when it is back.
 Nodes keep serving through the restart, so users lose nothing.
 

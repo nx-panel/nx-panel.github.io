@@ -20,8 +20,8 @@ Installs from the update button ([[use/panel-update]]). Take a backup first,
 and update the panel before the nodes: this panel works with nodes on v0.1.1,
 and node v0.1.2 brings OpenConnect DTLS back and the WARP+ licence key. A node
 from before refuses a WARP outbound that carries a key, so update the nodes
-before you set one. **Everyone logs in once more** after the update, because
-the login cookie changed ([[how/security#sessions]]).
+before you set one. **Over HTTPS, everyone logs in once more** after the
+update, because the login cookie changed ([[how/security#sessions]]).
 
 - **Signed releases:** from this release on, the update button installs only
   releases NX has signed, and checks the signature before it takes a backup.
@@ -29,7 +29,7 @@ the login cookie changed ([[how/security#sessions]]).
   (*not signed yet*), and the panel is left untouched
   ([[use/panel-update#only-signed-releases]]).
 - **The daily release check asks nx-panel.org first**. Without an answer it asks
-  GitHub ([[start/update#what-nx-panel-org-records]]).
+  GitHub.
 - **Import outbounds and endpoints:** paste share links to get outbounds; drop
   a WireGuard `.conf` or an `.ovpn` to get an endpoint; or sign in to NordVPN or
   PIA and pick servers from their live list to get WireGuard endpoints. Every

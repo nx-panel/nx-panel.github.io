@@ -31,8 +31,8 @@ On an install made with the script, **Update now** does the whole upgrade:
 4. **Installing** it, keeping the old binary as
    `/opt/nx-panel/nx-panel.previous`.
 5. **Restarting.** You stay logged in, unless the release notes say otherwise:
-   after the update to v0.1.2 everyone logs in once more, because the login
-   cookie changed. The panel is unreachable for a few seconds, and the page
+   after the update to v0.1.2 a panel reached over HTTPS asks everyone to log
+   in once more, because its login cookie changed. The panel is unreachable for a few seconds, and the page
    says when it is back.
 
 Only releases NX has signed are installed. A release is published a little
