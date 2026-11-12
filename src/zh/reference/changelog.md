@@ -11,6 +11,25 @@ tags: [reference]
 
 ## 面板 {#panel}
 
+### v0.1.2 — 2026 年 11 月 12 日 {#panel-v0-1-2}
+
+可以用更新按钮安装（[[use/panel-update]]）。请先做备份，并先更新面板再更新节点：这个面板可以与 v0.1.1 的节点一起工作，节点 v0.1.2 恢复了 OpenConnect 的 DTLS，并带来 WARP+ 许可证密钥。更早的节点会拒绝带有密钥的 WARP 出站，因此请在设置密钥之前先更新节点。**通过 HTTPS 访问时，更新后所有人都需要再登录一次**，因为登录 cookie 变了（[[how/security#sessions]]）。
+
+- **已签名的版本：** 从这个版本起，更新按钮只安装经 NX 签名的版本，并在备份之前检查签名。已发布但尚未签名的版本会显示为可用，但会被拒绝（*not signed yet*），面板保持原样（[[use/panel-update#only-signed-releases]]）。
+- **每日版本检查会先询问 nx-panel.org**，发送面板的版本、架构、其程序文件的校验和以及是否持有许可证；地址在 12 个月后删除。没有响应时改为询问 GitHub，且不发送这些信息（[[start/update#what-nx-panel-org-records]]）。
+- **导入出站和端点：** 粘贴分享链接得到出站；上传 WireGuard 的 `.conf` 或 `.ovpn` 得到端点；或者登录 NordVPN 或 PIA，从其实时列表中选择服务器，得到 WireGuard 端点。保存之前会先显示每一行，凭据不会保存（[[use/outbounds#import]]、[[use/endpoints#import]]）。
+- **ShadowTLS** 通过入站 **Listen options** 中设置的 detour 提供服务（[[protocols/more#shadowtls]]）；**Shadowsocks 2022** 的密钥与其加密方法匹配，长度不对的密钥会被拒绝（[[protocols/shadowsocks]]）；**MTProxy** 每个入站都有自己的 FakeTLS 网站，用户会得到 Telegram 链接（[[protocols/more#mtproxy]]）。
+- **批量为用户添加或移除模板**，可以从选择菜单操作，也可以作用于当前筛选（[[use/user-operations#add-or-remove-a-template]]）。
+- **入站在订阅中的位置** 由其 Basic 标签页上的顺序号决定（[[use/inbounds#client-settings]]）。
+- **按月查看用量并导出 CSV**，适用于节点上各用户的用量和用户在各节点上的用量；超过 30 天的用户流量按天保存（[[use/nodes#stats-health-history-and-uptime]]）。
+- **配置文件保留扩展名**：Safari 和 Android 上的 Chrome 曾把 `.conf` 或 `.ovpn` 保存为 `.conf.txt` 或 `.ovpn.txt`（[[addons/sub-themes]]）。
+- **WARP：** WARP 出站上的 **WARP+ 许可证密钥**（需要节点 v0.1.2）；若模板的 WARP 出站在两个或更多节点上指定同一个配置文件，会显示警告；WARP 密钥字段不再有生成按钮（[[use/outbounds#warp]]）。
+- **OpenVPN：** sing-box 订阅会像 `.ovpn` 一样固定服务器证书的名称；没有名称的证书按指纹固定，因此证书续期后用户需要重新下载文件（[[protocols/openvpn]]）。
+- **默认更安全：** 面板拒绝来自其他 origin 页面的写入请求；通过 HTTPS 时，登录 cookie 为 `Secure`，绑定到所在路由的路径，并且是 `SameSite=Strict`；修改路由的前缀会让该路由上的所有人都需要重新登录（[[how/security#sessions]]）。配置中的任何内容都不能在节点上启动程序：OpenConnect 的包装程序路径、Tor 的可执行文件路径、额外参数和插件，以及 Tailscale 的 SSH 服务器，在保存时都会被拒绝（[[use/endpoints#connecting-out]]）。把同一个标签选择两次的模板会被拒绝，去掉其路由仍在引用的条目的更新也会被拒绝（[[use/templates#checked-on-save]]）。
+- 以周日为起点的每周重置会保持在周日。此前以周日为起点创建的账户和套餐被保存成了周一；请检查它们（[[use/users#reset-cycles]]）。
+- 历史较长的面板会重新压缩节点健康历史；经由从不响应的服务器检查出站时，会显示 *timed out*。
+- 使用 Go 1.27.4 构建，修复了其 HTTP 库中的一个安全问题。
+
 ### v0.1.1 — 2026 年 11 月 5 日 {#panel-v0-1-1}
 
 可以用更新按钮安装（[[use/panel-update]]）。请先做备份，并先更新面板再更新节点：这个面板可以与 v0.1.0 的节点一起工作，只有节点上的新证书功能需要节点 v0.1.1。
@@ -94,6 +113,17 @@ tags: [reference]
 
 ## 节点 {#node}
 
+### v0.1.2 — 2026 年 11 月 12 日 {#node-v0-1-2}
+
+**请先把面板更新到 v0.1.2**，然后在 **节点** 页面逐个更新节点。v0.1.1 的节点仍可与它一起工作，但没有 OpenConnect 的 DTLS 和 WARP+ 许可证密钥。
+
+- **OpenConnect 的 DTLS 重新可以连接。** DTLS 会话可以恢复，不打招呼就离开的客户端会在 30 秒后被发现，空闲的客户端会在 70 秒后被断开，握手失败会作为一条带用户名的警告记入日志（[[protocols/openvpn#openconnect]]）。
+- **WARP+ 许可证密钥** 会绑定到节点自己的 WARP 设备上，不注册新设备；被拒绝的密钥会连同 Cloudflare 给出的原因记入日志，节点继续使用免费 WARP。通过 ID 和令牌指定现有配置文件的 WARP 出站现在可以注册（[[use/outbounds#warp-plus]]）。
+- **配置中的任何内容都不能启动程序：** 带有 OpenConnect 包装程序路径、Tor 可执行文件路径、额外参数和插件，或 Tailscale SSH 服务器的配置会被节点拒绝，并指出是哪个选项。
+- Tor 出站的数据目录和在核心设置中指定的日志文件保存在节点的 `cache/` 目录中（[[reference/files-and-ports#node-files]]）。
+- 出站检查在节点上有完整的时间，因此从不响应的服务器会显示 *timed out*。
+- 使用 Go 1.27.4 构建，修复了其 HTTP 库中的一个安全问题。
+
 ### v0.1.1 — 2026 年 11 月 5 日 {#node-v0-1-1}
 
 **请先把面板更新到 v0.1.1。** v0.1.0 的节点仍可与它一起工作。
@@ -160,11 +190,15 @@ tags: [reference]
 
 | 版本 | 日期 | 说明 |
 |---|---|---|
+| NX Shop v0.1.3 | 2026 年 11 月 12 日 | 软件包更新和安全修复 |
+| NX Shop v0.1.2 | 2026 年 11 月 7 日 | 拒绝来自其他 origin 的写入请求；安装时询问受信任的代理和监听地址（[[addons/shop#install]]） |
 | NX Shop v0.1.1 | 2026 年 10 月 30 日 | 从面板的 **扩展** 页面安装，或使用 `ghcr.io/nx-panel/shop:0.1.1`（[[addons/shop]]） |
 | NX Shop v0.1.0 | 2026 年 10 月 30 日 | 改用 NX 名称：在 **扩展** 页面（显示 *需要迁移* 的地方）于其主机上更新 |
 | NX Shop v0.0.3 | 2026 年 10 月 24 日 | 软件包更新和安全修复 |
 | NX Shop v0.0.2 | 2026 年 10 月 9 日 | |
 | NX Shop v0.0.1 | 2026 年 10 月 4 日 | 首个版本 |
+| Notifier v0.4.3 | 2026 年 11 月 12 日 | 软件包更新和安全修复 |
+| Notifier v0.4.2 | 2026 年 11 月 7 日 | 拒绝来自其他 origin 的写入请求；安装时询问受信任的代理和监听地址（[[addons/notifier#install]]） |
 | Notifier v0.4.1 | 2026 年 10 月 30 日 | `ghcr.io/nx-panel/notif:0.4.1`（[[addons/notifier]]） |
 | Notifier v0.4.0 | 2026 年 10 月 30 日 | 改用 NX 名称：在 **扩展** 页面（显示 *需要迁移* 的地方）于其主机上更新 |
 | Notifier v0.3.1 | 2026 年 10 月 24 日 | 软件包更新和安全修复 |

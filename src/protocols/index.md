@@ -81,7 +81,9 @@ can see a different list in two apps.
 | SSH | no | yes | yes | no |
 | Mieru | no | yes | no | no |
 | Snell | no | no | yes | no |
-| ShadowTLS, MTProxy, TrustTunnel, Sudoku | no | no | no | no |
+| ShadowTLS, with Shadowsocks behind it | no | yes | yes | no |
+| MTProxy | a `tg://proxy` link on the subscription page, for Telegram | no | no | no |
+| TrustTunnel, Sudoku | no | no | no | no |
 | WireGuard | `.conf` file | yes | yes | yes |
 | OpenVPN | `.ovpn` file | no | yes | no |
 | OpenConnect | server and sign-in details | no | yes | no |

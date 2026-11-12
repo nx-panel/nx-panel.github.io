@@ -137,6 +137,7 @@ sub-themes/
 | `.Address` | سرور و پورت، آمادهٔ نمایش: `203.0.113.10:443`، `[2001:db8::1]:443` |
 | `.Server`، `.Port` | همین، جدا از هم |
 | `.Link` | لینک اشتراک‌گذاری |
+| `.Open` | لینکی که با زدن روی آن یک اپ بازش می‌کند، فقط جایی که این بهتر از کپی است: لینک `tg://proxy` یک ورودی MTProxy، که تلگرام آن را به‌عنوان پراکسی اضافه می‌کند. در بقیه‌ی ورودی‌ها خالی است. همان‌طور که هست در `href` بگذارید؛ از پیش برای آن امن علامت خورده |
 
 `.Address` را نشان دهید. اگر خودتان `{{ .Server }}:{{ .Port }}` بنویسید، سرور
 IPv6 به `2001:db8::1:443` تبدیل می‌شود که نه آدرس درستی خوانده می‌شود و نه پورت
@@ -152,10 +153,12 @@ IPv6 به `2001:db8::1:443` تبدیل می‌شود که نه آدرس درست
 {{ range .Apps }}
   {{ $code := qr .Content }}
   {{ if $code }}{{ $code }}{{ else }}<p>{{ index $.T "qrTooBig" }}</p>{{ end }}
-  <a download="{{ .FileName }}" href="{{ dataURI "text/plain" .Content }}">{{ index $.T "download" }}</a>
+  <a download="{{ .FileName }}" href="{{ dataURI "application/octet-stream" .Content }}">{{ index $.T "download" }}</a>
   <button data-copy="{{ .Content }}">{{ index $.T "copy" }}</button>
 {{ end }}
 ```
+
+نوع دانلود را `application/octet-stream` بگذارید، نه `text/plain`: Safari و Chrome اندروید به فایل متنی‌ای که پسوندش را نمی‌شناسند `.txt` اضافه می‌کنند، و هیچ برنامه‌ای `.conf.txt` یا `.ovpn.txt` را باز نمی‌کند.
 
 ### اشتراک: `.Sub` {#the-subscription-sub}
 
@@ -215,7 +218,7 @@ IPv6 به `2001:db8::1:443` تبدیل می‌شود که نه آدرس درست
 | `when` | `{{ when .User.OnlineAt .T }}` ← `Today 09:30` |
 | `num` | `{{ num .Expire.Days }}` ← `40` |
 | `qr` | `{{ qr .Sub.URL }}` ← یک QR کد به شکل SVG درون‌خطی، یا هیچ، برای متنی که برای یک QR کد زیادی بلند است |
-| `dataURI` | `href="{{ dataURI "text/plain" .Content }}"` برای دانلود |
+| `dataURI` | `href="{{ dataURI "application/octet-stream" .Content }}"` برای دانلود |
 | `b64` | `{{ b64 .Sub.URL }}` ← base64 |
 | `default` | `{{ default "Subscription" .Panel.Title }}` |
 | `hasPrefix` | `{{ if hasPrefix "vless" .Protocol }}…{{ end }}` |

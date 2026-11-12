@@ -52,12 +52,24 @@ The editor has five tabs:
 - **Routing**: the rule sets, the rules and the final outbound. See
   [[routing]].
 - **DNS**: DNS servers and DNS rules. See [[routing#dns]].
-- **Log & NTP**: the node's log level and an optional time server.
+- **Log & NTP**: the node's log level and an optional time server. A log
+  file named in the core settings is kept in the node's cache directory.
 - **Advanced (JSON)**: extra top-level blocks merged into the node's
   configuration, for a setting the form does not show.
 
 A template with no inbound and no endpoint serves no user. The list marks it,
 and the summary strip counts it under **Empty**.
+
+### Checked on save {#checked-on-save}
+
+A template is checked before it reaches a node. The save is refused when the
+template would select one tag twice, or when it drops a row that its routing
+or a selector still names; the message says which.
+
+Some things are saved but warned of. The template's row shows **Check**, with
+the reason on hover, and the editor shows it at the top. One such case is a
+WARP outbound naming one profile on two or more enabled nodes, which would
+share one WARP device ([[outbounds#warp]]).
 
 ## Giving a template to nodes
 

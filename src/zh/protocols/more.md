@@ -10,7 +10,7 @@ tags: [protocols]
 除了有独立页面的协议，入站表单还提供许多其他协议。它们大多只适用于特定场景：某一类应用、某一种网络，或你自己的工具。本页为每种协议提供简短说明。它们的创建方式都相同，在 **入站 → 添加** 中完成（[[use/inbounds]]），除非条目另有说明，它们都带有按用户的流量统计和限制。
 
 ::: tip 销售前先确认应用支持
-其中有几种只有一类应用能用，还有四种无法通过订阅送达任何应用。[[protocols/index]] 中的表格列出了每种格式能携带什么。
+其中有几种只有一类应用能用，还有三种无法通过订阅送达任何应用。[[protocols/index]] 中的表格列出了每种格式能携带什么。
 :::
 
 ## AnyTLS {#anytls}
@@ -25,13 +25,15 @@ tags: [protocols]
 
 ## ShadowTLS {#shadowtls}
 
-像 REALITY 一样借用真实网站的 TLS 握手，通常与 Shadowsocks 搭配使用。
+像 REALITY 一样借用真实网站的 TLS 握手。它自身不带代理协议：放行的连接会交给同一节点上的第二个入站，几乎总是 Shadowsocks。
 
-- **Version** 3（默认）用账户名和 **密码** 登录用户；版本 1 和 2 使用一个共享的 **Password (v1/v2)**。
-- **Handshake server** 和 **Handshake port** 指定真实网站。建议与 [[protocols/vless-reality|REALITY 的目标网站]]相同：节点能够访问，且对你的用户没有被封锁。
-- **Strict mode** 和 **Wildcard SNI**（高级）收紧或放宽可接受的握手。
-- **应用**：没有任何订阅格式携带它。客户端必须手动设置，因此不适合用于销售。
-- 没有用户的版本 3 入站不会提供服务。
+- 先创建 **Shadowsocks** 入站，**Listen** 设为 `127.0.0.1`，不设端口。它只能经由 ShadowTLS 访问，因此在订阅中不会单独成为一个条目。
+- 在 ShadowTLS 入站上，用 **监听选项 → Detour (inbound)** 指定这个 Shadowsocks 入站。此项必填。在相同的模板中同时选择这两个入站：只选其中一个的模板会被面板拒绝。
+- **Version** 3（默认）用账户名和 **密码** 登录用户；版本 2 使用一个共享的 **Password**；版本 1 不验证任何人。
+- **Handshake server** 和 **Handshake port** 指定真实网站。建议与 [[protocols/vless-reality|REALITY 的目标网站]]相同：节点能够访问，且对你的用户没有被封锁。到该网站的连接接受常规的连接选项（高级），例如经由某个出站的 **Handshake detour**。
+- **Strict mode** 和 **Wildcard SNI**（高级，版本 3）收紧或放宽可接受的握手。
+- **应用**：sing-box 应用会得到经由 ShadowTLS 拨号的 Shadowsocks 条目，Clash 应用会得到带 `shadow-tls` 插件的 Shadowsocks；UDP 在 TCP 流内传输。没有分享链接，也没有 Xray 条目。后面接的不是 Shadowsocks 时，只有 sing-box 应用会得到条目。
+- 没有用户的版本 3 入站不会提供服务；detour 目标不在节点上的入站也不会。
 
 ## Mieru {#mieru}
 
@@ -57,8 +59,10 @@ tags: [protocols]
 Telegram 自己的代理协议，供 Telegram 应用使用。它只承载 Telegram 流量。
 
 - 每个账户都有自己的密钥（secret），因此用户分别计量、分别限制。
-- 高级字段用于调整连接处理，以及代理向非 Telegram 客户端展示的网站。
-- **应用**：Telegram。没有任何订阅格式携带 MTProxy 条目，所以用户不会和其他配置一起收到它。
+- **FakeTLS site**：连接所模仿的真实 HTTPS 网站。Telegram 应用会发送它的名称，每个用户的 secret 中也包含它。请选择节点能够访问、且对你的用户没有被封锁的网站；留空即 `www.cloudflare.com`。修改它会改变所有用户的 secret。
+- **Probe fallback address** 和 **port**（高级）：非 Telegram 的连接（例如探测器或浏览器）会被转发到这里，使该端口的表现与 FakeTLS 网站一致。留空即 FakeTLS 网站本身；只有当该网站在节点上无法解析时才需要填写地址。这不是面板的[[use/fronting|域前置]]，MTProxy 无法使用后者。
+- 其余高级字段用于调整连接处理。
+- **应用**：Telegram。每个用户会在订阅页面上得到一条 `tg://proxy` 链接，并带有 **在 Telegram 中打开** 按钮；用户的 **QR / Links** 对话框和导出中也有它。代理应用无法使用它，因此它不会出现在订阅本身中。
 - 没有用户的入站不会提供服务。
 
 ## SSH {#ssh}

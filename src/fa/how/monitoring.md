@@ -146,6 +146,9 @@ ssh -L 3000:localhost:3000 you@your-server
   compose خودتان آن نام را به‌عنوان network alias به سرویس پنل بدهید
   (`networks: { default: { aliases: [panel.example.com] } }`) و
   `panel.example.com:2095` را scrape کنید.
+- **پیش از انتقال به انیکس راه‌اندازی شده:**
+  [[start/move-to-nx#prometheus-and-grafana|گام Grafana]] را آنجا ببینید، وگرنه
+  Grafana روی داده‌های قدیمی‌اش بالا نمی‌آید.
 
 ### بدون Docker {#without-docker}
 

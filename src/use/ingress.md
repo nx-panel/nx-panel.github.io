@@ -120,6 +120,9 @@ everything else on the same host.
 **Who may sign in** limits sign-in on this route to main admins, operators or
 resellers. Empty lets every account in, and the panel's owner always gets in.
 
+The login cookie belongs to the route's path prefix, so changing the prefix of
+a panel route signs everyone out there ([[how/security#sessions]]).
+
 ### API routes
 
 An **API** route accepts API tokens only. A browser's session is ignored

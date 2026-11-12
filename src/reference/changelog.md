@@ -14,6 +14,66 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
+### v0.1.2 — 12 November 2026 {#panel-v0-1-2}
+
+Installs from the update button ([[use/panel-update]]). Take a backup first,
+and update the panel before the nodes: this panel works with nodes on v0.1.1,
+and node v0.1.2 brings OpenConnect DTLS back and the WARP+ licence key. A node
+from before refuses a WARP outbound that carries a key, so update the nodes
+before you set one. **Over HTTPS, everyone logs in once more** after the
+update, because the login cookie changed ([[how/security#sessions]]).
+
+- **Signed releases:** from this release on, the update button installs only
+  releases NX has signed, and checks the signature before it takes a backup.
+  A release published but not signed yet is shown as available and refused
+  (*not signed yet*), and the panel is left untouched
+  ([[use/panel-update#only-signed-releases]]).
+- **The daily release check asks nx-panel.org first**. Without an answer it asks
+  GitHub.
+- **Import outbounds and endpoints:** paste share links to get outbounds; drop
+  a WireGuard `.conf` or an `.ovpn` to get an endpoint; or sign in to NordVPN or
+  PIA and pick servers from their live list to get WireGuard endpoints. Every
+  row is shown before anything is saved, and credentials are not stored
+  ([[use/outbounds#import]], [[use/endpoints#import]]).
+- **ShadowTLS** serves through a detour set in the inbound's
+  **Listen options** ([[protocols/more#shadowtls]]); **Shadowsocks 2022** keys
+  fit their method, and a key of the wrong length is refused
+  ([[protocols/shadowsocks]]); **MTProxy** has a FakeTLS site per inbound, and
+  users get a Telegram link ([[protocols/more#mtproxy]]).
+- **Add or remove a template on many users** at once, from the selection menu
+  or on the current filter ([[use/user-operations#add-or-remove-a-template]]).
+- **An inbound's place in subscriptions** is set by an order number on its
+  Basic tab ([[use/inbounds#client-settings]]).
+- **Usage by month, and as CSV**, for a node's per-user usage and a user's
+  usage by node; per-user traffic older than 30 days is kept per day
+  ([[use/nodes#stats-health-history-and-uptime]]).
+- **Config files keep their extension** on Safari and Chrome on Android, which
+  saved a `.conf` or an `.ovpn` as `.conf.txt` or `.ovpn.txt`
+  ([[addons/sub-themes]]).
+- **WARP:** a **WARP+ licence key** on a WARP outbound (needs node v0.1.2); a
+  template whose WARP outbound names one profile on two or more nodes is
+  warned of; no generate button on the WARP key fields
+  ([[use/outbounds#warp]]).
+- **OpenVPN:** sing-box subscriptions pin the server certificate's name, as
+  the `.ovpn` does, and a certificate with no name is pinned by its
+  fingerprint, so users download their file again after a renewal
+  ([[protocols/openvpn]]).
+- **Safer by default:** the panel refuses writes sent by a page on another
+  origin, and over HTTPS the login cookie is `Secure`, bound to its route's
+  path and `SameSite=Strict`; changing a route's prefix signs everyone out
+  there ([[how/security#sessions]]). Nothing in a config can start a program
+  on a node: OpenConnect's wrapper paths, Tor's executable path, extra
+  arguments and plugins, and Tailscale's SSH server are refused on save
+  ([[use/endpoints#connecting-out]]). A template that selects one tag twice is
+  refused, and so is an update that drops a row its routing still names
+  ([[use/templates#checked-on-save]]).
+- A weekly reset anchored on Sunday stays on Sunday. Accounts and plans
+  created with a Sunday anchor before were stored with Monday; check them
+  ([[use/users#reset-cycles]]).
+- Node health history is folded again on panels with a long history, and an
+  outbound check through a server that never answers says *timed out*.
+- Built with Go 1.27.4, which fixes a security issue in its HTTP library.
+
 ### v0.1.1 — 5 November 2026 {#panel-v0-1-1}
 
 Installs from the update button ([[use/panel-update]]). Take a backup first,
@@ -207,6 +267,30 @@ its **Update** page ([[use/panel-update]]).
 
 ## Node
 
+### v0.1.2 — 12 November 2026 {#node-v0-1-2}
+
+**Update the panel to v0.1.2 first**, then each node from the Nodes page. A
+node on v0.1.1 keeps working with it, without OpenConnect DTLS and the WARP+
+licence key.
+
+- **OpenConnect DTLS connects again.** DTLS sessions resume, a client that
+  leaves without saying so is noticed after 30 seconds, an idle one is dropped
+  after 70, and a failed handshake is logged as a warning naming the user
+  ([[protocols/openvpn#openconnect]]).
+- **WARP+ licence key**, put on the node's own WARP device without
+  registering a new one; a refused key is logged with Cloudflare's reason and
+  the node stays on free WARP. A WARP outbound that names an existing profile
+  by id and token now enrols ([[use/outbounds#warp-plus]]).
+- **Nothing in a config can start a program:** the node refuses a
+  configuration with OpenConnect's wrapper paths, Tor's executable path, extra
+  arguments and plugins, or Tailscale's SSH server, naming the option.
+- A Tor outbound's data directory and a log file named in the core settings
+  are kept in the node's `cache/` directory
+  ([[reference/files-and-ports#node-files]]).
+- An outbound check has its full time on the node, so a server that never
+  answers reads *timed out*.
+- Built with Go 1.27.4, which fixes a security issue in its HTTP library.
+
 ### v0.1.1 — 5 November 2026 {#node-v0-1-1}
 
 **Update the panel to v0.1.1 first.** A node on v0.1.0 keeps working with it.
@@ -305,11 +389,15 @@ updated from the panel ([[start/add-node]]).
 
 | Release | Date | Notes |
 |---|---|---|
+| NX Shop v0.1.3 | 12 November 2026 | Package and security updates |
+| NX Shop v0.1.2 | 7 November 2026 | Refuses writes sent from another origin; asks for trusted proxies and a listen address at install ([[addons/shop#install]]) |
 | NX Shop v0.1.1 | 30 October 2026 | Install from the panel's **Addons** page or with `ghcr.io/nx-panel/shop:0.1.1` ([[addons/shop]]) |
 | NX Shop v0.1.0 | 30 October 2026 | The move to the NX name: update it on its host from the **Addons** page, where it shows *Needs migration* |
 | NX Shop v0.0.3 | 24 October 2026 | Package and security updates |
 | NX Shop v0.0.2 | 9 October 2026 | |
 | NX Shop v0.0.1 | 4 October 2026 | First release |
+| Notifier v0.4.3 | 12 November 2026 | Package and security updates |
+| Notifier v0.4.2 | 7 November 2026 | Refuses writes sent from another origin; asks for trusted proxies and a listen address at install ([[addons/notifier#install]]) |
 | Notifier v0.4.1 | 30 October 2026 | `ghcr.io/nx-panel/notif:0.4.1` ([[addons/notifier]]) |
 | Notifier v0.4.0 | 30 October 2026 | The move to the NX name: update it on its host from the **Addons** page, where it shows *Needs migration* |
 | Notifier v0.3.1 | 24 October 2026 | Package and security updates |

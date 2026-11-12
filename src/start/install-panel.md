@@ -21,13 +21,13 @@ Pick what to install and copy the command:
 Run it as root. With SQLite, which needs no other service:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 The installer ends by printing the setup link:
 
 ```terminal title="root@server: ~"
-$ bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+$ bash <(curl -fsSL https://nx-panel.org/install.sh)
 ==> installing NX Panel (linux-amd64)
 ==> downloading the panel
 ==> downloading node binaries
@@ -52,6 +52,21 @@ no admin seeded; the panel will open its setup wizard on first start
 Open the link and continue with [[setup-wizard]]. The token in it creates the
 main administrator, so keep it private. It stops working once setup is done.
 
+### Straight from GitHub
+
+If nx-panel.org cannot be reached from the server, or you would rather not go
+through it, run the same installer straight from the public panel repository.
+`--github` makes it download the panel from GitHub too:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
+```
+
+Without the flag, the installer tries nx-panel.org first and falls back to
+GitHub by itself. Every other option works the same with it. The panel's daily
+release check still asks nx-panel.org first and GitHub after it; to stop it,
+switch off **Check for releases daily** on **Settings → Panel update**.
+
 ### Options
 
 | Option | Effect |
@@ -60,6 +75,7 @@ main administrator, so keep it private. It stops working once setup is done.
 | `--version v1.2.3` | install a specific panel release instead of the newest |
 | `--node-version v1.2.3` | stage a specific node release for your node installers instead of the newest |
 | `--uninstall` | remove the panel; see [[uninstall]] |
+| `--github` | download the panel straight from GitHub instead of through nx-panel.org; see [Straight from GitHub](#straight-from-github) |
 
 ### SQLite or PostgreSQL
 
@@ -127,6 +143,16 @@ To run a node on the same server in Docker, see [[same-server]].
 Every path it uses is listed in [[files-and-ports]]. Until setup is finished,
 the panel answers only the setup link. Running the
 same command again later updates the panel in place; see [[start/update]].
+
+### What nx-panel.org records
+
+Install, update and the new-version check go through nx-panel.org. Each
+request records the panel's version and platform, a checksum of its binary,
+whether it holds a licence, and the address it came from with its country.
+They are used for licence and release statistics. Addresses are deleted after
+12 months; the counts are kept. Switching off the update check
+(**Check for releases daily** on **Settings → Panel update**) stops the
+panel's daily request.
 
 ### Lost the link?
 

@@ -22,14 +22,23 @@ release, how this panel was installed, and the release notes.
 
 On an install made with the script, **Update now** does the whole upgrade:
 
-1. **Taking a backup** of the database into your backup directory.
+1. **Taking a backup** of the database into your backup directory. Before it,
+   the panel checks that the release's checksum list (`SHA256SUMS`) carries
+   NX's signature.
 2. **Downloading** the release.
-3. **Verifying** it against the checksum published with it, and running it once
+3. **Verifying** that the archive matches that signed list, and running it once
    to be sure it starts on this server.
 4. **Installing** it, keeping the old binary as
    `/opt/nx-panel/nx-panel.previous`.
-5. **Restarting.** You stay logged in. The panel is unreachable for a few
-   seconds, and the page says when it is back.
+5. **Restarting.** You stay logged in, unless the release notes say otherwise:
+   after the update to v0.1.2 a panel reached over HTTPS asks everyone to log
+   in once more, because its login cookie changed. The panel is unreachable for a few seconds, and the page
+   says when it is back.
+
+Only releases NX has signed are installed. A release is published a little
+before it is signed; in that window the page shows it as available, and the
+update stops with *not signed yet* before the backup, leaving the panel
+untouched. Try again later.
 
 If the new build does not come up, the previous binary is put back
 automatically within about ten seconds, and the page shows **Rolled back**.
@@ -57,16 +66,37 @@ domain or path.
   `nx-panel restore FILE -keep-web-settings=false` and restart the panel.
 :::
 
-**Check for releases daily** turns the daily check off. It is one request a day
-to the public panel repository, which tells it your server's address. The button
-still works with the check off.
+**Check for releases daily** turns the daily check off. With it off, the
+panel asks only when you press **Check now**, and the button still works.
+
+The daily check asks nx-panel.org first, and sends four things with it: the
+panel's version, its architecture, a checksum of its own binary, and whether
+it holds a licence. If nx-panel.org does not answer, the panel asks GitHub,
+without them.
+
+### What nx-panel.org records
+
+Install, update and the new-version check go through nx-panel.org. Each
+request records the panel's version and platform, a checksum of its binary,
+whether it holds a licence, and the address it came from with its country.
+They are used for licence and release statistics. Addresses are deleted after
+12 months; the counts are kept. Switching off the update check
+(**Check for releases daily** on **Settings → Panel update**) stops the
+panel's daily request.
 
 ## The panel, from the command line
 
 Run the installer again. It finds the existing install and updates it in place:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
+```
+
+To update straight from GitHub instead, without nx-panel.org (see
+[[install-panel#straight-from-github]]):
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
 ```
 
 It stops the service, copies a SQLite database to `nx.db.bak`, keeps the

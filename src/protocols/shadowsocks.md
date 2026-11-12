@@ -44,9 +44,10 @@ generated server key.
 
 The 2022 methods need keys of an exact length, written in base64. The
 **Server password** must match its method: a 16-byte key for
-`2022-blake3-aes-128-gcm`, a 32-byte key for the other two. If you change the
-method, generate a key of the right length too, or the node refuses the
-inbound.
+`2022-blake3-aes-128-gcm`, a 32-byte key for the other two. Changing the
+method replaces a key that no longer fits, the generate button always makes
+one of the method's length, and the panel refuses to save a key of the wrong
+length, which the node would refuse.
 
 The older methods are there for apps that do not support 2022. `none` sends
 traffic unencrypted and is only for testing.

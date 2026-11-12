@@ -87,7 +87,9 @@ WireGuard, OpenVPN и OpenConnect — это [[~endpoint|эндпоинты]], �
 | SSH | нет | да | да | нет |
 | Mieru | нет | да | нет | нет |
 | Snell | нет | нет | да | нет |
-| ShadowTLS, MTProxy, TrustTunnel, Sudoku | нет | нет | нет | нет |
+| ShadowTLS с Shadowsocks за ним | нет | да | да | нет |
+| MTProxy | ссылка `tg://proxy` на странице подписки, для Telegram | нет | нет | нет |
+| TrustTunnel, Sudoku | нет | нет | нет | нет |
 | WireGuard | файл `.conf` | да | да | да |
 | OpenVPN | файл `.ovpn` | нет | да | нет |
 | OpenConnect | сервер и данные для входа | нет | да | нет |

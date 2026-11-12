@@ -151,6 +151,9 @@ at all: it has no login of its own and holds your whole operational picture.
   the panel service that name as a network alias in your compose file
   (`networks: { default: { aliases: [panel.example.com] } }`) and scrape
   `panel.example.com:2095`.
+- **Set up before the move to NX:** follow
+  [[start/move-to-nx#prometheus-and-grafana|the Grafana step of the move]], or
+  Grafana will not start on its old data.
 
 ### Without Docker
 

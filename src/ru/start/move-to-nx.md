@@ -17,7 +17,7 @@ tags: [install, panel, node]
 Один раз запустите новый скрипт установки от root на сервере панели:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 ## Что делает скрипт
@@ -61,6 +61,30 @@ bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.
 Скрипт переименовывает только базу, которую сам создал на этом сервере.
 Остальные сохраняют имя, и панель по-прежнему использует DSN из
 `/opt/nx-panel/config.json`.
+
+## Prometheus и Grafana {#prometheus-and-grafana}
+
+Метрики тоже переименованы: каждая серия теперь начинается с `nx_`, а серии,
+записанные до переезда, сохраняют старый префикс. Дашборд, оставшийся с прежних
+времён, с этого дня ничего не показывает. Замените каталог `monitoring/` версией
+из [репозитория панели](https://github.com/nx-panel/panel), чтобы получить
+дашборд **NX fleet**.
+
+У его источника данных новый uid — `nx-prometheus`. Grafana не умеет менять uid
+источника данных, который уже создала через provisioning, поэтому на старых
+данных Grafana она не запускается и пишет в лог
+`Datasource provisioning error: data source not found`. Добавьте этот блок над
+`datasources:` в `monitoring/grafana/provisioning/datasources/prometheus.yml` и
+снова запустите overlay:
+
+```yaml
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+```
+
+Grafana удалит старый источник данных и создаст новый. Блок можно оставить: при
+следующих запусках он пересоздаёт тот же источник.
 
 ## Старые адреса
 

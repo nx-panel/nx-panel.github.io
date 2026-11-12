@@ -14,7 +14,7 @@ certificates, is left in place for you to delete when you are sure.
 ## The panel
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --uninstall
+bash <(curl -fsSL https://nx-panel.org/install.sh) --uninstall
 ```
 
 | Removed | Kept |

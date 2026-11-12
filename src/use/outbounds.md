@@ -47,6 +47,12 @@ tab offers **None**, **TLS** or **REALITY**, as the far server expects.
 A `selector` or `urltest` lists the tags of the outbounds it chooses from.
 Those outbounds must be in the same template.
 
+A `tor` outbound never starts a program on the node. An executable path,
+extra arguments or transport plugins in its JSON are refused when it is
+saved, with the option named, and an outbound stored with one before has it
+left out on its way to the node. Its data directory is kept in the node's
+cache directory, whatever path is typed.
+
 ## Adding an outbound
 
 1. Open **Core configs → Outbounds** and click **Add**.
@@ -60,6 +66,30 @@ Those outbounds must be in the same template.
 An outbound that no template selects does nothing. The summary strip counts
 those under **Unused**.
 
+## Importing outbounds {#import}
+
+The **⋯** button (**Operations**) beside **Add** opens the import menu.
+**From links** turns share links into outbounds: paste them one per line, or
+as one base64 block.
+
+1. Paste the links and click **Convert**.
+2. Every row is shown before anything is saved: its tag, its type, its
+   **Name in the source** and any **Notes**. Change a tag where you want
+   another; each row needs one that no other row and no existing outbound
+   has. Untick a row to leave it out.
+3. Click **Add** *n*. Each row is created the ordinary way, through the same
+   save as **Add**, so every check a save applies still applies. A row the
+   save refuses stays in the list with the reason, to be fixed and sent
+   again.
+
+A line that does not convert is listed under **Not converted** by its line
+number, never by the link, which carries credentials. Naive links are refused,
+because some node builds cannot run naive. Links make outbounds only: a
+WireGuard server comes in as its `.conf` on the endpoints page
+([[endpoints#import]]). The links are not kept. The new outbounds are on no
+template yet: add them to a template and write the routing rules that use
+them.
+
 ## Cloudflare WARP {#warp}
 
 A WARP outbound sends traffic out through Cloudflare's network, so the
@@ -68,7 +98,8 @@ sites that refuse your server's address.
 
 1. Open **Core configs → Outbounds** and click **From a preset**.
 2. Pick **Cloudflare WARP**. The ordinary form opens with the type `masque`
-   and the tag `warp` filled in. Leave the profile fields empty.
+   and the tag `warp` filled in. Leave the profile fields empty; a WARP+ key
+   is the one exception ([WARP+](#warp-plus)).
 3. Click **Save**, select it in a template's **Outbounds**, and write the
    routing rules that send traffic to `warp` yourself. The preset adds no
    rules.
@@ -77,6 +108,30 @@ There is no account to create. On its first start each node registers its own
 WARP device with Cloudflare and keeps it, so no two nodes share one. That first
 registration needs the node to reach Cloudflare's API. Where it cannot, set
 **Profile detour** to an outbound that can reach it.
+
+A profile filled in by hand (its id and token) names one WARP device, which a
+node enrols on. On a template that two or more enabled nodes run, they would
+all share that device, and the device keeps only the last node's key: one
+node holds the tunnel and the others stop connecting. The panel saves such a
+template but warns of it: its row on the Templates page shows **Check**, and
+its editor names the outbound ([[templates#checked-on-save]]). Leave the
+profile empty and use a WARP+ key instead, or put each node on a template of
+its own. The WARP key fields have no generate button: a made-up value is never
+right there.
+
+### WARP+ {#warp-plus}
+
+A WARP+ key moves the nodes onto Cloudflare's paid WARP. Paste it in **WARP+
+licence key** in the outbound's form and save. Each node puts the key on the
+WARP device it already has; no new device is registered.
+
+- Every node is a device of its own, and a key covers only a few devices
+  (five at the time of writing). Past that, Cloudflare refuses the key and the
+  node stays on free WARP; the node's log says why.
+- Clearing the field does not take the nodes back to free WARP. **Recreate
+  profile** does, with a new device on each node.
+- A node from before this field refuses an outbound carrying it. Update the
+  nodes before you set a key ([[start/update]]).
 
 ## How routing names an outbound
 
@@ -105,7 +160,8 @@ because a proxy does not always say whether its far end connected. See
 endpoint the node is running, read from the node itself, so the built-in
 `direct` and any tunnel are there too. **Test all**, or the gauge on one row,
 has the node fetch a test URL through it and shows how many milliseconds the
-answer took, or the node's error. Leave **Test URL** empty for the node's
+answer took, or the node's error; a server that never answers reads *timed
+out*. Leave **Test URL** empty for the node's
 default. It needs the right to change nodes, because it makes the node open
 connections.
 

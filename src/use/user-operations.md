@@ -45,7 +45,9 @@ say how many accounts they will reach before you confirm.
 | Forget registered devices | **Reset devices** | |
 | Add days or traffic | **Extend and gift** | **Extend and gift the current filter…** |
 | Set limits | **Set limits** | |
+| Limit which configs accounts get | **Allowed configs** | |
 | Hand to another owner | **Change owner** | |
+| Put on or take off a template | **Add or remove a template** | **Add or remove a template on the current filter…** |
 | Export a CSV list | **Download CSV** | **Download CSV of the current filter** |
 | Export configs | **Download config pack** | |
 | Delete | **Delete** | **Delete expired users…** |
@@ -106,6 +108,24 @@ ones the user form has (see [[use/users#limiting-configs]]). **Set this
 limit** needs at least one rule: removing the limit is its own choice. Only
 accounts whose limit changed are counted. A reseller that sells plans only
 cannot run it.
+
+### Add or remove a template
+
+Puts the accounts on one template, or takes them off it, and leaves every
+other template they are on as it is. The template decides which nodes serve
+an account (see [[use/users#templates]]), so this is how a group of users is moved onto
+a new server or off an old one.
+
+- **Add**: accounts on **All templates** are on it already and are not
+  changed.
+- **Remove**: an account on **All templates** stays on every other template,
+  now listed one by one. It no longer joins a template created later.
+- Removing an account's only template leaves it on no template: it is served
+  by no node until you add one again.
+
+A reseller's accounts are never put on a template the reseller may not use;
+they are left out and reported. A reseller sees only its own templates here,
+and one that sells plans only cannot run it.
 
 ### Change owner
 
@@ -185,6 +205,7 @@ selection.
 | Any change to an account outside the licence | it is view-only until you are back under the cap. It can still be deleted. See [[use/licence]]. |
 | **Extend and gift** and **Set limits** for a reseller that sells from plans only | its accounts' limits are the plan's, and only you can change them |
 | **Change owner** to a reseller without room for the whole selection | its user limit is checked once, for all the accounts together |
+| **Add or remove a template** adding a reseller’s account to a template the reseller may not use | the reseller is limited to its own templates |
 | Every change for a reseller whose **May edit and delete users** is off | it may create accounts and export them, but not change or remove them |
 
 If a long operation is interrupted, the report says which accounts were

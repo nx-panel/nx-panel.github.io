@@ -14,7 +14,7 @@ way, on **Inbounds → Add** ([[use/inbounds]]), and all of them carry the
 per-user accounting and limits unless the entry says otherwise.
 
 ::: tip Check the apps before you sell it
-Several of these reach only one app family, and four reach none through the
+Several of these reach only one app family, and three reach none through the
 subscription. The table on [[protocols/index]] shows which format carries
 what.
 :::
@@ -35,19 +35,33 @@ traffic from following a fixed pattern.
 
 ## ShadowTLS {#shadowtls}
 
-Borrows the TLS handshake of a real website, the way REALITY does, and is
-usually paired with Shadowsocks.
+Borrows the TLS handshake of a real website, the way REALITY does. It carries
+no proxy protocol of its own: what it lets through is handed to a second
+inbound on the same node, almost always Shadowsocks.
 
+- Create the **Shadowsocks** inbound first, with **Listen** `127.0.0.1` and no
+  port. It is reached only through ShadowTLS, so it is not an entry of its own
+  in subscriptions.
+- On the ShadowTLS inbound, **Listen options → Detour (inbound)** names that
+  Shadowsocks inbound. It is required. Select both inbounds in the same
+  templates: the panel refuses a template that selects one without the other.
 - **Version** 3 (the default) signs users in with their account name and
-  **Password**; versions 1 and 2 use one shared **Password (v1/v2)**.
+  **Password**; version 2 uses one shared **Password**; version 1 checks no
+  one.
 - **Handshake server** and **Handshake port** name the real site. The same
   advice applies as for [[protocols/vless-reality|REALITY's target]]:
-  reachable from the node and not blocked for your users.
-- **Strict mode** and **Wildcard SNI** (advanced) tighten or relax which
-  handshakes are accepted.
-- **Apps**: no subscription format carries it. A client has to be set up by
-  hand, which makes it a poor fit for selling.
-- A version 3 inbound with no users is not served.
+  reachable from the node and not blocked for your users. The connection to
+  it takes the usual dial options (advanced), such as a **Handshake detour**
+  through an outbound.
+- **Strict mode** and **Wildcard SNI** (advanced, version 3) tighten or relax
+  which handshakes are accepted.
+- **Apps**: sing-box apps get the Shadowsocks entry dialled through
+  ShadowTLS, and Clash apps get Shadowsocks with the `shadow-tls` plugin; UDP
+  travels inside the TCP stream. There is no share link and no Xray entry.
+  With a protocol other than Shadowsocks behind it, only sing-box apps get an
+  entry.
+- A version 3 inbound with no users is not served, and neither is one whose
+  detour target is not on the node.
 
 ## Mieru {#mieru}
 
@@ -81,10 +95,20 @@ carries Telegram traffic only.
 
 - Each account gets its own secret, so users are counted and limited
   separately.
-- The advanced fields tune connection handling and the site the proxy
-  presents to anyone who is not a Telegram client.
-- **Apps**: Telegram. No subscription format carries an MTProxy entry, so
-  users do not receive it with their other configurations.
+- **FakeTLS site**: the real HTTPS site the connection imitates. Telegram
+  apps send its name, and every user's secret carries it. Pick a site
+  reachable from the node and not blocked for your users; empty means
+  `www.cloudflare.com`. Changing it changes every user's secret.
+- **Probe fallback address** and **port** (advanced): where a connection that
+  is not Telegram, such as a prober or a browser, is forwarded, so the port
+  answers like the FakeTLS site. Empty means the FakeTLS site itself; set an
+  address only when that site does not resolve from the node. This is not the
+  panel's [[use/fronting|domain fronting]], which MTProxy cannot use.
+- The other advanced fields tune connection handling.
+- **Apps**: Telegram. Each user gets a `tg://proxy` link on their
+  subscription page, with an **Open in Telegram** button, and in the user's
+  **QR / Links** dialog and the export. Proxy apps cannot use it, so it is
+  left out of the subscription itself.
 - An inbound with no users is not served.
 
 ## SSH {#ssh}

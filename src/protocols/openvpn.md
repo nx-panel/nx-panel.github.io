@@ -112,7 +112,11 @@ dialog under **Client apps** (**Save file**) and on their
   certificate's domain, so the app accepts this server's certificate and no
   other one from the same authority. Files saved from 0.1.0 with either kind
   fail in OpenVPN Connect with "Peer certificate verification failure"; the
-  user downloads the file again;
+  user downloads the file again. A certificate with no name in it (Let's
+  Encrypt's short-lived certificate for an IP address) cannot be named, so
+  the file pins that one certificate by its fingerprint instead. Each renewal
+  then stops saved files from connecting until users download them again, and
+  the node's warnings say so: a certificate for a domain name avoids that;
 - the user's name and password are inside it too, so OpenVPN Connect 3 and
   OpenVPN 2.6 or later connect without asking.
 
@@ -120,7 +124,10 @@ An `.ovpn` with a certificate inside is usually too large for a QR code; the
 dialog then offers copy and save only. The file names the node's first
 [[~link-address|link address]], since a saved file cannot list alternatives.
 
-Sing-box apps also get the endpoint as an entry in their subscription.
+Sing-box apps also get the endpoint as an entry in their subscription, with
+the same check: the certificate's domain, or its fingerprint when it has no
+name. A subscription refreshes by itself, so a renewal costs that entry one
+update rather than a download by hand.
 
 ## OpenConnect
 
@@ -138,6 +145,11 @@ port, a client address pool and TLS on the node's certificate.
 OpenConnect clients take a server address and a sign-in rather than a file.
 The user's **Client apps** tab and subscription page show both. Sing-box apps
 also get the endpoint in their subscription.
+
+AnyConnect clients carry their traffic over DTLS when UDP gets through, and
+over TLS when it does not; DTLS needs node v0.1.2 or later. A client that
+leaves without saying so is noticed after 30 seconds, an idle one is dropped
+after 70, and a failed DTLS handshake is logged as a warning naming the user.
 
 ## Users
 

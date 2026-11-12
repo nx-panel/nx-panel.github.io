@@ -18,13 +18,13 @@ tags: [install, panel]
 以 root 身份运行。使用 SQLite 时不需要其他服务：
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 安装程序最后会打印设置链接：
 
 ```terminal title="root@server: ~"
-$ bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+$ bash <(curl -fsSL https://nx-panel.org/install.sh)
 ==> installing NX Panel (linux-amd64)
 ==> downloading the panel
 ==> downloading node binaries
@@ -48,6 +48,16 @@ no admin seeded; the panel will open its setup wizard on first start
 
 打开链接，继续阅读 [[setup-wizard]]。链接中的令牌可以创建主管理员，请勿外泄。设置完成后它就失效。
 
+### 直接从 GitHub 安装 {#straight-from-github}
+
+如果服务器无法访问 nx-panel.org，或者您不想经过它，可以直接从面板的公开仓库运行同一个安装程序。加上 `--github` 后，面板本身也从 GitHub 下载：
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh) --github
+```
+
+不加这个选项时，安装程序会先尝试 nx-panel.org，失败后自动改用 GitHub。其他选项照常可用。面板每天的新版本检查仍然先询问 nx-panel.org，再询问 GitHub；要停止它，请在 **设置 → 面板更新** 中关闭 **每天检查新版本**。
+
 ### 选项 {#options}
 
 | 选项 | 作用 |
@@ -56,6 +66,7 @@ no admin seeded; the panel will open its setup wizard on first start
 | `--version v1.2.3` | 安装指定的面板版本，而不是最新版 |
 | `--node-version v1.2.3` | 为节点安装程序准备指定的节点版本，而不是最新版 |
 | `--uninstall` | 移除面板；见 [[uninstall]] |
+| `--github` | 直接从 GitHub 下载面板，而不经过 nx-panel.org；见 [直接从 GitHub 安装](#straight-from-github) |
 
 ### SQLite 还是 PostgreSQL {#sqlite-or-postgresql}
 
@@ -103,6 +114,10 @@ Docker 默认只在 IPv4 上发布端口。在仅有 IPv6 的主机上，请在 
 7. 为找到的每个地址打印一个设置链接，排在最前的是互联网看到的本服务器地址。
 
 它使用的所有路径都列在 [[files-and-ports]] 中。设置完成之前，面板只响应设置链接。之后再次运行同一条命令会就地更新面板；见 [[start/update]]。
+
+### nx-panel.org 记录什么 {#what-nx-panel-org-records}
+
+安装、更新和新版本检查都通过 nx-panel.org 进行。每个请求都会记录面板的版本和平台、其程序文件的校验和、是否持有许可证，以及请求来源的地址及其所在国家。这些信息用于许可证和版本发布统计。地址在 12 个月后删除；计数会保留。关闭更新检查（**设置 → 面板更新** 中的 **每天检查新版本**）会停止面板每天的请求。
 
 ### 链接丢了？ {#lost-the-link}
 

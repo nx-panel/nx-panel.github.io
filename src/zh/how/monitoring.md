@@ -100,6 +100,7 @@ ssh -L 3000:localhost:3000 you@your-server
 - **面板自己提供 HTTPS 时：** 在 `monitoring/prometheus/prometheus.yml` 中设置 `scheme: https` 和 `tls_config: { insecure_skip_verify: true }`。面板的证书写的是你的公开主机名，而不是 Prometheus 拨号使用的 `panel` 服务名。
 - **面板设置了基础路径时：** 设置 `metrics_path: /your-base-path/metrics`。
 - **面板设置了主机名时：** `/metrics` 只在该名称上应答。请在 compose 文件中把这个名称作为网络别名赋给面板服务（`networks: { default: { aliases: [panel.example.com] } }`），并抓取 `panel.example.com:2095`。
+- **在迁移到 NX 之前就已配置：** 请执行[[start/move-to-nx#prometheus-and-grafana|其中的 Grafana 步骤]]，否则 Grafana 无法在旧数据上启动。
 
 ### 不使用 Docker {#without-docker}
 

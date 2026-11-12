@@ -159,6 +159,9 @@ ssh -L 3000:localhost:3000 you@your-server
   Дайте сервису панели это имя как сетевой псевдоним в своём compose-файле
   (`networks: { default: { aliases: [panel.example.com] } }`) и опрашивайте
   `panel.example.com:2095`.
+- **Настроено до перехода на NX:** выполните
+  [[start/move-to-nx#prometheus-and-grafana|шаг для Grafana]], иначе Grafana не
+  запустится на старых данных.
 
 ### Без Docker {#without-docker}
 

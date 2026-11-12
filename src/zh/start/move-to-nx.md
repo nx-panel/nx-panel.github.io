@@ -12,7 +12,7 @@ tags: [install, panel, node]
 **旧面板的更新按钮无法安装它。** 它会故意失败并显示发布说明，说明会指向本页。请以 root 身份在面板服务器上运行一次新的安装脚本：
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.sh)
+bash <(curl -fsSL https://nx-panel.org/install.sh)
 ```
 
 ## 脚本做了什么
@@ -37,6 +37,20 @@ bash <(curl -fsSL https://raw.githubusercontent.com/nx-panel/panel/main/install.
 ## 自己的 PostgreSQL 服务器
 
 脚本只会改名它自己在本服务器上创建的数据库。其他数据库保留原名，面板继续使用 `/opt/nx-panel/config.json` 中的 DSN。
+
+## Prometheus 与 Grafana {#prometheus-and-grafana}
+
+指标也改了名：现在每个序列都以 `nx_` 开头，迁移之前记录的序列保留旧前缀。迁移前留下的仪表板从那天起不再显示任何数据。用[面板仓库](https://github.com/nx-panel/panel)中的版本替换 `monitoring/` 目录，即可得到 **NX fleet** 仪表板。
+
+它的数据源有新的 uid：`nx-prometheus`。Grafana 无法修改它已经通过 provisioning 创建的数据源的 uid，因此在旧的 Grafana 数据上它会拒绝启动，并在日志中写入 `Datasource provisioning error: data source not found`。在 `monitoring/grafana/provisioning/datasources/prometheus.yml` 的 `datasources:` 上方加入这个块，然后重新启动 overlay：
+
+```yaml
+deleteDatasources:
+  - name: Prometheus
+    orgId: 1
+```
+
+Grafana 会删除旧数据源并创建新的。这个块可以保留：之后每次启动时它都会重新创建同一个数据源。
 
 ## 旧地址
 

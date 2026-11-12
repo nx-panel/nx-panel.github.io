@@ -85,7 +85,9 @@ WireGuard، OpenVPN و OpenConnect [[~endpoint|اندپوینت]] هستند و 
 | SSH | خیر | بله | بله | خیر |
 | Mieru | خیر | بله | خیر | خیر |
 | Snell | خیر | خیر | بله | خیر |
-| ShadowTLS، MTProxy، TrustTunnel، Sudoku | خیر | خیر | خیر | خیر |
+| ShadowTLS، با Shadowsocks پشت آن | خیر | بله | بله | خیر |
+| MTProxy | یک لینک `tg://proxy` در صفحه‌ی اشتراک، برای تلگرام | خیر | خیر | خیر |
+| TrustTunnel، Sudoku | خیر | خیر | خیر | خیر |
 | WireGuard | فایل `.conf` | بله | بله | بله |
 | OpenVPN | فایل `.ovpn` | خیر | بله | خیر |
 | OpenConnect | سرور و اطلاعات ورود | خیر | بله | خیر |

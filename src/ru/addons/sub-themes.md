@@ -146,6 +146,7 @@ sub-themes/
 | `.Address` | Сервер и порт, готовые к показу: `203.0.113.10:443`, `[2001:db8::1]:443` |
 | `.Server`, `.Port` | То же по отдельности |
 | `.Link` | Ссылка для импорта |
+| `.Open` | Ссылка, которую приложение открывает по нажатию; задана только там, где это лучше копирования: ссылка `tg://proxy` записи MTProxy, которую Telegram добавляет как прокси. В остальных записях пусто. Подставляйте в `href` как есть: она уже помечена как безопасная для этого |
 
 Показывайте `.Address`. Если самому написать `{{ .Server }}:{{ .Port }}`,
 сервер IPv6 превратится в `2001:db8::1:443`, что не читается ни как адрес,
@@ -161,10 +162,12 @@ OpenConnect: `.Name`, `.Type`, `.FileName` и `.Content`, весь файл.
 {{ range .Apps }}
   {{ $code := qr .Content }}
   {{ if $code }}{{ $code }}{{ else }}<p>{{ index $.T "qrTooBig" }}</p>{{ end }}
-  <a download="{{ .FileName }}" href="{{ dataURI "text/plain" .Content }}">{{ index $.T "download" }}</a>
+  <a download="{{ .FileName }}" href="{{ dataURI "application/octet-stream" .Content }}">{{ index $.T "download" }}</a>
   <button data-copy="{{ .Content }}">{{ index $.T "copy" }}</button>
 {{ end }}
 ```
+
+Отдавайте файл как `application/octet-stream`, а не `text/plain`: Safari и Chrome на Android добавляют `.txt` к текстовому файлу с незнакомым расширением, а `.conf.txt` или `.ovpn.txt` не откроет ни одно приложение.
 
 ### Подписка: `.Sub` {#the-subscription-sub}
 
@@ -227,7 +230,7 @@ OpenConnect: `.Name`, `.Type`, `.FileName` и `.Content`, весь файл.
 | `when` | `{{ when .User.OnlineAt .T }}` → `Today 09:30` |
 | `num` | `{{ num .Expire.Days }}` → `40` |
 | `qr` | `{{ qr .Sub.URL }}` → QR-код как встроенный SVG или ничего, если текст слишком длинный для QR-кода |
-| `dataURI` | `href="{{ dataURI "text/plain" .Content }}"` для скачивания |
+| `dataURI` | `href="{{ dataURI "application/octet-stream" .Content }}"` для скачивания |
 | `b64` | `{{ b64 .Sub.URL }}` → base64 |
 | `default` | `{{ default "Subscription" .Panel.Title }}` |
 | `hasPrefix` | `{{ if hasPrefix "vless" .Protocol }}…{{ end }}` |
