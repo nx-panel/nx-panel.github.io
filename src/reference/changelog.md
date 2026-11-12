@@ -14,7 +14,7 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
-### v0.1.2 — DATE {#panel-v0-1-2}
+### v0.1.2 — 12 November 2026 {#panel-v0-1-2}
 
 Installs from the update button ([[use/panel-update]]). Take a backup first,
 and update the panel before the nodes: this panel works with nodes on v0.1.1,
@@ -267,7 +267,7 @@ its **Update** page ([[use/panel-update]]).
 
 ## Node
 
-### v0.1.2 — DATE {#node-v0-1-2}
+### v0.1.2 — 12 November 2026 {#node-v0-1-2}
 
 **Update the panel to v0.1.2 first**, then each node from the Nodes page. A
 node on v0.1.1 keeps working with it, without OpenConnect DTLS and the WARP+
@@ -389,14 +389,14 @@ updated from the panel ([[start/add-node]]).
 
 | Release | Date | Notes |
 |---|---|---|
-| NX Shop v0.1.3 | DATE | Package and security updates |
+| NX Shop v0.1.3 | 12 November 2026 | Package and security updates |
 | NX Shop v0.1.2 | 7 November 2026 | Refuses writes sent from another origin; asks for trusted proxies and a listen address at install ([[addons/shop#install]]) |
 | NX Shop v0.1.1 | 30 October 2026 | Install from the panel's **Addons** page or with `ghcr.io/nx-panel/shop:0.1.1` ([[addons/shop]]) |
 | NX Shop v0.1.0 | 30 October 2026 | The move to the NX name: update it on its host from the **Addons** page, where it shows *Needs migration* |
 | NX Shop v0.0.3 | 24 October 2026 | Package and security updates |
 | NX Shop v0.0.2 | 9 October 2026 | |
 | NX Shop v0.0.1 | 4 October 2026 | First release |
-| Notifier v0.4.3 | DATE | Package and security updates |
+| Notifier v0.4.3 | 12 November 2026 | Package and security updates |
 | Notifier v0.4.2 | 7 November 2026 | Refuses writes sent from another origin; asks for trusted proxies and a listen address at install ([[addons/notifier#install]]) |
 | Notifier v0.4.1 | 30 October 2026 | `ghcr.io/nx-panel/notif:0.4.1` ([[addons/notifier]]) |
 | Notifier v0.4.0 | 30 October 2026 | The move to the NX name: update it on its host from the **Addons** page, where it shows *Needs migration* |

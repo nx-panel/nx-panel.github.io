@@ -11,7 +11,7 @@ tags: [reference]
 
 ## 面板 {#panel}
 
-### v0.1.2 — DATE {#panel-v0-1-2}
+### v0.1.2 — 2026 年 11 月 12 日 {#panel-v0-1-2}
 
 可以用更新按钮安装（[[use/panel-update]]）。请先做备份，并先更新面板再更新节点：这个面板可以与 v0.1.1 的节点一起工作，节点 v0.1.2 恢复了 OpenConnect 的 DTLS，并带来 WARP+ 许可证密钥。更早的节点会拒绝带有密钥的 WARP 出站，因此请在设置密钥之前先更新节点。**通过 HTTPS 访问时，更新后所有人都需要再登录一次**，因为登录 cookie 变了（[[how/security#sessions]]）。
 
@@ -113,7 +113,7 @@ tags: [reference]
 
 ## 节点 {#node}
 
-### v0.1.2 — DATE {#node-v0-1-2}
+### v0.1.2 — 2026 年 11 月 12 日 {#node-v0-1-2}
 
 **请先把面板更新到 v0.1.2**，然后在 **节点** 页面逐个更新节点。v0.1.1 的节点仍可与它一起工作，但没有 OpenConnect 的 DTLS 和 WARP+ 许可证密钥。
 
@@ -190,14 +190,14 @@ tags: [reference]
 
 | 版本 | 日期 | 说明 |
 |---|---|---|
-| NX Shop v0.1.3 | DATE | 软件包更新和安全修复 |
+| NX Shop v0.1.3 | 2026 年 11 月 12 日 | 软件包更新和安全修复 |
 | NX Shop v0.1.2 | 2026 年 11 月 7 日 | 拒绝来自其他 origin 的写入请求；安装时询问受信任的代理和监听地址（[[addons/shop#install]]） |
 | NX Shop v0.1.1 | 2026 年 10 月 30 日 | 从面板的 **扩展** 页面安装，或使用 `ghcr.io/nx-panel/shop:0.1.1`（[[addons/shop]]） |
 | NX Shop v0.1.0 | 2026 年 10 月 30 日 | 改用 NX 名称：在 **扩展** 页面（显示 *需要迁移* 的地方）于其主机上更新 |
 | NX Shop v0.0.3 | 2026 年 10 月 24 日 | 软件包更新和安全修复 |
 | NX Shop v0.0.2 | 2026 年 10 月 9 日 | |
 | NX Shop v0.0.1 | 2026 年 10 月 4 日 | 首个版本 |
-| Notifier v0.4.3 | DATE | 软件包更新和安全修复 |
+| Notifier v0.4.3 | 2026 年 11 月 12 日 | 软件包更新和安全修复 |
 | Notifier v0.4.2 | 2026 年 11 月 7 日 | 拒绝来自其他 origin 的写入请求；安装时询问受信任的代理和监听地址（[[addons/notifier#install]]） |
 | Notifier v0.4.1 | 2026 年 10 月 30 日 | `ghcr.io/nx-panel/notif:0.4.1`（[[addons/notifier]]） |
 | Notifier v0.4.0 | 2026 年 10 月 30 日 | 改用 NX 名称：在 **扩展** 页面（显示 *需要迁移* 的地方）于其主机上更新 |
