@@ -26,26 +26,39 @@ The page shows:
 - **Last checked**, and **Check now** to look again.
 
 The panel checks once a day and shows a banner when a release is out. The daily
-check is one request to nx-panel.org; what it records is in
-[[start/install-panel#what-nx-panel-org-records]]. Switch it off with **Check for releases daily**, or from
-the command line (see [[reference/cli]]). **Check now** and the update button
-still work with it off.
+check asks nx-panel.org first. If nx-panel.org does not answer, the panel asks GitHub. What nx-panel.org records is in
+[[start/install-panel#what-nx-panel-org-records]]. Switch the check off with
+**Check for releases daily**, or from the command line (see
+[[reference/cli]]). With it off, the panel asks only when you press
+**Check now**, and the update button still works.
 
 ## Updating the panel
 
 On a systemd install, **Update now** (or **Update to** *version*) does the
 whole upgrade:
 
-1. **Taking a backup**: a database backup into your backup directory.
+1. **Taking a backup**: a database backup into your backup directory. Before
+   it, the panel checks that the release's checksum list (`SHA256SUMS`)
+   carries NX's signature.
 2. **Downloading** the release.
-3. **Verifying** it against the checksum published with it, and running it
+3. **Verifying** that the archive matches that signed list, and running it
    once to be sure it starts on this machine.
 4. **Installing**: swapping it in, keeping the previous binary beside it.
 5. **Restarting** on the new version.
 
-You stay signed in. The panel is unreachable for a few seconds and the page
-says when it is back. Nodes keep serving through the restart, so users lose
-nothing.
+You stay signed in, unless the release notes say otherwise: after the update
+to v0.1.2 everyone signs in once more, because the login cookie changed. The
+panel is unreachable for a few seconds and the page says when it is back.
+Nodes keep serving through the restart, so users lose nothing.
+
+### Only signed releases {#only-signed-releases}
+
+The update button installs only releases NX has signed. A release is
+published a little before it is signed: in that window the page shows it as
+available, and the update stops with *not signed yet* before the backup is
+taken, leaving the panel untouched. Try again later. A release whose
+signature is not NX's is refused at the same point, and an archive that does
+not match the signed list is refused before anything is installed.
 
 ### If the new version does not start
 
