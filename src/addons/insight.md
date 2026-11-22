@@ -15,6 +15,14 @@ links that work for each network first in its users' subscriptions. This
 page covers what it needs, installing it, each of its pages, and what it
 sends where.
 
+::: warning Estimates, not proof
+Everything Insight shows is worked out from counts: a network that has gone
+quiet can look blocked, a probe score can rise on a scan, and an AI finding
+can simply be wrong. Check a finding against the numbers beside it, and with
+a real user on that network if you can, before you move users or rotate an
+address.
+:::
+
 ## What it needs
 
 - A panel and nodes from **v0.1.3** on. The nodes count; the panel relays.
