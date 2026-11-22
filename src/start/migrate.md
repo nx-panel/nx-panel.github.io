@@ -87,7 +87,12 @@ link.
   redirect route, after the users: an old link then answers with a redirect to
   the same token on NX's own subscription address. NX's existing addresses do
   not change, and each redirect is a route you can delete later. This step needs
-  the main admin. Point the old domain and port at NX before you switch off the
+  the main admin. These rows are **not ticked** to begin with: they change NX's
+  own addresses, which can upset its other settings (the Settings page and an
+  admin's subscription domain stop editing the addresses, and a self-signed
+  panel certificate gains the old names). Setting the redirects up yourself on
+  NX's Addresses page is the better way; tick them only if you want the tool to
+  do it. Point the old domain and port at NX before you switch off the
   old panel. For s-ui, 3x-ui, x-ui, Marzban and PasarGuard, existing links keep
   working. Marzneshin, Hiddify and Remnawave users get new links; the wizard
   says so per user. A format name NX spells differently (s-ui's
