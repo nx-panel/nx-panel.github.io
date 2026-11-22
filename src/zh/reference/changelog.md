@@ -205,6 +205,7 @@ tags: [reference]
 | Notifier v0.3.0 | 2026 年 10 月 9 日 | |
 | Notifier v0.2.0 | 2026 年 10 月 4 日 | |
 | Notifier v0.1.0 | 2026 年 10 月 4 日 | 首个版本 |
+| nx-migrate v0.1.2 | 2026 年 11 月 22 日 | 适配面板 0.1.1 及以后。旧面板的订阅地址（3x-ui 在 2096 端口上的随机路径、s-ui 和 x-ui 的路径、Marzban 的前缀）可以在 NX 的地址中变成重定向，客户现有的链接继续可用；因为会更改 NX 自己的地址，不勾选就不会启用。NX 已有的账号或管理员会报告为已存在而不是失败；Go 1.27.4 和 SQLite 驱动更新（[[start/migrate]]） |
 | nx-migrate v0.1.1 | 2026 年 11 月 5 日 | 适配面板 0.1.1。用户保留原有的入站（Hiddify、Marzneshin 和 Remnawave 以外的所有面板）；迁移 PasarGuard 的 WireGuard；迁移 Hysteria2 混淆、3x-ui 的每周续期和 Hiddify 的重置周期；只有在面板还没有用户时，迁移期间才默认关闭节点（[[start/migrate]]） |
 | nx-migrate v0.1.0 | 2026 年 10 月 30 日 | 改用 NX 名称；软件包更新和安全修复（[[start/migrate]]） |
 | nx-migrate v0.0.2 | 2026 年 10 月 9 日 | Windows、Linux 和 macOS 版本 |
