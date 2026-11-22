@@ -84,6 +84,8 @@ curl -H "Authorization: Bearer $NX_TOKEN" \
 | `webhooks:write` | 修改事件订阅者 |
 | `services:read` | 查看面板服务 |
 | `services:write` | 配置和测试面板服务 |
+| `telemetry:read` | 查看节点按客户端网络统计的数据（会开启统计） |
+| `telemetry:write` | 按客户端网络排列所有订阅的链接顺序 |
 
 只授予程序所需的最少权限。有三个作用域属于面板自身的管理：`admins:write`、`tokens:write` 和 `license:write`。除非程序确实需要，否则不要授予；没有它们的令牌无法创建账户，也无法签发新令牌，因此即使泄露，也无法让自己永久存在。`backup:read` 可以读出包含所有凭据的整个数据库，`nodes:install` 能以 root 身份登录你的服务器，因此这两个作用域同样需要谨慎对待。
 
