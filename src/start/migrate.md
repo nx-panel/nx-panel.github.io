@@ -83,7 +83,7 @@ link.
 - **Subscription links.** Every user keeps their old token, and NX answers it
   at `/sub/{token}`. The old panel's subscription address (its host, port and
   path, such as 3x-ui's random path on port 2096) is a row under **Old
-  subscription links**. The transfer adds it to NX's [[ingress|Addresses]] as a
+  subscription links**. The transfer adds it to NX's [[use/ingress|Addresses]] as a
   redirect route, after the users: an old link then answers with a redirect to
   the same token on NX's own subscription address. NX's existing addresses do
   not change, and each redirect is a route you can delete later. This step needs
