@@ -21,14 +21,14 @@ sends where.
   A node on an older version keeps serving and simply reports nothing, and
   Insight shows that node as not supported.
 - The counting is off on every node until Insight reads it. The first read
-  turns it on; it turns off again ten minutes after the last read, or as soon
-  as Insight's token is deleted or loses its scope. Nothing is counted for an
+  turns it on; it turns off again ten minutes after the last read, or within
+  a minute of Insight's token being deleted or losing its scope. Nothing is counted for an
   addon that is not there.
 
 ## What stays on your server
 
 A node never reports a client's address, only its /24 (IPv4) or /48 (IPv6)
-network. The panel passes those numbers on without storing them. Insight
+network, or /40 for a 6to4 address. The panel passes those numbers on without storing them. Insight
 turns each one into its ISP and region the moment it reads it and keeps only
 the ISP, the country and the region. No client address or network prefix is
 written anywhere, by the panel or by Insight.
@@ -154,8 +154,8 @@ cut-off the order for that network is left as it was.
 
 ## AI analysis
 
-Optional: your own AI model reads your paths once a day for each client
-country, and again after an alert there, and says what it sees: a protocol
+Optional: your own AI model reads your paths once a day for each country
+whose regions you chose to tell apart, and again after an alert there, and says what it sees: a protocol
 blocked for one ISP, a node's address listed, where to move users, what to
 change. Set it up on the **AI analysis** page:
 
@@ -163,13 +163,16 @@ change. Set it up on the **AI analysis** page:
 | --- | --- |
 | API address | Any OpenAI-compatible API: `https://api.openai.com/v1`, OpenRouter, or Ollama on your own server at `http://127.0.0.1:11434/v1`. |
 | Model | A small local model reads poorly; prefer one of 7B or more, or a hosted model. |
-| API key | Kept in Insight's database and never shown again. A local model needs none. |
+| API key | Kept in Insight's database and never shown again. A local model needs none. Changing the API address’s scheme, host or port, or the proxy, clears it: enter it again. |
 | Proxy | For a server that cannot reach the provider directly. |
 | Daily token budget | Past it, nothing is sent until the next day (UTC). |
 
-What is sent: for each ISP, node number and inbound, the counts and ratios of
-the last 24 hours, and each node's hosting country and provider. Never a
-client's or a node's address, never a node's name. Nothing goes to NX. Every
+What is sent: for each ISP (its AS number and registered name), node number
+and inbound tag, the counts and ratios of the last 24 hours; each node's
+hosting country and provider; the probing scores and how many alerts there
+were. Never a client's or a node's address, never a node's name. Inbound tags
+and a provider you typed on the Nodes page go as you wrote them, cut to
+up to forty letters, digits, spaces, dashes and underscores (dots are dropped), so do not put an address in them. Nothing goes to NX. Every
 finding is checked against the numbers it was given, and one they do not bear
 out is left out, so a model that guesses wrong shows nothing rather than
 something false.
