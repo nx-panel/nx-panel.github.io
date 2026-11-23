@@ -100,7 +100,7 @@ names in the second column; the API and the API reference use the first.
 | `services:read` | See panel services |
 | `services:write` | Configure and test panel services |
 | `telemetry:read` | See what nodes count per client network, which turns the counting on |
-| `telemetry:write` | Order every subscription’s links by client network |
+| `telemetry:write` | Order every subscription’s links by client network, and register the key an addon shares path data with NX by ([[use/licence#contributor-key]]) |
 
 Grant the least a program needs. Three scopes are the panel's own
 administration: `admins:write`, `tokens:write` and `license:write`. Leave them

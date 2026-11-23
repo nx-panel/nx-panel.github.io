@@ -31,6 +31,7 @@ page.
 | **Buy a licence** / **Renew or upgrade** / **Move the licence to this machine** | opens the checkout (below) |
 | **Limits & usage** | for users and nodes: how many you have (**Used**) and how many the licence covers (**Allowed**). A count over the limit is shown in red. The expiry date is under the table. |
 | **License key** and **Activate** | for a key you received by hand |
+| **Contributor key** | only while an addon has registered one: its fingerprint, how it is sent and since when ([below](#contributor-key)) |
 
 ## Buying a licence
 
@@ -115,6 +116,23 @@ The panel needs to reach `license.nx-panel.org` over HTTPS. If it cannot
 for 14 days, it runs on the free tier until it can again, and a banner warns a
 week before that happens. If the server sits behind a firewall, allow
 outbound HTTPS to that address. **Recheck online** tries straight away.
+
+## Contributor key
+
+An addon that shares path data with NX — NX Insight, once its sharing is
+turned on — registers a key with the panel. While one is registered:
+
+- a licensed panel sends the key's public half with each licence check, which
+  carries nothing else new;
+- a panel without a licence sends it to `license.nx-panel.org` in a check-in
+  of its own — the key, this install's id and the panel's version — every six
+  hours, and once more when the key is removed.
+
+NX uses it to tell which licence, or none, stands behind what the addon
+shares; the addon never sees the licence. Nothing is sent while no addon has
+registered a key. Deleting the addon or its API token removes the key within
+a minute, and the licence service is told. The **License** page shows the
+key's fingerprint, how it is sent and since when.
 
 ## Questions and refunds
 
