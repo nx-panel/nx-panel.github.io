@@ -230,6 +230,21 @@ groups:
 
 If you sell on a licence, add `nx_license_expires_at_seconds - time() < 7 * 86400`.
 
+### NX Insight's paths {#nx-insight-paths}
+
+[[addons/insight|NX Insight]] serves its own `/metrics`, under its admin path
+and behind the token you gave its **Token for Prometheus** question at
+install (16 characters or more; none turns it off). It carries what the
+panel's cannot: per node, inbound and client network — the AS number and its
+registered name, never an address — the last fifteen minutes' accepted,
+authenticated, failed and cut-short connections, with the ten busiest
+networks per inbound and the rest as `other`; and the paths degraded now,
+the networks cut off, the tunnels with no link, the probe scores and the
+alerts of the last day. The `nx-insight` dashboard beside `nx-fleet` in
+`monitoring/grafana/dashboards` reads it: put the token in
+`monitoring/prometheus/insight_token`, then uncomment the `nx-insight` job in
+`prometheus.yml` and the matching line in the overlay.
+
 ## Alerts as events
 
 The panel judges a few things itself and raises an [[~event]] when they

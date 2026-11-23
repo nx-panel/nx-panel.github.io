@@ -202,6 +202,16 @@ finding is checked against the numbers it was given, and one they do not bear
 out is left out, so a model that guesses wrong shows nothing rather than
 something false.
 
+## Prometheus and Grafana
+
+With a token given to the **Token for Prometheus** question at install,
+Insight serves `/metrics` under its admin path for your own Prometheus, and
+the panel's repository ships a Grafana dashboard for it: success, sessions,
+failures and short cuts per node and client network, the paths degraded now,
+tunnels with no link and probe scores. Setting it up is in
+[[how/monitoring#nx-insight-paths]]. Like everything here, it carries no
+client address.
+
 ## Data
 
 IP address to ASN data from [iptoasn.com](https://iptoasn.com). IP

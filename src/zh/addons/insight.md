@@ -158,6 +158,10 @@ insight admin reset-password -user admin -pass …
 都会与提供给模型的数字核对，数字不支持的结论会被忽略，因此猜错的模型只会什么都不显示，而不会
 显示错误的内容。
 
+## Prometheus 与 Grafana {#prometheus-and-grafana}
+
+如果安装时在“Prometheus 令牌”问题中填写了令牌，Insight 会在其管理路径下为您自己的 Prometheus 提供 `/metrics`，面板仓库中也附带了相应的 Grafana 仪表盘：按节点和客户端网络统计的成功率、会话、失败和过早切断，当前受阻的路径、没有链路的隧道以及探测评分。设置方法见 [[how/monitoring#nx-insight-paths]]。与这里的一切一样，其中不含任何客户端地址。
+
 ## 数据 {#data}
 
 IP 到 ASN 的数据来自 [iptoasn.com](https://iptoasn.com)。IP 地理位置由
