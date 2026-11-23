@@ -14,6 +14,31 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
+### v0.2.0 — 23 November 2026 {#panel-v0-2-0}
+
+Installs from the update button ([[use/panel-update]]). Take a backup first,
+and update the panel before the nodes: this panel works with nodes on v0.1.2,
+which only lack the path counting below, and node v0.2.0 works with an older
+panel. Nothing changes until an addon that reads path data is installed.
+
+- **Path telemetry, for addons:** nodes on v0.2.0 can count how client
+  connections fare, per inbound and per client network — accepted,
+  authenticated, failed and how, or cut short soon after they began; on Linux
+  also round-trip time and retransmissions — and tunnel links, WireGuard
+  peers, OpenConnect and OpenVPN clients. It is off until an addon holds a
+  token with the new `telemetry:read` scope, and the panel never stores a
+  client address or network ([[use/tokens#scopes]]). Measured on Linux: no
+  measurable slowdown.
+- **Best link first:** an addon holding `telemetry:write` can order every
+  subscription's links by the user's network, so a link that works from there
+  comes first.
+- **Contributor key:** an addon that shares path data with NX registers a key;
+  the **License** page shows it, and nothing is sent while none is registered
+  ([[use/licence#contributor-key]]).
+- Through the API, a user or admin name already taken answers 409 in the
+  panel's words; the login page takes a signed-in admin to the dashboard;
+  updated dependencies.
+
 ### v0.1.2 — 12 November 2026 {#panel-v0-1-2}
 
 Installs from the update button ([[use/panel-update]]). Take a backup first,
@@ -266,6 +291,24 @@ The first stable release. From this release on, the panel updates itself from
 its **Update** page ([[use/panel-update]]).
 
 ## Node
+
+### v0.2.0 — 23 November 2026 {#node-v0-2-0}
+
+**Update the panel to v0.2.0 first**, then each node from the Nodes page. A
+node on v0.1.2 keeps working with it, without the path counting.
+
+- **Failed handshakes look like a real server's.** A TLS inbound closes a
+  failed handshake as a stock HTTPS server does instead of resetting it, and
+  every other protocol keeps reading until the prober gives up instead of
+  closing after a fixed number of bytes or on the first one. XHTTP,
+  HTTPUpgrade and TrustTunnel over TLS no longer hang after a failed
+  handshake. Authenticated connections behave as before.
+- **Path counting**, off until the panel asks: connections per inbound and
+  client network, replayed handshakes, tunnel links, WireGuard peers,
+  OpenConnect clients and OpenVPN sessions, in bounded memory, and none while
+  off. The node never acts on what it counts.
+- Updated dependencies, among them `pion/dtls` v3.1.16; OpenConnect DTLS
+  resumes as before.
 
 ### v0.1.2 — 12 November 2026 {#node-v0-1-2}
 
