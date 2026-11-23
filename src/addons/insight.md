@@ -108,12 +108,20 @@ Below it:
   at once, it is not your nodes that are blocked but that network that is
   cut off: a shutdown, or a whitelist that lets only some sites through.
   Insight says so once and suggests nothing to change.
+- **Tunnels with no link.** A user connects to a tunnel's relay node and
+  goes out through its origin; when the link between them is cut, every
+  network on the relay seems to fail at once. Insight asks the panel about
+  each tunnel every minute, and while one has no link it says that once —
+  no alert for each of the relay's paths, and nothing suggested to change on
+  the relay.
 - **Blocked paths**, each with the paths that still work for the same network.
 - **The matrix**: client networks (or regions) down the side, nodes and
   inbounds across, over the last hour, six hours, day or week. Each cell is
   the share of that network's connections that got through. Point at it for
   the numbers: connections, authenticated, failed handshakes, sessions cut
   within seconds, round-trip time.
+  A WireGuard endpoint's cell shows the handshakes that worked instead:
+  WireGuard answers no handshake that fails, so a failure cannot be seen.
 
 ## Nodes
 
@@ -121,6 +129,13 @@ The network each node is hosted on, from its address. Where the network
 database places a node wrong (a provider's ranges, an address behind a
 front), correct it here; the correction stays over later updates of the
 database.
+
+Beside it: what the node serves — each inbound and endpoint, with its
+protocol, transport, security and whether a domain front reaches it — and
+the [[use/tunnels|tunnels]] it is the relay or an origin of: linked or not,
+and over the last day the link attempts, links up, failures and links that
+dropped right after they came up. Reading the tunnels needs the
+`tunnels:read` permission, which Insight asks for when it is installed.
 
 ## Probing
 
@@ -144,7 +159,7 @@ they are scanners rather than probes of this endpoint.
 ## Alerts
 
 Every change, newest first: a path degraded or recovered, a network cut off
-or back, an endpoint probed. A path is judged against its own normal for that
+or back, an endpoint probed, a tunnel down or back. A path is judged against its own normal for that
 hour of the week, learned from its history; a path needs a few hours of
 traffic before it can be judged, and two bad checks five minutes apart before
 it alerts. With a Telegram or Bale bot set at install, each alert is also sent
@@ -178,8 +193,10 @@ change. Set it up on the **AI analysis** page:
 What is sent: for each ISP (its AS number and registered name), node number
 and inbound tag, the counts and ratios of the last 24 hours; each node's
 hosting country and provider; the probing scores and how many alerts there
-were. Never a client's or a node's address, never a node's name. Inbound tags
-and a provider you typed on the Nodes page go as you wrote them, cut to
+were; each tunnel touching those nodes, by its name, with its relay and
+origin node numbers and whether it has a link. Never a client's or a node's
+address, never a node's name. Inbound tags,
+tunnel names and a provider you typed on the Nodes page go as you wrote them, cut to
 up to forty letters, digits, spaces, dashes and underscores (dots are dropped), so do not put an address in them. Nothing goes to NX. Every
 finding is checked against the numbers it was given, and one they do not bear
 out is left out, so a model that guesses wrong shows nothing rather than
