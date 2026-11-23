@@ -25,7 +25,7 @@ address.
 
 ## What it needs
 
-- A panel and nodes from **v0.1.3** on. The nodes count; the panel relays.
+- A panel and nodes from **v0.2.0** on. The nodes count; the panel relays.
   A node on an older version keeps serving and simply reports nothing, and
   Insight shows that node as not supported.
 - The counting is off on every node until Insight reads it. The first read
@@ -98,7 +98,7 @@ The top of the page says whether Insight is reading the panel:
 | --- | --- |
 | Waiting | Not registered with a panel yet. |
 | Reading | Working; the time of the last read is beside it. |
-| Not supported | The panel is older than v0.1.3. Update it, then the nodes. |
+| Not supported | The panel is older than v0.2.0. Update it, then the nodes. |
 | No permission | Insight's token lacks the scope to read. Approve its permissions again under **Addons**. |
 | Failed | The last read failed; Insight tries again every minute. |
 
