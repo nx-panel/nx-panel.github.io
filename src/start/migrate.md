@@ -80,10 +80,24 @@ link.
 
 ## What to know before the transfer
 
-- **Subscription links.** NX also answers the old `/sub/{token}` links. For
-  s-ui, 3x-ui, x-ui, Marzban and PasarGuard, existing links keep working once
-  the old domain points at NX. Marzneshin, Hiddify and Remnawave users get
-  new links; the wizard says so per user.
+- **Subscription links.** Every user keeps their old token, and NX answers it
+  at `/sub/{token}`. The old panel's subscription address (its host, port and
+  path, such as 3x-ui's random path on port 2096) is a row under **Old
+  subscription links**. The transfer adds it to NX's [[use/ingress|Addresses]] as a
+  redirect route, after the users: an old link then answers with a redirect to
+  the same token on NX's own subscription address. NX's existing addresses do
+  not change, and each redirect is a route you can delete later. This step needs
+  the main admin. These rows are **not ticked** to begin with: they change NX's
+  own addresses, which can upset its other settings (the Settings page and an
+  admin's subscription domain stop editing the addresses, and a self-signed
+  panel certificate gains the old names). Setting the redirects up yourself on
+  NX's Addresses page is the better way; tick them only if you want the tool to
+  do it. Point the old domain and port at NX before you switch off the
+  old panel. For s-ui, 3x-ui, x-ui, Marzban and PasarGuard, existing links keep
+  working. Marzneshin, Hiddify and Remnawave users get new links; the wizard
+  says so per user. A format name NX spells differently (s-ui's
+  `?format=json`, Marzban's `clash-meta`) gets NX's link list, and the row says
+  so.
 - **One set of credentials per user.** NX keeps one UUID and one password per
   user. Where the old panel had one per protocol, the UUID comes from
   VLESS/VMess and the password from Trojan/Shadowsocks, and the row names what was

@@ -170,6 +170,10 @@ groups:
 
 如果你按许可证销售，再加上 `nx_license_expires_at_seconds - time() < 7 * 86400`。
 
+### NX Insight 的路径 {#nx-insight-paths}
+
+[[addons/insight|NX Insight]] 在其管理路径下提供自己的 `/metrics`，由安装时“Prometheus 令牌”问题中填写的令牌保护（至少 16 个字符；留空则关闭）。其中有面板指标没有的内容：按节点、inbound 和客户端网络（AS 号及其注册名称，绝无地址）统计的过去十五分钟内被接受、通过认证、失败和很快被切断的连接，每个 inbound 保留流量最大的十个网络，其余合并为 `other`；以及当前受阻的路径、被切断的网络、没有链路的隧道、探测评分和过去一天的告警。`monitoring/grafana/dashboards` 中 `nx-fleet` 旁边的 `nx-insight` 仪表盘读取它：把令牌写入 `monitoring/prometheus/insight_token`，然后取消注释 `prometheus.yml` 中的 `nx-insight` 任务以及 overlay 中对应的那一行。
+
 ## 作为事件的告警 {#alerts-as-events}
 
 面板自己判断少数几件事，并在它们变化时发出一个[[~event]]，每次越过阈值时一次，恢复时再一次：

@@ -58,7 +58,7 @@ ssh -L 8787:127.0.0.1:8787 root@203.0.113.10
 
 ## 迁移前须知 {#what-to-know-before-the-transfer}
 
-- **订阅链接。** NX 也响应旧的 `/sub/{token}` 链接。对于 s-ui、3x-ui、x-ui、Marzban 和 PasarGuard，只要旧域名指向 NX，现有链接就能继续使用。Marzneshin、Hiddify 和 Remnawave 的用户会得到新链接；向导会按用户逐一说明。
+- **订阅链接。** 每个用户保留旧的 token，NX 在 `/sub/{token}` 上响应它。旧面板的订阅地址（主机、端口和路径，例如 3x-ui 在 2096 端口上的随机路径）是 **Old subscription links** 下的一行。迁移在用户之后把它作为重定向路由加入 NX 的[[use/ingress|地址]]：旧链接会重定向到 NX 自己订阅地址上的同一个 token。NX 现有的地址不会改变，每个重定向都是一条以后可以删除的路由。这一步需要主管理员。这些行**默认不勾选**：它们会更改 NX 自己的地址，可能打乱它的其他设置（设置页面和管理员的订阅域名将不再编辑这些地址，自签名的面板证书会加入旧名称）。更好的做法是在 NX 的地址页面上自己设置重定向；只有想让工具来做时才勾选它们。在关闭旧面板之前，把旧域名和端口指向 NX。对于 s-ui、3x-ui、x-ui、Marzban 和 PasarGuard，现有链接继续可用。Marzneshin、Hiddify 和 Remnawave 的用户会得到新链接；向导会按用户逐一说明。NX 写法不同的格式名（s-ui 的 `?format=json`、Marzban 的 `clash-meta`）会得到 NX 的链接列表，该行会说明这一点。
 - **每个用户一套凭据。** NX 为每个用户保存一个 UUID 和一个密码。如果旧面板为每种协议各保存一套，UUID 取自 VLESS/VMess，密码取自 Trojan/Shadowsocks，并在该行注明丢弃了哪些。
 - **入站会转换为 NX 的格式。** NX 中没有对应项的设置，例如 fallback、mux 和 TCP 头部混淆，会被丢弃并在该行注明。没有私钥的 REALITY 入站会得到新密钥，因此其用户需要新链接。Hysteria2 混淆（salamander 和 gecko）会一并迁移。传输方式在 NX 中不存在的入站（例如 XDRIVE 或 MASQUE）会标为红色：它的客户端无法连接到它。把入站放到节点上之前，请逐一检查。
 - **每个用户保留自己的入站。** 如果旧面板（s-ui、3x-ui、x-ui、Marzban、PasarGuard）只把某个用户放在部分入站上，NX 用户会按这些入站的标签通过[[users#limiting-configs|限制配置]]被限制在这些入站上。原本在全部入站上的用户不受限制。在 PasarGuard 中，这取决于用户已启用的分组。

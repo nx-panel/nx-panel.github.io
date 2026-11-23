@@ -14,6 +14,31 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
+### v0.2.0 — 23 November 2026 {#panel-v0-2-0}
+
+Installs from the update button ([[use/panel-update]]). Take a backup first,
+and update the panel before the nodes: this panel works with nodes on v0.1.2,
+which only lack the path counting below, and node v0.2.0 works with an older
+panel. Nothing changes until an addon that reads path data is installed.
+
+- **Path telemetry, for addons:** nodes on v0.2.0 can count how client
+  connections fare, per inbound and per client network — accepted,
+  authenticated, failed and how, or cut short soon after they began; on Linux
+  also round-trip time and retransmissions — and tunnel links, WireGuard
+  peers, OpenConnect and OpenVPN clients. It is off until an addon holds a
+  token with the new `telemetry:read` scope, and the panel never stores a
+  client address or network ([[use/tokens#scopes]]). Measured on Linux: no
+  measurable slowdown.
+- **Best link first:** an addon holding `telemetry:write` can order every
+  subscription's links by the user's network, so a link that works from there
+  comes first.
+- **Contributor key:** an addon that shares path data with NX registers a key;
+  the **License** page shows it, and nothing is sent while none is registered
+  ([[use/licence#contributor-key]]).
+- Through the API, a user or admin name already taken answers 409 in the
+  panel's words; the login page takes a signed-in admin to the dashboard;
+  updated dependencies.
+
 ### v0.1.2 — 12 November 2026 {#panel-v0-1-2}
 
 Installs from the update button ([[use/panel-update]]). Take a backup first,
@@ -267,6 +292,24 @@ its **Update** page ([[use/panel-update]]).
 
 ## Node
 
+### v0.2.0 — 23 November 2026 {#node-v0-2-0}
+
+**Update the panel to v0.2.0 first**, then each node from the Nodes page. A
+node on v0.1.2 keeps working with it, without the path counting.
+
+- **Failed handshakes look like a real server's.** A TLS inbound closes a
+  failed handshake as a stock HTTPS server does instead of resetting it, and
+  every other protocol keeps reading until the prober gives up instead of
+  closing after a fixed number of bytes or on the first one. XHTTP,
+  HTTPUpgrade and TrustTunnel over TLS no longer hang after a failed
+  handshake. Authenticated connections behave as before.
+- **Path counting**, off until the panel asks: connections per inbound and
+  client network, replayed handshakes, tunnel links, WireGuard peers,
+  OpenConnect clients and OpenVPN sessions, in bounded memory, and none while
+  off. The node never acts on what it counts.
+- Updated dependencies, among them `pion/dtls` v3.1.16; OpenConnect DTLS
+  resumes as before.
+
 ### v0.1.2 — 12 November 2026 {#node-v0-1-2}
 
 **Update the panel to v0.1.2 first**, then each node from the Nodes page. A
@@ -404,6 +447,7 @@ updated from the panel ([[start/add-node]]).
 | Notifier v0.3.0 | 9 October 2026 | |
 | Notifier v0.2.0 | 4 October 2026 | |
 | Notifier v0.1.0 | 4 October 2026 | First release |
+| nx-migrate v0.1.2 | 22 November 2026 | Works with panel 0.1.1 and later. The old panel's subscription addresses (3x-ui's random path on port 2096, s-ui's and x-ui's path, Marzban's prefix) can become redirects in NX's Addresses, so customers' existing links keep working; they are off unless ticked, since they change NX's own addresses. An account or admin NX already has is reported as existing rather than failed; Go 1.27.4 and SQLite driver updates ([[start/migrate]]) |
 | nx-migrate v0.1.1 | 5 November 2026 | Works with panel 0.1.1. Users keep the inbounds they had (all panels except Hiddify, Marzneshin and Remnawave); PasarGuard's WireGuard comes across; Hysteria2 obfuscation, 3x-ui weekly renewals and Hiddify's reset cycle are carried; nodes are switched off during a transfer by default only on a panel with no users ([[start/migrate]]) |
 | nx-migrate v0.1.0 | 30 October 2026 | The move to the NX name; package and security updates ([[start/migrate]]) |
 | nx-migrate v0.0.2 | 9 October 2026 | Windows, Linux and macOS builds |

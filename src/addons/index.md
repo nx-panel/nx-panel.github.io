@@ -86,6 +86,7 @@ register**, especially for an unofficial one.
 | --- | --- |
 | [[shop\|NX Shop]] | Sells your plans through a Telegram bot and a web app: products, orders, a wallet, card-to-card and gateway payments, discount codes, referrals and agents. |
 | [[notifier\|The notifier]] | Tells every user on the panel about their account (expiry, traffic, renewals) and sends your own messages, over Telegram, Bale, SMS, email or any HTTP API. |
+| [[insight\|NX Insight]] | Shows which nodes and protocols still reach which of your users' networks, warns when a path is blocked or probed, and puts the links that work first in each subscription. |
 
 ## Where to start
 
