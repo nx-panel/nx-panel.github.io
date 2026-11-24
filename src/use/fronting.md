@@ -81,7 +81,7 @@ Then in the panel, on **Core configs → Domain fronting**, click **Add**:
 | **Address** | The CDN hostname apps dial. `*.cdn.example.com` gives each subscriber their own (below). |
 | **Port** | Blank means 443. This is the CDN's port, not the inbound's. |
 | **SNI**, **Host** | Blank sends the front's own hostname, which is what a CDN expects. Fill them in only if your CDN needs another name at the origin. |
-| ALPN, **Fingerprint**, **Allow insecure** | The app's TLS towards the CDN. A CDN has a valid certificate, so leave **Allow insecure** off. |
+| ALPN, **Fingerprint**, **Allow insecure** | The app's TLS towards the CDN. A CDN has a valid certificate, so leave **Allow insecure** off. With it on, vless and trojan links carry `allowInsecure=1`, which current Xray based apps (v2rayNG, v2rayN, Streisand) refuse to connect; the form and the front's row warn about it. |
 | **Client address header** | See [the client address header](#client-address). |
 | **Origin node** | Optional. See below. |
 | **Order** | Where this front's entries sit in a subscription. |
