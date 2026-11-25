@@ -20,7 +20,7 @@ v0.2.0 节点配合使用，v0.2.1 节点的路径计数更准确。NX Insight v
   密钥在下一次检查前一直视为已拒绝，而不是显示为已发送。密钥随每次许可证检查发送，许可证被拒绝
   的面板还会发送免费签到（[[use/licence#contributor-key]]）。
 - **前置（Front）：** 开启 **Allow insecure** 时，vless 和 trojan 链接带有
-  `allowInsecure=1`，当前基于 Xray 的应用会拒绝连接；表单、前置所在行及保存时现在都会警告，
+  `allowInsecure=1`，当前的 Xray 客户端应用会拒绝连接；表单、前置所在行及保存时现在都会警告，
   并列出受影响的入站（[[use/fronting]]）。
 - **扩展页面：** **编辑** 和 **打开** 留在每一行上，其余操作在行菜单中；已签名插件的 **编辑**
   包含其入口链接（[[use/addons#the-registered-list]]）。
