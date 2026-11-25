@@ -25,8 +25,9 @@ address.
 
 ## What it needs
 
-- A panel and nodes from **v0.2.0** on. The nodes count; the panel relays.
-  A node on an older version keeps serving and simply reports nothing, and
+- A panel from **v0.2.1** and nodes from **v0.2.0** on; nodes on v0.2.1
+  count OpenConnect, OpenVPN and WireGuard more exactly. The nodes count; the
+  panel relays. A node on an older version keeps serving and simply reports nothing, and
   Insight shows that node as not supported.
 - The counting is off on every node until Insight reads it. The first read
   turns it on; it turns off again ten minutes after the last read, or within

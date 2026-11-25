@@ -126,7 +126,10 @@ turned on — registers a key with the panel. While one is registered:
   carries nothing else new;
 - a panel without a licence sends it to `license.nx-panel.org` in a check-in
   of its own — the key, this install's id and the panel's version — every six
-  hours, and once more when the key is removed.
+  hours, and once more when the key is removed;
+- a panel whose licence the check refuses sends both, so the key still
+  arrives. A key the licence service refuses is held as refused until the
+  next check.
 
 NX uses it to tell which licence, or none, stands behind what the addon
 shares; the addon never sees the licence. Nothing is sent while no addon has
