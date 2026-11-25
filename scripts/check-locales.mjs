@@ -1,5 +1,5 @@
-// Every page exists in every locale (docs-site.md exit criterion 2). English is
-// the root (src/), the others are src/fa, src/ru, src/zh with the same paths.
+// Every page exists in every locale. English is the root (src/), the others
+// are src/fa, src/ru, src/zh with the same paths.
 
 import { readdirSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'

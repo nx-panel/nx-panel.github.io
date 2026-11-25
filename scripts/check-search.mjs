@@ -1,7 +1,7 @@
-// Search finds the right page in every language (docs-site.md exit
-// criterion 3): ten fixed queries per locale (search-queries.json), run
-// against the built index with the site's own tokenizer, must each have the
-// expected page among the first five results.
+// Search finds the right page in every language: ten fixed queries per
+// locale (search-queries.json), run against the built index with the site's
+// own tokenizer, must each have the expected page among the first five
+// results.
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'

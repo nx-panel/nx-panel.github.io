@@ -1,4 +1,4 @@
-// The core-name rule (docs-site.md P4, owner 2026-10-11): the site may name
+// The core-name rule (owner, 2026-10-11): the site may name
 // sing-box and Xray as *client* software — a sing-box subscription, sing-box
 // apps, Xray-based clients, the `singbox` / `xray` format identifiers — and
 // must never say or imply that NX is built on, inherits from or contains
@@ -128,7 +128,7 @@ for (const target of targets) {
 
 if (problems.length) {
   console.error(problems.join('\n'))
-  console.error(`\n${problems.length} mention(s) break the core-name rule (docs-site.md P4).`)
+  console.error(`\n${problems.length} mention(s) break the core-name rule.`)
   process.exit(1)
 }
 console.log('core-name rule: ok')
