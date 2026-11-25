@@ -1,7 +1,6 @@
 /* rtl:begin:ignore */
-/* NX's tokens on the default theme. The values are the panel's
-   (nx-panel/frontend/src/theme.ts violet scale, styles.css surfaces), so the
-   docs and the panel read as one product. */
+/* NX's tokens on the default theme. The values are the panel's (its violet
+   scale and its surfaces), so the docs and the panel read as one product. */
 
 :root {
   --nx-violet-300: #b096ff;

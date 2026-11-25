@@ -1,4 +1,4 @@
-// Checks on the built site (docs-site.md exit criteria 4 and 6):
+// Checks on the built site:
 // - nothing is loaded from another host: scripts, styles, fonts, images,
 //   frames and preloads all come from this site (links out are fine);
 // - the core-name rule holds on the text a reader sees, not only on sources;

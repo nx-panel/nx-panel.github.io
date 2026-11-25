@@ -114,22 +114,28 @@ used. The state is one of:
 | **Suspended** | stopped by you (below) |
 | **Unhealthy** | its health path failed twice in a row |
 
-The row menu holds what you can do with it:
+Two buttons stay on the row:
 
+- **Edit**: for your own addon, its whole form; for a signed one, a dialog
+  named after it with its [entry link](#the-entry-link), the only thing the
+  panel lets you change on a signed addon.
 - **Open**: the addon's own interface, in a new tab.
-- **Entry link** (signed addons) or **Edit** (your own).
+
+The row menu holds the rest:
+
 - **Check for an update** (signed addons).
 - **Review the update**, when one is waiting.
 - **Certificate**.
 - **Update on its host** and **Remove from its host**, for an addon the panel
   installed over SSH or on this server.
 - **Suspend** or **Resume**.
-- **Remove**.
+- **Remove**, last, asked once more before it goes.
 
 ### The entry link
 
 The address you register is where the *panel* reaches the addon. With Docker
-that is often a container name your browser cannot open. **Entry link** sets
+that is often a container name your browser cannot open. **Entry link**, in a
+signed addon's **Edit**, sets
 the address your browser uses for **Open**; empty uses the one the addon
 declares, and a newer version of the addon keeps yours.
 

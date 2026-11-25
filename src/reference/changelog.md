@@ -14,6 +14,27 @@ and [the node](https://github.com/nx-panel/node/releases).
 
 ## Panel
 
+### v0.2.1 — 25 November 2026 {#panel-v0-2-1}
+
+Installs from the update button ([[use/panel-update]]). Take a backup first,
+and update the panel before the nodes: this panel works with nodes on v0.2.0,
+and node v0.2.1 counts paths more exactly. NX Insight v0.0.2 needs it.
+
+- **Licence check:** the panel reads the licence service's answer, not only
+  that it answered, so a refused contributor key is held as refused until the
+  next check instead of shown as sent. The key goes with every licence check,
+  and a panel whose licence is refused sends the free check-in too
+  ([[use/licence#contributor-key]]).
+- **Fronts:** with **Allow insecure** on, vless and trojan links carry
+  `allowInsecure=1`, which current Xray based apps refuse to connect; the
+  form, the front's row and its save now warn and name the inbounds affected
+  ([[use/fronting]]).
+- **Addons page:** **Edit** and **Open** stay on each row and the rest is in
+  its menu; a signed addon's **Edit** holds its entry link
+  ([[use/addons#the-registered-list]]).
+- The path readout reads the templates' shapes through a one-minute cache;
+  updated dependencies.
+
 ### v0.2.0 — 23 November 2026 {#panel-v0-2-0}
 
 Installs from the update button ([[use/panel-update]]). Take a backup first,
@@ -292,6 +313,18 @@ its **Update** page ([[use/panel-update]]).
 
 ## Node
 
+### v0.2.1 — 25 November 2026 {#node-v0-2-1}
+
+**Update the panel to v0.2.1 first**, then each node from the Nodes page. A
+node on v0.2.0 keeps working with it.
+
+- **Path counting is more exact:** a connection counts at most one failure,
+  and nothing while counting is off. OpenConnect counts a login once its
+  cookie is issued and closes a refused tunnel; OpenVPN keeps its UDP
+  sessions in a share of their own; WireGuard leaves out what happened while
+  counting was off.
+- Updated dependencies, among them `mieru` v3.40.0.
+
 ### v0.2.0 — 23 November 2026 {#node-v0-2-0}
 
 **Update the panel to v0.2.0 first**, then each node from the Nodes page. A
@@ -432,6 +465,9 @@ updated from the panel ([[start/add-node]]).
 
 | Release | Date | Notes |
 |---|---|---|
+| NX Insight v0.0.2 | 25 November 2026 | Needs panel v0.2.1. **Mode B**, off until turned on: hourly batches to NX and NX's report back ([[addons/insight]]); a **Settings** page for alerts, the AI model, the metrics token and the account |
+| NX Insight v0.0.1 | 23 November 2026 | First release; needs panel and nodes v0.2.0 ([[addons/insight]]) |
+| NX Shop v0.1.4 | 25 November 2026 | Package updates; its own icon in the browser tab |
 | NX Shop v0.1.3 | 12 November 2026 | Package and security updates |
 | NX Shop v0.1.2 | 7 November 2026 | Refuses writes sent from another origin; asks for trusted proxies and a listen address at install ([[addons/shop#install]]) |
 | NX Shop v0.1.1 | 30 October 2026 | Install from the panel's **Addons** page or with `ghcr.io/nx-panel/shop:0.1.1` ([[addons/shop]]) |
@@ -439,6 +475,7 @@ updated from the panel ([[start/add-node]]).
 | NX Shop v0.0.3 | 24 October 2026 | Package and security updates |
 | NX Shop v0.0.2 | 9 October 2026 | |
 | NX Shop v0.0.1 | 4 October 2026 | First release |
+| Notifier v0.4.4 | 25 November 2026 | Package updates; opening an SMTP connection over TLS stops when its send is cancelled; its own icon in the browser tab |
 | Notifier v0.4.3 | 12 November 2026 | Package and security updates |
 | Notifier v0.4.2 | 7 November 2026 | Refuses writes sent from another origin; asks for trusted proxies and a listen address at install ([[addons/notifier#install]]) |
 | Notifier v0.4.1 | 30 October 2026 | `ghcr.io/nx-panel/notif:0.4.1` ([[addons/notifier]]) |
@@ -447,6 +484,7 @@ updated from the panel ([[start/add-node]]).
 | Notifier v0.3.0 | 9 October 2026 | |
 | Notifier v0.2.0 | 4 October 2026 | |
 | Notifier v0.1.0 | 4 October 2026 | First release |
+| nx-migrate v0.1.3 | 25 November 2026 | Package updates and small fixes found by a linter ([[start/migrate]]) |
 | nx-migrate v0.1.2 | 22 November 2026 | Works with panel 0.1.1 and later. The old panel's subscription addresses (3x-ui's random path on port 2096, s-ui's and x-ui's path, Marzban's prefix) can become redirects in NX's Addresses, so customers' existing links keep working; they are off unless ticked, since they change NX's own addresses. An account or admin NX already has is reported as existing rather than failed; Go 1.27.4 and SQLite driver updates ([[start/migrate]]) |
 | nx-migrate v0.1.1 | 5 November 2026 | Works with panel 0.1.1. Users keep the inbounds they had (all panels except Hiddify, Marzneshin and Remnawave); PasarGuard's WireGuard comes across; Hysteria2 obfuscation, 3x-ui weekly renewals and Hiddify's reset cycle are carried; nodes are switched off during a transfer by default only on a panel with no users ([[start/migrate]]) |
 | nx-migrate v0.1.0 | 30 October 2026 | The move to the NX name; package and security updates ([[start/migrate]]) |

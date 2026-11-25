@@ -12,8 +12,7 @@ this in their second language. Write for that person.
   "powerful", "seamless", "simply", "just".
 - One idea per sentence. Short paragraphs. Prefer a numbered list for a
   procedure and a table for a set of options.
-- Name controls exactly as the panel's English interface does, in **bold**
-  (`nx-panel/frontend/src/i18n/locales/en.ts` holds every label).
+- Name controls exactly as the panel's English interface does, in **bold**.
 - No em-dash-heavy asides, no "not X but Y" constructions, no rhetorical
   questions.
 

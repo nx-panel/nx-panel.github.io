@@ -25,8 +25,9 @@ address.
 
 ## What it needs
 
-- A panel and nodes from **v0.2.0** on. The nodes count; the panel relays.
-  A node on an older version keeps serving and simply reports nothing, and
+- A panel from **v0.2.1** and nodes from **v0.2.0** on; nodes on v0.2.1
+  count OpenConnect, OpenVPN and WireGuard more exactly. The nodes count; the
+  panel relays. A node on an older version keeps serving and simply reports nothing, and
   Insight shows that node as not supported.
 - The counting is off on every node until Insight reads it. The first read
   turns it on; it turns off again ten minutes after the last read, or within
@@ -83,12 +84,24 @@ hosted.
 ### Sign-in
 
 Sign in at the public address with the admin path. Insight has its own admins,
-not the panel's. Turn on two-factor sign-in under **Security**. A lost
+not the panel's. Turn on two-factor sign-in under **Settings → Account**. A lost
 password is reset on the server:
 
 ```bash
 insight admin reset-password -user admin -pass …
 ```
+
+### Settings {#settings}
+
+**Settings** holds what can change while Insight runs, a tab each:
+
+| Tab | |
+| --- | --- |
+| Alerts | The Telegram or Bale bot, its chat, a proxy, the Bot API address and the alerts' language, with a test message. The installer's answers hold until you save here; after that yours do, until **Go back to the installer's values**. A new Bot API address needs the bot's token typed again, so a saved token is never sent somewhere new. |
+| AI model | Mode A, below. |
+| Prometheus | The token `/metrics` asks for; none turns it off. Taken at once, without a restart. |
+| Account | Your password and two-factor sign-in. |
+| Installation | What the installer set — port, admin path, address, HTTPS, database, the countries told apart by region — to read only. Changing one means running the installer again. |
 
 ## Overview
 
@@ -122,6 +135,10 @@ Below it:
   within seconds, round-trip time.
   A WireGuard endpoint's cell shows the handshakes that worked instead:
   WireGuard answers no handshake that fails, so a failure cannot be seen.
+  Each country whose regions you tell apart gets a table of its own, and
+  every other country goes in one more, **abroad** (by region, a row per
+  country there). A network is shown by its short name; the ⓘ beside it
+  gives its AS number and full registered name, on hover or a tap.
 
 ## Nodes
 
@@ -162,8 +179,8 @@ Every change, newest first: a path degraded or recovered, a network cut off
 or back, an endpoint probed, a tunnel down or back. A path is judged against its own normal for that
 hour of the week, learned from its history; a path needs a few hours of
 traffic before it can be judged, and two bad checks five minutes apart before
-it alerts. With a Telegram or Bale bot set at install, each alert is also sent
-there, in the install's language.
+it alerts. With a Telegram or Bale bot set at install or under **Settings →
+Alerts**, each alert is also sent there, in the language chosen there.
 
 ## Subscriptions, best link first
 
@@ -180,7 +197,9 @@ cut-off the order for that network is left as it was.
 Optional: your own AI model reads your paths once a day for each country
 whose regions you chose to tell apart, and again after an alert there, and says what it sees: a protocol
 blocked for one ISP, a node's address listed, where to move users, what to
-change. Set it up on the **AI analysis** page:
+change. Set it up under **Settings → AI model**; the **AI analysis** page then
+shows the findings, per country, on its **Insight AI** tab. Until a model is set
+up, that tab only says so.
 
 | Field | |
 | --- | --- |
@@ -197,15 +216,57 @@ were; each tunnel touching those nodes, by its name, with its relay and
 origin node numbers and whether it has a link. Never a client's or a node's
 address, never a node's name. Inbound tags,
 tunnel names and a provider you typed on the Nodes page go as you wrote them, cut to
-up to forty letters, digits, spaces, dashes and underscores (dots are dropped), so do not put an address in them. Nothing goes to NX. Every
+up to forty letters, digits, spaces, dashes and underscores (dots are dropped), so do not put an address in them. Nothing of this goes to NX (Mode B, below, is separate). Every
 finding is checked against the numbers it was given, and one they do not bear
 out is left out, so a model that guesses wrong shows nothing rather than
 something false.
 
+## NX network (Mode B) {#nx-network}
+
+Off until you turn it on on the **NX network** page. Mode B shares this
+panel's counts with NX, anonymously, and brings back NX's regional report:
+which protocol shapes work, are degraded or are blocked for each network of
+your users' countries, pooled from many independent operators.
+
+What is sent, once an hour, for the hour just closed:
+
+- per client network: its AS number and registered name, its country and
+  estimated region;
+- per hosting network of your nodes: its AS number, name and country;
+- per protocol shape: protocol, transport, TLS or REALITY, direct or through
+  a CDN, and TCP or UDP;
+- connections accepted, authenticated and cut early, failures by class and
+  by signature (bytes read, seconds to failure), replayed handshakes, and
+  the sums of round-trip and session times;
+- Insight's own reading of each: fine, degraded, network outage, the node's
+  address blocked, its tunnel down.
+
+Never a client's or a node's address, a node's name or number, an inbound's
+tag, a domain, an SNI, a path or your panel's address. The page shows every
+batch as it went out.
+
+Each batch is signed with a key Insight makes for this install. Turning
+Mode B on registers the key with your panel, and the panel passes it to
+NX's licence service (see [[use/licence#contributor-key]]); that is how NX
+tells a licensed panel from a free one, and it learns nothing else about
+your licence. Turning it off removes the key from the panel and drops
+every batch not sent yet.
+
+NX publishes a report only for a network that at least five independent
+operators share, so nothing in it can be traced to one panel. A panel with
+a licence receives the whole report; a panel without one receives outages
+and throttling only, not which protocols work. Reports go to installs that
+sent a batch in the last three days. Insight asks for a newer report when
+it starts and when you open the page, sending the time of the report it
+holds; NX sends a newer one or says there is none. The report is on the
+**AI analysis** page, on its **NX** tab. It is signed by
+NX, and Insight shows none whose signature does not check. Like every
+finding here, it is an estimate: check it against your own numbers.
+
 ## Prometheus and Grafana
 
-With a token given to the **Token for Prometheus** question at install,
-Insight serves `/metrics` under its admin path for your own Prometheus, and
+With a token given to the **Token for Prometheus** question at install, or
+set under **Settings → Prometheus**, Insight serves `/metrics` under its admin path for your own Prometheus, and
 the panel's repository ships a Grafana dashboard for it: success, sessions,
 failures and short cuts per node and client network, the paths degraded now,
 tunnels with no link and probe scores. Setting it up is in
